@@ -11,7 +11,6 @@ const Main = () => {
                     <MainBodyLeft />
                     <MainBodyRight />
                 </div>
-
             </div>
 
 
