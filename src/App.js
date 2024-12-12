@@ -1,11 +1,15 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/auth/RegisterPage";
 
-function App() {
-  return (
-    <>
-    <h1>Itdat</h1>
-    <p>fork test</p>
-    </>
-  );
+export default function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+        </Router>
+    );
 }
-
-export default App;
