@@ -2,7 +2,6 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     baseURL: "https://www.namewallet.store",
-    withCredentials: true,
     headers: {
         "Content-Type": "application/json"
     }
@@ -16,8 +15,14 @@ export const registerUser = async (userData) => {
 
 // 유효성 검사 API 호출
 export const checkAvailability = async (type, value) => {
-    const response = await axiosInstance.get(`/api/auth/check-availability`, {
-        params: { type, value }
-    });
-    return response.data.available; // 서버에서 반환한 boolean 값이 됨.
+    try {
+        const response = await axiosInstance.get(`/api/auth/check-availability`, {
+            params: { type, value }
+        });
+        return response.data.available;
+    } catch (error) {
+        console.error(`API 호출 오류:`, error.response?.data || error.message);
+        return false;
+    }
 };
+
