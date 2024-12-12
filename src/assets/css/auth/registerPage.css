@@ -52,3 +52,13 @@
 .register-page form button:hover {
     background-color: #0056b3;
 }
+
+.register-error {
+    border: 1px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
