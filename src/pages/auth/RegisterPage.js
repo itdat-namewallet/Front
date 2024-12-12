@@ -35,64 +35,58 @@ export default function RegisterPage() {
                     error = "아이디를 입력해 주세요";
                 } else {
                     try {
-                        const available = await checkAvailability("userId", value);
-                        console.log(`아이디 ${value} 사용 가능 여부: `, available);
-                        if (!available) {
-                            error = "이미 사용 중인 아이디입니다.";
-                        }
+                        const isAvailable = await checkAvailability("userId", value);
+                        console.log(`아이디 ${value} 사용 가능 여부: ${isAvailable}`);
+                        if (!isAvailable) error = "이미 사용 중인 아이디입니다.";
                     } catch (err) {
                         console.error("아이디 확인 중 오류:", err);
                         error = "아이디 확인 중 오류가 발생했습니다.";
                     }
                 }
                 break;
+    
             case "userEmail":
                 if (!value || !/\S+@\S+\.\S+/.test(value)) {
                     error = "올바른 이메일 주소를 입력해 주세요";
                 } else {
                     try {
-                        const available = await checkAvailability("userEmail", value);
-                        console.log(`이메일 ${value} 사용 가능 여부: `, available);
-                        if (!available) {
-                            error = "이미 사용 중인 이메일입니다.";
-                        }
+                        const isAvailable = await checkAvailability("userEmail", value);
+                        console.log(`이메일 ${value} 사용 가능 여부: ${isAvailable}`);
+                        if (!isAvailable) error = "이미 사용 중인 이메일입니다.";
                     } catch (err) {
                         console.error("이메일 확인 중 오류:", err);
                         error = "이메일 확인 중 오류가 발생했습니다.";
                     }
                 }
                 break;
+    
             case "password":
-                if (!value || value.length < 6) {
-                    error = "비밀번호는 6자리 이상이어야 합니다.";
-                }
+                if (!value || value.length < 6) error = "비밀번호는 6자리 이상이어야 합니다.";
                 break;
+    
             case "confirmPassword":
-                if (value !== formData.password) {
-                    error = "비밀번호가 일치하지 않습니다.";
-                }
+                if (value !== formData.password) error = "비밀번호가 일치하지 않습니다.";
                 break;
+    
             case "userName":
-                if (!value) {
-                    error = "이름을 입력해 주세요";
-                }
+                if (!value) error = "이름을 입력해 주세요";
                 break;
+    
             case "userPhone":
-                if (!value || !/^\d{11}$/.test(value)) {
-                    error = "올바른 전화번호를 입력해 주세요.";
-                }
+                if (!value || !/^\d{11}$/.test(value)) error = "올바른 전화번호를 입력해 주세요.";
                 break;
+    
             case "userBirth":
-                if (!value) {
-                    error = "생년월일을 입력해 주세요";
-                }
+                if (!value) error = "생년월일을 입력해 주세요";
                 break;
+    
             default:
                 break;
         }
-
+    
         setErrors((prev) => ({ ...prev, [name]: error }));
     };
+    
 
     const handleChange = async (e) => {
         const { name, value } = e.target;
