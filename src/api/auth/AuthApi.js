@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "https://www.namewallet.store",
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     headers: {
         "Content-Type": "application/json"
-    }
+    },
+    withCredentials: false,
 });
 
 // 회원가입 API 호출
@@ -17,12 +18,16 @@ export const registerUser = async (userData) => {
 export const checkAvailability = async (type, value) => {
     try {
         const response = await axiosInstance.get(`/api/auth/check-availability`, {
-            params: { type, value }
+            params: { type, value },
         });
+        console.log("API 응답 데이터:", response.data);
         return response.data.available;
     } catch (error) {
-        console.error(`API 호출 오류:`, error.response?.data || error.message);
+        console.error("API 요청 오류:", error);
         return false;
     }
 };
+
+
+
 
