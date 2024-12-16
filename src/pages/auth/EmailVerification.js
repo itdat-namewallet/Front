@@ -24,6 +24,7 @@ export default function EmailVerification({ email, setEmail, isVerified, setIsVe
     }, [isCodeSent, timer]);
 
     const sendVerificationCode = async () => {
+        alert("인증 번호가 발송 중입니다. 잠시만 기다려 주세요.");
         try {
             await axios.post(`${BASE_URL}/api/auth/send-verification-code`, { email });
             setIsCodeSent(true);
