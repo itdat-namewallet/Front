@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 /*
     --------------------------------------------------------
     작성자 : 김동규
     작성일 : 2024-12-13
-    설명   : 주소 검색 관련 컴포넌트
+    설명   : 주소 검색 및 상세주소 입력 관련 컴포넌트
     ---------------------------------------------------------
 */
 
-export default function AddressSearch({ address, setAddress }) {
+export default function AddressSearch({ address, setAddress, detailedAddress, setDetailedAddress }) {
     const openAddressSearch = () => {
         new window.daum.Postcode({
             oncomplete: function (data) {
                 const fullAddress = data.address;
                 setAddress(fullAddress);
+                setDetailedAddress("");
             },
         }).open();
     };
@@ -32,6 +33,16 @@ export default function AddressSearch({ address, setAddress }) {
                     검색
                 </button>
             </div>
+            {address && (
+                <div className="detailed-address-container">
+                    <input
+                        type="text"
+                        value={detailedAddress}
+                        onChange={(e) => setDetailedAddress(e.target.value)}
+                        placeholder="상세 주소를 입력하세요"
+                    />
+                </div>
+            )}
         </div>
     );
 }

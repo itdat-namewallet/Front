@@ -30,11 +30,12 @@ export default function RegisterPage() {
         companyDept: "",
         companyFax: "",
         companyAddr: "",
+        companyAddrDetail: "",
         companyPhone: "",
     });
 
     const [errors, setErrors] = useState({});
-    const [isVerified, setIsVerified] = useState(false);
+    // const [isVerified, setIsVerified] = useState(false);     이메일 인증 관련 로직
 
     const validateField = (name, value) => {
         let error = "";
@@ -62,21 +63,17 @@ export default function RegisterPage() {
                     error = "올바른 전화번호를 입력해 주세요.";
                 }
                 break;
-            
-            case "userBirth":
-                if (!value) error = "생년월일을 입력해 주세요";
-                break;
-            
-            case "companyFax":
-                if (value && !/^\d{3}-\d{3}-\d{4}$/.test(value)) {
-                    error = "올바른 FAX번호를 입력해 주세요.";
-                }
-                break;
+
             case "companyPhone":
-                if (value && !/^\d{1,11}$/.test(value)) {
-                    error = "올바른 회사 전화번호를 입력해 주세요.";
+                if (!value || !/^\d{11}$/.test(value)) {
+                    error = "올바른 전화번호를 입력해 주세요.";
                 }
                 break;
+
+            case "userBirth":
+                if (!value) error = "생년월일을 입력해 주세요.";
+                break;
+
             default:
                 break;
         }
@@ -91,10 +88,12 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isVerified) {
-            alert("이메일 인증을 완료해 주세요.");
-            return;
-        }
+
+        // 이메일 인증 관련 로직
+        // if (!isVerified) {
+        //     // alert("이메일 인증을 완료해 주세요.");
+        //     return;
+        // }
 
         try {
             const response = await axios.post(`${BASE_URL}/api/auth/register`, formData, {
@@ -113,6 +112,8 @@ export default function RegisterPage() {
         <div className="register-page">
             <h1>회원가입</h1>
             <form onSubmit={handleSubmit}>
+
+                {/* 아이디 입력 */}
                 <FormInput
                     label="아이디"
                     name="userId"
@@ -121,6 +122,8 @@ export default function RegisterPage() {
                     error={errors.userId}
                     placeholder="아이디"
                 />
+
+                {/* 비밀번호 입력 */}
                 <FormInput
                     label="비밀번호"
                     name="password"
@@ -130,6 +133,8 @@ export default function RegisterPage() {
                     error={errors.password}
                     placeholder="비밀번호"
                 />
+
+                {/* 비밀번호 확인란 */}
                 <FormInput
                     label="비밀번호 확인"
                     name="confirmPassword"
@@ -139,6 +144,8 @@ export default function RegisterPage() {
                     error={errors.confirmPassword}
                     placeholder="비밀번호 확인"
                 />
+
+                {/* 이름 입력 */}
                 <FormInput
                     label="이름"
                     name="userName"
@@ -147,12 +154,50 @@ export default function RegisterPage() {
                     error={errors.userName}
                     placeholder="이름"
                 />
-                <EmailVerification
+
+                {/* 이메일 입력 */}
+                <FormInput
+                    label="이메일"
+                    name="userEmail"
+                    type="email"
+                    value={formData.userEmail}
+                    onChange={handleChange}
+                    error={errors.userEmail}
+                    placeholder="이메일"
+                />
+
+                {/* 이메일 인증 서비스 추후 다시 개발 */}
+                {/* <EmailVerification
                     email={formData.userEmail}
                     setEmail={(value) => setFormData((prev) => ({ ...prev, userEmail: value }))}
                     isVerified={isVerified}
                     setIsVerified={setIsVerified}
+                /> */}
+
+                {/* 유저 타입 드롭다운 */}
+                <div className="form-group">
+                    <label>유저 타입</label>
+                    <select
+                        name="userType"
+                        value={formData.userType}
+                        onChange={handleChange}
+                    >
+                        <option value="PERSONAL">개인</option>
+                        <option value="BUSINESS">비즈니스</option>
+                    </select>
+                </div>
+
+                {/* 생년월일 입력 */}
+                <FormInput
+                    label="생년월일"
+                    name="userBirth"
+                    type="date"
+                    value={formData.userBirth}
+                    onChange={handleChange}
+                    error={errors.userBirth}
                 />
+
+                {/* 전화번호 */}
                 <FormInput
                     label="전화번호"
                     name="userPhone"
@@ -161,14 +206,28 @@ export default function RegisterPage() {
                     error={errors.userPhone}
                     placeholder="전화번호"
                 />
+
+                {/* 직급 */}
                 <FormInput
-                    label="팩스 번호"
-                    name="companyFax"
-                    value={formData.companyFax}
+                    label="직급"
+                    name="companyRank"
+                    value={formData.companyRank}
                     onChange={handleChange}
-                    error={errors.companyFax}
-                    placeholder="123-456-7890"
+                    error={errors.companyRank}
+                    placeholder="직급"
                 />
+
+                {/* 부서명 */}
+                <FormInput
+                    label="부서명"
+                    name="companyDept"
+                    value={formData.companyDept}
+                    onChange={handleChange}
+                    error={errors.companyDept}
+                    placeholder="부서명"
+                />
+
+                {/* 회사 전화번호 */}
                 <FormInput
                     label="회사 전화번호"
                     name="companyPhone"
@@ -177,9 +236,25 @@ export default function RegisterPage() {
                     error={errors.companyPhone}
                     placeholder="회사 전화번호"
                 />
+
+                {/* fax */}
+                <FormInput
+                    label="fax 번호"
+                    name="companyFax"
+                    value={formData.companyFax}
+                    onChange={handleChange}
+                    error={errors.companyFax}
+                    placeholder="fax"
+                />
+
+                {/* 주소 입력 */}
                 <AddressSearch
                     address={formData.companyAddr}
                     setAddress={(value) => setFormData((prev) => ({ ...prev, companyAddr: value }))}
+                    detailedAddress={formData.companyAddrDetail}
+                    setDetailedAddress={(value) =>
+                        setFormData((prev) => ({ ...prev, companyAddrDetail: value }))
+                    }
                 />
                 <button type="submit">회원가입</button>
             </form>
