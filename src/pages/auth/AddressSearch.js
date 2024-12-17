@@ -8,7 +8,7 @@ import React, { useState } from "react";
     ---------------------------------------------------------
 */
 
-export default function AddressSearch({ address, setAddress, detailedAddress, setDetailedAddress }) {
+export default function AddressSearch({ address, setAddress, detailedAddress, setDetailedAddress , company, setCompany}) {
     const openAddressSearch = () => {
         new window.daum.Postcode({
             oncomplete: function (data) {
@@ -21,6 +21,18 @@ export default function AddressSearch({ address, setAddress, detailedAddress, se
 
     return (
         <div>
+            {/* 회사 이름 입력 */}
+            <label>회사 이름</label>
+            <div className="company-name-container">
+                <input
+                    type="text"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="회사 이름을 입력하세요"
+                />
+            </div>
+
+            {/* 회사 주소 입력 */}
             <label>회사 주소</label>
             <div className="address-container">
                 <input
@@ -33,6 +45,8 @@ export default function AddressSearch({ address, setAddress, detailedAddress, se
                     검색
                 </button>
             </div>
+
+            {/* 상세 주소 입력 */}
             {address && (
                 <div className="detailed-address-container">
                     <input
