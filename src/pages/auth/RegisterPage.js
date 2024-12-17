@@ -65,8 +65,8 @@ export default function RegisterPage() {
                 break;
 
             case "companyPhone":
-                if (!value || !/^\d{11}$/.test(value)) {
-                    error = "올바른 전화번호를 입력해 주세요.";
+                if (!value || !/^\d{10,11}$/.test(value)) {
+                    error = "올바른 전화번호를 입력해 주세요. 10~11자리 숫자만 입력 가능합니다.";
                 }
                 break;
 
@@ -100,8 +100,10 @@ export default function RegisterPage() {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             });
+            // console.log("최종 전송 데이터:", formData);
             alert("회원가입 성공!");
-            console.log(response.data);
+            navigator("/login");
+            // console.log(response.data);
         } catch (error) {
             alert("회원가입 실패!");
             console.error(error.response?.data?.message || error.message);
@@ -255,6 +257,8 @@ export default function RegisterPage() {
                     setDetailedAddress={(value) =>
                         setFormData((prev) => ({ ...prev, companyAddrDetail: value }))
                     }
+                    company={formData.company}
+                    setCompany={(value) => setFormData((prev) => ({ ...prev, company: value }))}
                 />
                 <button type="submit">회원가입</button>
             </form>
