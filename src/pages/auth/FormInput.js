@@ -8,7 +8,7 @@ import React from "react";
     ---------------------------------------------------------
 */
 
-export default function FormInput({ label, name, type = "text", value, onChange, error, placeholder }) {
+export default function FormInput({ label, name, type = "text", value, onChange, error, placeholder, onBlur }) {
     return (
         <div>
             <label>{label}</label>
@@ -17,6 +17,7 @@ export default function FormInput({ label, name, type = "text", value, onChange,
                 name={name}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 className={error ? "register-error" : ""}
                 placeholder={placeholder}
             />
