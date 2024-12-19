@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../assets/css/auth/registerPage.css";
 import EmailVerification from "./EmailVerification";
@@ -34,6 +35,7 @@ export default function RegisterPage() {
         companyPhone: "",
     });
 
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     // const [isVerified, setIsVerified] = useState(false);     이메일 인증 관련 로직
 
@@ -84,10 +86,14 @@ export default function RegisterPage() {
         try {
             const response = await axios.get(`${BASE_URL}/api/auth/check-availability`, {
                 params: { type, value },
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
             return response.data.available;
         } catch (error) {
             console.error("중복검사 API 호출 오류:", error);
+            console.log(`${BASE_URL}`);
             return false;
         }
     };
@@ -163,7 +169,7 @@ export default function RegisterPage() {
             withCredentials: true,
         });
         alert("회원가입 성공!");
-        navigator("/login");
+        navigate("/login");
     } catch (error) {
         alert("회원가입 실패!");
         console.error(error.response?.data?.message || error.message);
