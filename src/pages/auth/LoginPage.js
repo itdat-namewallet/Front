@@ -10,8 +10,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    // 일반 로그인 처리
     const handleLogin = async () => {
-        console.log("로그인 시도: 이메일 =", email, "비밀번호 =", password);
         try {
             const response = await axios.post(`${BASE_URL}/api/auth/login`, { email, password });
             const { token } = response.data;
@@ -22,12 +22,22 @@ export default function LoginPage() {
         }
     };
 
-    const handleSocialLogin = (provider) => {
-        const redirectUri = `${window.location.origin}/oauth2/${provider}`;
-        console.log("소셜 로그인 리다이렉트 URI:", redirectUri);
-        window.location.href = redirectUri;
+    // 소셜 로그인 처리
+    const handleSocialLogin = async (provider) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/oauth/${provider}`, {
+                providerId: prompt(`${provider} ID를 입력하세요.`),
+                email: email || prompt("소셜 계정 이메일을 입력하세요."),
+                name: prompt("소셜 계정 이름을 입력하세요."),
+            });
+            const { token } = response.data;
+            localStorage.setItem("token", token);
+            alert("소셜 로그인 성공!");
+            navigate("/");
+        } catch (error) {
+            alert(error.response?.data?.message || "소셜 로그인 실패");
+        }
     };
-    
 
     return (
         <div className="login-page">
