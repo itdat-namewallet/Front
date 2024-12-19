@@ -54,3 +54,23 @@ export const setAuthToken = (token) => {
         delete axiosInstance.defaults.headers.common["Authorization"];
     }
 };
+
+// 소셜 로그인 요청
+export const socialLogin = async (provider, data) => {
+    try {
+        const response = await axiosInstance.post(`/oauth/${provider}`, data);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
+// 소셜 로그인 연동 해제
+export const unlinkSocialLogin = async (provider, data) => {
+    try {
+        const response = await axiosInstance.delete(`/oauth/${provider}`, { data });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
