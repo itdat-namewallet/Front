@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import OAuthCallback from "./pages/auth/OAuthCallback";
 import LoginPage from "./pages/auth/LoginPage";
+import CanvasEditor from "./pages/editor/CanvasEditor";
 
 export default function App() {
     return (
@@ -14,6 +15,7 @@ export default function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/callback" element={<OAuthCallback />} />
                 <Route path="/oauth2/:provider" element={<HomePage />} />
+                <Route path="/editor" element={<CanvasEditor/>}/>
             </Routes>
         </Router>
     );
