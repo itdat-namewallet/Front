@@ -173,6 +173,9 @@ const CanvasEditor = () => {
         {canvases.map((canvas) => (
           <div
             key={canvas.id}
+
+
+            
             onDrop={(e) => handleUpload(e, canvas.id)}
             onDragOver={(e) => e.preventDefault()}
             style={{
