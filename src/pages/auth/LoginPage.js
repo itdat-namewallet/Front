@@ -25,19 +25,33 @@ export default function LoginPage() {
     // 소셜 로그인 처리
     const handleSocialLogin = async (provider) => {
         try {
-            const response = await axios.post(`${BASE_URL}/oauth/${provider}`, {
-                providerId: prompt(`${provider} ID를 입력하세요.`),
-                email: email || prompt("소셜 계정 이메일을 입력하세요."),
-                name: prompt("소셜 계정 이름을 입력하세요."),
+            const { data } = await axios.post(`${BASE_URL}/api/oauth/${provider}`, {}, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
-            const { token } = response.data;
-            localStorage.setItem("token", token);
-            alert("소셜 로그인 성공!");
-            navigate("/");
+    
+            // 서버에서 이미 회원가입이 된 경우
+            if (!data.requiresRegistration) {
+                localStorage.setItem("token", data.token); // 로그인 완료
+                navigate("/"); // 홈으로 이동
+            } else {
+                // 회원가입이 필요한 경우 RegisterPage로 이동
+                navigate("/register", {
+                    state: {
+                        provider,                      // 소셜 제공자 (GOOGLE, KAKAO, NAVER)
+                        providerId: data.providerId,   // 소셜 로그인 고유 ID
+                        email: data.email,             // 소셜 이메일
+                    },
+                });
+            }
         } catch (error) {
+            console.error("소셜 로그인 요청 실패:", error.response?.data || error.message);
             alert(error.response?.data?.message || "소셜 로그인 실패");
         }
     };
+    
+    
     
 
     return (
