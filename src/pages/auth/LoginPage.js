@@ -25,17 +25,15 @@ export default function LoginPage() {
     // 소셜 로그인 처리
     const handleSocialLogin = async (provider) => {
         try {
-            const { data } = await axios.post(`${BASE_URL}/oauth/${provider}`);
-            if (data.requiresRegistration) {
-                // 소셜 회원가입 필요 시 회원가입 페이지로 이동
-                navigate(`/social-register`, {
-                    state: { provider, providerId: data.providerId, email: data.email },
-                });
-            } else {
-                // 로그인 완료 시
-                localStorage.setItem("token", data.token);
-                navigate("/");
-            }
+            const response = await axios.post(`${BASE_URL}/oauth/${provider}`, {
+                providerId: prompt(`${provider} ID를 입력하세요.`),
+                email: email || prompt("소셜 계정 이메일을 입력하세요."),
+                name: prompt("소셜 계정 이름을 입력하세요."),
+            });
+            const { token } = response.data;
+            localStorage.setItem("token", token);
+            alert("소셜 로그인 성공!");
+            navigate("/");
         } catch (error) {
             alert(error.response?.data?.message || "소셜 로그인 실패");
         }
