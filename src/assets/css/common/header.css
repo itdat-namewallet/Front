@@ -1,7 +1,9 @@
 .main-header {
     display: flex;
     align-items: center;
-    width: 100%;
+    max-width: 100%;
+    padding-left: 3%;
+    padding-right: 3%;
     
 }
 
@@ -39,7 +41,15 @@
 .main-header li:hover .main-header-icon{
     opacity: 0.1; /* 반투명 설정 */
     transform: translate(-50%, -50%) scale(1.1); /* 살짝 확대 효과 추가 */
-   
+}
+
+.main-header-nav-link {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: black;
+}
+
+.main-header-nav-link:visited {
+    color: black;
 }
 
 
