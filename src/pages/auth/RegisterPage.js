@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../assets/css/auth/registerPage.css";
 import EmailVerification from "./EmailVerification";
@@ -17,6 +17,13 @@ import FormInput from "./FormInput";
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function RegisterPage() {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // 소셜 회원가입 데이터 (state에서 가져오기)
+    const socialData = location.state || {};
+
     const [formData, setFormData] = useState({
         userId: "",
         password: "",
@@ -35,9 +42,23 @@ export default function RegisterPage() {
         companyPhone: "",
     });
 
-    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const isSocialRegister = Boolean(socialData.provider);
     // const [isVerified, setIsVerified] = useState(false);     이메일 인증 관련 로직
+
+    useEffect(() => {
+        if (isSocialRegister) {
+            // 소셜 회원가입일 경우 기본 데이터 설정
+            const defaultPassword = `social_${Date.now()}`;
+            setFormData((prev) => ({
+                ...prev,
+                userId: `${socialData.provider}_${socialData.providerId}`, // 소셜 고유 ID
+                userEmail: socialData.email || "",
+                password: defaultPassword, // 기본 비밀번호 설정
+                confirmPassword: defaultPassword, // 비밀번호 확인도 동일하게 설정
+            }));
+        }
+    }, [socialData]);
 
     const validateField = (name, value) => {
         let error = "";
@@ -123,97 +144,92 @@ export default function RegisterPage() {
     };
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // 이메일 인증 관련 로직
-        // if (!isVerified) {
-        //     // alert("이메일 인증을 완료해 주세요.");
-        //     return;
-        // }
-
-    // 클라이언트 측에서 모든 필수 필드가 입력되었는지 확인
-    const requiredFields = ["userId", "password", "confirmPassword", "userName", "userEmail", "userBirth", "userPhone"];
-    const missingFields = requiredFields.filter((field) => !formData[field]);
-
-    // 필수 입력값이 누락된 경우 에러 메시지 표시 및 요청 중단
-    if (missingFields.length > 0) {
-        const updatedErrors = {};
-        missingFields.forEach((field) => {
-            updatedErrors[field] = "이 필드는 필수 입력 항목입니다.";
-        });
-        setErrors((prev) => ({ ...prev, ...updatedErrors }));
-        alert("필수 입력 항목을 모두 입력해 주세요.");
-        return;
-    }
-
-    // 비밀번호 확인 일치 여부 검증
-    if (formData.password !== formData.confirmPassword) {
-        setErrors((prev) => ({
-            ...prev,
-            confirmPassword: "비밀번호가 일치하지 않습니다.",
-        }));
-        alert("비밀번호가 일치하지 않습니다.");
-        return;
-    }
-
-    // 이메일 형식 및 기타 유효성 확인
-    if (errors.userEmail || errors.userPhone || errors.userId) {
-        alert("입력값에 오류가 있습니다. 올바르게 입력해 주세요.");
-        return;
-    }
-
-    // 서버로 회원가입 요청 전송
-    try {
-        const response = await axios.post(`${BASE_URL}/api/auth/register`, formData, {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-        });
-        alert("회원가입 성공!");
-        navigate("/login");
-    } catch (error) {
-        alert("회원가입 실패!");
-        console.error(error.response?.data?.message || error.message);
-    }
-};
+        e.preventDefault();
+    
+        // 소셜 회원가입 시 비활성화된 필드 정의
+        const socialExemptFields = ["password", "confirmPassword", "userId", "userEmail"];
+    
+        // 필수 필드 검사 (소셜 회원가입 시 비활성화된 필드 제외)
+        const requiredFields = ["userId", "password", "confirmPassword", "userName", "userEmail", "userBirth", "userPhone"];
+        const missingFields = requiredFields.filter(
+            (field) => !formData[field] && !(isSocialRegister && socialExemptFields.includes(field))
+        );
+    
+        // 필수 입력값이 누락된 경우 에러 메시지 표시 및 요청 중단
+        if (missingFields.length > 0) {
+            const updatedErrors = {};
+            missingFields.forEach((field) => {
+                updatedErrors[field] = "이 필드는 필수 입력 항목입니다.";
+            });
+            setErrors((prev) => ({ ...prev, ...updatedErrors }));
+            alert("필수 입력 항목을 모두 입력해 주세요.");
+            return;
+        }
+    
+        // 비밀번호 확인 일치 여부 검증 (소셜 회원가입이 아닌 경우에만)
+        if (!isSocialRegister && formData.password !== formData.confirmPassword) {
+            setErrors((prev) => ({
+                ...prev,
+                confirmPassword: "비밀번호가 일치하지 않습니다.",
+            }));
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+    
+        // 서버로 회원가입 요청 전송
+        try {
+            const endpoint = isSocialRegister ? "/api/auth/social/register" : "/api/auth/register";
+            const response = await axios.post(`${BASE_URL}${endpoint}`, formData, {
+                headers: { "Content-Type": "application/json" },
+            });
+            alert("회원가입 성공!");
+            localStorage.setItem("token", response.data.token);
+            navigate("/");
+        } catch (error) {
+            alert(error.response?.data?.message || "회원가입 실패");
+        }
+    };
+    
 
 
     return (
         <div className="register-page">
-            <h1>회원가입</h1>
+            <h1>{isSocialRegister ? `${socialData.provider} 회원가입` : "회원가입"}</h1>
             <form onSubmit={handleSubmit}>
-
-                {/* 아이디 입력 */}
+                {/* 아이디 입력 (소셜 회원가입일 경우 비활성화) */}
                 <FormInput
                     label="아이디"
                     name="userId"
                     value={formData.userId}
                     onChange={handleChange}
-                    onBlur={handleBlur}
                     error={errors.userId}
                     placeholder="아이디"
+                    disabled={isSocialRegister}
                 />
 
-                {/* 비밀번호 입력 */}
-                <FormInput
-                    label="비밀번호"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    error={errors.password}
-                    placeholder="비밀번호"
-                />
-
-                {/* 비밀번호 확인란 */}
-                <FormInput
-                    label="비밀번호 확인"
-                    name="confirmPassword"
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    error={errors.confirmPassword}
-                    placeholder="비밀번호 확인"
-                />
+                {/* 비밀번호 입력 (소셜 회원가입일 경우 비활성화) */}
+                {!isSocialRegister && (
+                    <>
+                        <FormInput
+                            label="비밀번호"
+                            name="password"
+                            type="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            error={errors.password}
+                            placeholder="비밀번호"
+                        />
+                        <FormInput
+                            label="비밀번호 확인"
+                            name="confirmPassword"
+                            type="password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            error={errors.confirmPassword}
+                            placeholder="비밀번호 확인"
+                        />
+                    </>
+                )}
 
                 {/* 이름 입력 */}
                 <FormInput
@@ -225,17 +241,18 @@ export default function RegisterPage() {
                     placeholder="이름"
                 />
 
-                {/* 이메일 입력 */}
-                <FormInput
-                    label="이메일"
-                    name="userEmail"
-                    type="email"
-                    value={formData.userEmail}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.userEmail}
-                    placeholder="이메일"
-                />
+                {/* 이메일 입력 (소셜 회원가입일 경우 비활성화) */}
+                {!isSocialRegister && (
+                    <FormInput
+                        label="이메일"
+                        name="userEmail"
+                        type="email"
+                        value={formData.userEmail}
+                        onChange={handleChange}
+                        error={errors.userEmail}
+                        placeholder="이메일"
+                    />
+                )}
 
                 {/* 이메일 인증 서비스 추후 다시 개발 */}
                 {/* <EmailVerification
