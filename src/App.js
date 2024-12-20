@@ -13,6 +13,7 @@ export default function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/callback" element={<OAuthCallback />} />
+                <Route path="/oauth2/:provider" element={<HomePage />} />
             </Routes>
         </Router>
     );
