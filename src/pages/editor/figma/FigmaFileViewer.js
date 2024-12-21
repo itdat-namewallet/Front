@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 const FigmaFileViewer = () => {
   const [figmaData, setFigmaData] = useState(null);
