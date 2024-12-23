@@ -48,17 +48,16 @@ export default function RegisterPage() {
 
     useEffect(() => {
         if (isSocialRegister) {
-            // 소셜 회원가입일 경우 기본 데이터 설정
-            const defaultPassword = `social_${Date.now()}`;
             setFormData((prev) => ({
                 ...prev,
-                userId: `${socialData.provider}_${socialData.providerId}`, // 소셜 고유 ID
+                userId: `${socialData.provider}_${socialData.providerId}`,
                 userEmail: socialData.email || "",
-                password: defaultPassword, // 기본 비밀번호 설정
-                confirmPassword: defaultPassword, // 비밀번호 확인도 동일하게 설정
+                password: `social_${Date.now()}`, // 기본 비밀번호 (암호화됨)
+                confirmPassword: `social_${Date.now()}`,
             }));
         }
     }, [socialData]);
+    
 
     const validateField = (name, value) => {
         let error = "";
