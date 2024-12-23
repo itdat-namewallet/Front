@@ -4,8 +4,8 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import OAuthCallback from "./pages/auth/OAuthCallback";
 import LoginPage from "./pages/auth/LoginPage";
-import CanvasEditor from "./pages/editor/CanvasEditor";
 import EditorPage from "./pages/editor/figma/EditorPage";
+
 
 export default function App() {
     return (
