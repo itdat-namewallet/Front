@@ -4,12 +4,22 @@
   "private": true,
   "proxy": "https://www.namewallet.store",
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^44.1.0",
+    "@ckeditor/ckeditor5-react": "^9.4.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "konva": "^9.3.16",
     "react": "^19.0.0",
+    "react-color": "^2.19.3",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.0.0",
+    "react-konva": "^19.0.1",
+    "react-resizable": "^3.0.5",
     "react-router-dom": "^7.0.2",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13"
   },
   "scripts": {

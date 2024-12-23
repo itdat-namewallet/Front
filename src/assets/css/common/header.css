@@ -6,10 +6,17 @@
     padding-right: 3%;
     
 }
+.itdat-and-green-dot{
+    display: flex;
+    position: relative;
 
-.main-header img{
-    width: 50px;
-    height: 50px;
+    img {
+        position: absolute;
+        left: 100%; 
+        top: 70%;      
+        width: 8px;
+
+    }
 }
 
 .main-header ul{
@@ -29,18 +36,23 @@
 }
 
 .main-header-icon {
-    position: absolute; /* 부모 요소 기준으로 위치 설정 */
-    top: 50%; /* 텍스트 중앙에 맞춤 */
-    left: 50%;
+    position: relative;
     transform: translate(-50%, -50%); /* 정확히 가운데 정렬 */
     opacity: 0; /* 초기 상태에서 보이지 않음 */
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* 투명도와 위치 변화를 천천히 */
     pointer-events: none; /* 호버 시 클릭 방지 */
+
+    img{
+        width: 5px;
+        position: absolute;
+    }
 }
 
 .main-header li:hover .main-header-icon{
-    opacity: 0.1; /* 반투명 설정 */
-    transform: translate(-50%, -50%) scale(1.1); /* 살짝 확대 효과 추가 */
+    opacity: 1; 
+    /* 반투명 설정 */
+    transform: translate(-50%, -50%) scale(1.1); 
+    /* 살짝 확대 효과 추가 */
 }
 
 .main-header-nav-link {
@@ -50,32 +62,4 @@
 
 .main-header-nav-link:visited {
     color: black;
-}
-
-
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-}
-
-.header h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.nav-link {
-    margin-left: 15px;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
 }

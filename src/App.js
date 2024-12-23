@@ -7,6 +7,8 @@ import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./components/common/Layout";
 import LoginAndRegisterPage from "./pages/main/LoginAndRegisterPage";
 import styled, { createGlobalStyle } from 'styled-components'
+import EditorPage from "./pages/editor/figma/EditorPage";
+// import QnaPage from "./pages/main/QnaPage";
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -28,10 +30,12 @@ export default function App() {
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/callback" element={<OAuthCallback />} />
+                        <Route path="/oauth2/:provider" element={<HomePage />} />
+                        <Route path="/editor" element={<EditorPage/>}/>
+                        {/* <Route path="/qna" element={<QnaPage/>}/> */}
                     </Route>
                 </Routes>
             </Router>
         </>
-        
     );
 }
