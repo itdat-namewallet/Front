@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../../assets/css/common/header.css';
 import logo from '../../assets/images/anchor.webp';
 import logoImg from "../../assets/images/logo-Img.png"
@@ -12,10 +12,13 @@ export default function Header() {
             <header className="main-header">
                 <h1>
                     <div className="itdat-and-green-dot">
-                       ITDAT
-                       <img src={logoGreenDot}/> 
+                        ITDAT
+                        <Link to={"/admin"}>
+                            <img src={logoGreenDot} />
+                        </Link>
+
                     </div>
-                    
+
                 </h1>
                 <ul>
                     <li>
