@@ -35,7 +35,6 @@ export default function LoginPage() {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            
             if (data.requiresRegistration) {
                 navigate("/register", { state: data });
             } else {
