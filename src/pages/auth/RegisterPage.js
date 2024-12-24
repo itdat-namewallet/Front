@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "../../assets/css/auth/registerPage.css";
 import EmailVerification from "./EmailVerification";
@@ -20,9 +20,14 @@ export default function RegisterPage() {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams] = useSearchParams();
 
     // 소셜 회원가입 데이터 (state에서 가져오기)
     const socialData = location.state || {};
+
+    const provider = searchParams.get("providerType");
+    const providerId = searchParams.get("providerId");
+    const email = searchParams.get("email");
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -40,23 +45,46 @@ export default function RegisterPage() {
         companyAddr: "",
         companyAddrDetail: "",
         companyPhone: "",
+        providerType: provider || "", // 소셜 타입 기본값 설정
+        providerId: providerId || "", // 소셜 providerId 기본값 설정
     });
 
     const [errors, setErrors] = useState({});
     const isSocialRegister = Boolean(socialData.provider);
     // const [isVerified, setIsVerified] = useState(false);     이메일 인증 관련 로직
 
+    // useEffect(() => {
+    //     if (isSocialRegister) {
+    //         setFormData((prev) => ({
+    //             ...prev,
+    //             userId: socialData.email || "",
+    //             userEmail: socialData.email || "",
+    //             password: "",
+    //             confirmPassword: "",
+    //             providerType: socialData.provider || "",
+    //         }));
+    //     }
+    // }, [socialData]);
+
     useEffect(() => {
-        if (isSocialRegister) {
+        if (provider && providerId && email) {
             setFormData((prev) => ({
                 ...prev,
-                userId: `${socialData.provider}_${socialData.providerId}`,
+                userId: email,
+                userEmail: email,
+                providerType: provider,
+                providerId: providerId,
+            }));
+        } else if (socialData.provider) {
+            setFormData((prev) => ({
+                ...prev,
+                userId: socialData.email || "",
                 userEmail: socialData.email || "",
-                password: `social_${Date.now()}`, // 기본 비밀번호 (암호화됨)
-                confirmPassword: `social_${Date.now()}`,
+                providerType: socialData.provider || "",
             }));
         }
-    }, [socialData]);
+    }, [provider, providerId, email, socialData.provider, socialData.email]);
+    
     
 
     const validateField = (name, value) => {
@@ -145,17 +173,27 @@ export default function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        // 소셜 회원가입 시 비활성화된 필드 정의
-        const socialExemptFields = ["password", "confirmPassword", "userId", "userEmail"];
-    
-        // 필수 필드 검사 (소셜 회원가입 시 비활성화된 필드 제외)
-        const requiredFields = ["userId", "password", "confirmPassword", "userName", "userEmail", "userBirth", "userPhone"];
+        const requiredFields = [
+            "userId",
+            "userName",
+            "userEmail",
+            "userBirth",
+            "userPhone",
+            "companyRank",
+            "companyDept",
+            "companyPhone",
+            "companyFax",
+            "companyAddr",
+            "providerType",
+        ];
+
         const missingFields = requiredFields.filter(
-            (field) => !formData[field] && !(isSocialRegister && socialExemptFields.includes(field))
+            (field) => !formData[field]
         );
     
         // 필수 입력값이 누락된 경우 에러 메시지 표시 및 요청 중단
         if (missingFields.length > 0) {
+            console.log("Missing Fields:", missingFields);
             const updatedErrors = {};
             missingFields.forEach((field) => {
                 updatedErrors[field] = "이 필드는 필수 입력 항목입니다.";
@@ -174,10 +212,12 @@ export default function RegisterPage() {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
+
+        console.log("Form Data:", formData);
     
         // 서버로 회원가입 요청 전송
         try {
-            const endpoint = isSocialRegister ? "/api/auth/social/register" : "/api/auth/register";
+            const endpoint = isSocialRegister ? "/api/oauth/social/register" : "/api/auth/register";
             const response = await axios.post(`${BASE_URL}${endpoint}`, formData, {
                 headers: { "Content-Type": "application/json" },
             });
@@ -193,7 +233,7 @@ export default function RegisterPage() {
 
     return (
         <div className="register-page">
-            <h1>{isSocialRegister ? `${socialData.provider} 회원가입` : "회원가입"}</h1>
+            <h1>{provider ? `${provider} 회원가입` : "회원가입"}</h1>
             <form onSubmit={handleSubmit}>
                 {/* 아이디 입력 (소셜 회원가입일 경우 비활성화) */}
                 <FormInput
@@ -202,33 +242,31 @@ export default function RegisterPage() {
                     value={formData.userId}
                     onChange={handleChange}
                     error={errors.userId}
-                    placeholder="아이디"
-                    disabled={isSocialRegister}
+                    onBlur={handleBlur} // 중복 체크 실행
+                    placeholder="아이디를 입력하세요"
+                    disabled={false} // 수정 가능
                 />
 
                 {/* 비밀번호 입력 (소셜 회원가입일 경우 비활성화) */}
-                {!isSocialRegister && (
-                    <>
-                        <FormInput
-                            label="비밀번호"
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            error={errors.password}
-                            placeholder="비밀번호"
-                        />
-                        <FormInput
-                            label="비밀번호 확인"
-                            name="confirmPassword"
-                            type="password"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            error={errors.confirmPassword}
-                            placeholder="비밀번호 확인"
-                        />
-                    </>
-                )}
+                <FormInput
+                    label="비밀번호"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    error={errors.password}
+                    placeholder="비밀번호"
+                />
+                <FormInput
+                    label="비밀번호 확인"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    error={errors.confirmPassword}
+                    placeholder="비밀번호 확인"
+                />
+                
 
                 {/* 이름 입력 */}
                 <FormInput
@@ -241,17 +279,14 @@ export default function RegisterPage() {
                 />
 
                 {/* 이메일 입력 (소셜 회원가입일 경우 비활성화) */}
-                {!isSocialRegister && (
-                    <FormInput
-                        label="이메일"
-                        name="userEmail"
-                        type="email"
-                        value={formData.userEmail}
-                        onChange={handleChange}
-                        error={errors.userEmail}
-                        placeholder="이메일"
-                    />
-                )}
+                <FormInput
+                    label="이메일"
+                    name="userEmail"
+                    value={formData.userEmail}
+                    onChange={handleChange}
+                    error={errors.userEmail}
+                    disabled={isSocialRegister}
+                />
 
                 {/* 이메일 인증 서비스 추후 다시 개발 */}
                 {/* <EmailVerification
