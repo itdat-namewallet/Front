@@ -1,42 +1,73 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
+const NAVER_REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-export default function NaverLoginButton({ onSuccess, onFailure }) {
+export default function NaverLoginButton() {
+    const navigate = useNavigate();
+
     const handleNaverLogin = () => {
-        const popup = window.open(
-            `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + "/callback")}`,
-            "naverLoginPopup",
-            "width=500,height=600"
-        );
-    
-        const interval = setInterval(() => {
-            try {
-                if (!popup || popup.closed) {
-                    clearInterval(interval);
-                    console.error("팝업이 닫혔습니다");
-                    onFailure(new Error("팝업이 닫혔습니다"));
-                    return;
-                }
-    
-                const hash = popup.location.hash;
-                if (hash.includes("access_token")) {
-                    const params = new URLSearchParams(hash.substring(1));
-                    const accessToken = params.get("access_token");
-                    console.log("Naver Access Token:", accessToken);
-                    clearInterval(interval);
-                    popup.close();
-                    onSuccess(accessToken);
-                }
-            } catch (err) {
-                // Cross-origin 에러 무시
+        const state = Math.random().toString(36).substring(7);
+        const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+            NAVER_REDIRECT_URI
+        )}&state=${state}`;
+
+        window.location.href = naverAuthUrl; // 네이버 로그인 페이지로 리디렉션
+    };
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+        const state = urlParams.get("state");
+
+        if (code && state) {
+            handleNaverCallback(code, state);
+        }
+    }, []);
+
+    const handleNaverCallback = async (code, state) => {
+        console.log("Received code:", code);
+        console.log("Received state:", state);
+
+        try {
+            const response = await axios.get(
+                `${BASE_URL}/api/oauth/callback/naver?code=${code}&state=${state}`
+            );
+
+            const data = response.data;
+
+            if (data.requiresRegistration) {
+                console.log("Navigating to /register with state:", {
+                    provider: "NAVER",
+                    providerId: data.providerId,
+                    email: data.email,
+                    providerType: "NAVER",
+                });
+
+                // 회원가입 페이지로 이동
+                navigate("/register", {
+                    state: {
+                        provider: "NAVER",
+                        providerId: data.providerId,
+                        email: data.email,
+                        providerType: "NAVER",
+                    },
+                });
+            } else {
+                console.log("Login successful, redirecting to main page.");
+                localStorage.setItem("token", data.token);
+                navigate("/");
             }
-        }, 500);
+        } catch (error) {
+            console.error("Error during Naver callback handling:", error.response?.data || error.message);
+            alert("네이버 로그인 처리 중 문제가 발생했습니다.");
+        }
     };
 
     return (
-        <button className="social-button naver" onClick={handleNaverLogin}>
-            Naver 계정으로 로그인
-        </button>
+        <button onClick={handleNaverLogin}>네이버 계정으로 로그인</button>
     );
 }

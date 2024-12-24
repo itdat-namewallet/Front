@@ -1,23 +1,40 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-export default function GoogleLoginButton({ onSuccess, onFailure }) {
+export default function GoogleLoginButton() {
+    const navigate = useNavigate();
+
     const handleGoogleLogin = async (idToken) => {
+        // console.log("Google ID Token:", idToken);
+
         try {
-            // 백엔드로 ID Token 전달
-            const response = await axios.post("http://localhost:8082/api/oauth/google", null, {
-                headers: {
-                    Authorization: `Bearer ${idToken}`,
-                },
-            });
-            console.log("Google 로그인 성공:", response.data);
-            console.log("Google Credential (ID Token):", idToken);
-            onSuccess(response.data); // 부모 컴포넌트에 성공 결과 전달
+            const response = await axios.post(`${BASE_URL}/api/oauth/google`, { 
+                idToken,
+                providerType: "GOOGLE",
+        });
+            // console.log("서버 응답:", response.data);
+
+            if (response.data.requiresRegistration) {
+                // 신규 사용자 회원가입 페이지로 이동
+                navigate("/register", {
+                    state: {
+                        provider: "GOOGLE",
+                        providerId: response.data.providerId,
+                        email: response.data.email,
+                    },
+                });
+            } else {
+                // 기존 사용자 로그인 성공 처리
+                const token = response.data.token;
+                localStorage.setItem("token", token);
+                navigate("/"); // 로그인 성공 후 대시보드로 이동
+            }
         } catch (error) {
-            console.error("Google 로그인 실패:", error.response?.data || error.message);
-            onFailure(error.message);
+            console.error("로그인 실패:", error.response?.data || error.message);
         }
     };
 
@@ -31,10 +48,10 @@ export default function GoogleLoginButton({ onSuccess, onFailure }) {
             if (window.google) {
                 window.google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
-                    callback: async (response) => {
-                        console.log("Google Response:", response);
+                    callback: (response) => {
+                        // console.log("Google Response:", response);
                         if (response.credential) {
-                            await handleGoogleLogin(response.credential); // ID Token 처리
+                            handleGoogleLogin(response.credential);
                         } else {
                             console.error("Google 로그인 실패: credential 없음");
                         }

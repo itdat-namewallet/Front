@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/main/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import OAuthCallback from "./pages/auth/OAuthCallback";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./components/common/Layout";
 import LoginAndRegisterPage from "./pages/main/LoginAndRegisterPage";
@@ -13,6 +12,8 @@ import QnaPostBoard from "./components/qna/QnaPostBoard";
 import TextEditor from "./components/qna/TextEditor";
 import MyQnaPost from "./components/qna/MyQnaPost";
 import Admin from "./pages/main/Admin";
+import OAuthCallback from "./pages/auth/Backup/OAuthCallback";
+// import QnaPage from "./pages/main/QnaPage";
 
 const GlobalStyle = createGlobalStyle`
     body{
