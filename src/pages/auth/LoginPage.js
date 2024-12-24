@@ -12,19 +12,28 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // 일반 로그인 처리
     const handleLogin = async () => {
         try {
             const response = await axios.post(`${BASE_URL}/api/auth/login`, { email, password });
             const { token } = response.data;
-            localStorage.setItem("token", token);
-            console.log("일반 로그인 성공, 토큰 저장:", token);
-            navigate("/");
+    
+            if (token) {
+                console.log("로그인 성공, 토큰 저장:", token);
+                localStorage.setItem("token", token);
+                setIsLoggedIn(true); // 로그인 상태 즉시 업데이트
+                navigate("/");
+            } else {
+                alert("로그인 실패: 토큰 없음");
+            }
         } catch (error) {
-            alert(error.response?.data?.message || "로그인 실패");
+            console.error("로그인 실패:", error.response?.data || error.message);
+            alert("로그인 실패");
         }
     };
+    
 
     // 소셜 로그인 성공 처리
     const handleSocialLoginSuccess = async (provider, token) => {
