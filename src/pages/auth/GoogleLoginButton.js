@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function GoogleLoginButton() {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function GoogleLoginButton() {
         // console.log("Google ID Token:", idToken);
 
         try {
-            const response = await axios.post("http://localhost:8082/api/oauth/google", { 
+            const response = await axios.post(`${BASE_URL}/api/oauth/google`, { 
                 idToken,
                 providerType: "GOOGLE",
         });

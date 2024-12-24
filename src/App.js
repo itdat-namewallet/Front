@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/main/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import OAuthCallback from "./pages/auth/OAuthCallback";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./components/common/Layout";
 import LoginAndRegisterPage from "./pages/main/LoginAndRegisterPage";
 import styled, { createGlobalStyle } from 'styled-components'
 import EditorPage from "./pages/editor/figma/EditorPage";
+import OAuthCallback from "./pages/auth/Backup/OAuthCallback";
 // import QnaPage from "./pages/main/QnaPage";
 
 const GlobalStyle = createGlobalStyle`

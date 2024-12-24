@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const KAKAO_JAVASCRIPT_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function KakaoLoginButton() {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function KakaoLoginButton() {
 
                 try {
                     const response = await axios.post(
-                        "http://localhost:8082/api/oauth/kakao",
+                        `${BASE_URL}/api/oauth/kakao`,
                         {}, // Body는 필요 없음
                         {
                             headers: {
