@@ -30,7 +30,6 @@ export default function Header() {
                 });
 
                 console.log("사용자 정보:", response.data);
-
                 setIsLoggedIn(true);
                 setIsSocialUser(response.data.isSocialUser || false); // 소셜 로그인 여부 설정
             } catch (error) {
