@@ -5,7 +5,6 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./components/common/Layout";
 import LoginAndRegisterPage from "./pages/main/LoginAndRegisterPage";
-import styled, { createGlobalStyle } from 'styled-components'
 import EditorPage from "./pages/editor/figma/EditorPage";
 import QnaPage from "./pages/main/QnaPage";
 import QnaPostBoard from "./components/qna/QnaPostBoard";
@@ -14,6 +13,8 @@ import MyQnaPost from "./components/qna/MyQnaPost";
 import Admin from "./pages/main/Admin";
 import OAuthCallback from "./pages/auth/Backup/OAuthCallback";
 // import QnaPage from "./pages/main/QnaPage";
+import { createGlobalStyle } from "styled-components";
+import { AuthProvider } from "./context/AuthContext";
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -27,30 +28,26 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-
 export default function App() {
     return (
         <>
-            <GlobalStyle/>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Layout/>} >
-                        <Route index element={<HomePage/>}/>
-                        <Route path="/login-and-register" element={<LoginAndRegisterPage/>}/>
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/callback" element={<OAuthCallback />} />
-                        <Route path="/oauth2/:provider" element={<HomePage />} />
-                        <Route path="/editor" element={<EditorPage/>}/>
-                        <Route path="admin" element={<Admin/>}/>
-                        <Route path="/qna" element={<QnaPage/>}>
-                            <Route index element={<QnaPostBoard/>}/>
-                            <Route path="write" element={<TextEditor/>}/>
-                            <Route path="my-qna-post" element={<MyQnaPost/>}/>
+            <GlobalStyle />
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                            <Route index element={<HomePage />} />
+                            <Route path="login-and-register" element={<LoginAndRegisterPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/callback" element={<OAuthCallback />} />
+                            <Route path="/oauth2/:provider" element={<HomePage />} />
+                            <Route path="/editor" element={<EditorPage />} />
+                            {/* <Route path="/qna" element={<QnaPage/>}/> */}
                         </Route>
-                    </Route>
-                </Routes>
-            </Router>
+                    </Routes>
+                </Router>
+            </AuthProvider>
         </>
     );
 }
