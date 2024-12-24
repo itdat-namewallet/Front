@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
 const NAVER_REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function NaverLoginButton() {
     const navigate = useNavigate();
 
     const handleNaverLogin = () => {
-        const state = Math.random().toString(36).substring(7); // 고유 state 값 생성
+        const state = Math.random().toString(36).substring(7);
         const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(
             NAVER_REDIRECT_URI
         )}&state=${state}`;
@@ -33,7 +34,7 @@ export default function NaverLoginButton() {
 
         try {
             const response = await axios.get(
-                `http://localhost:8082/api/oauth/callback/naver?code=${code}&state=${state}`
+                `${BASE_URL}/api/oauth/callback/naver?code=${code}&state=${state}`
             );
 
             const data = response.data;
