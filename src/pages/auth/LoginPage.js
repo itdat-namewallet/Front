@@ -19,6 +19,7 @@ export default function LoginPage() {
             const response = await axios.post(`${BASE_URL}/api/auth/login`, { email, password });
             const { token } = response.data;
             localStorage.setItem("token", token);
+            console.log("일반 로그인 성공, 토큰 저장:", token);
             navigate("/");
         } catch (error) {
             alert(error.response?.data?.message || "로그인 실패");
@@ -39,6 +40,7 @@ export default function LoginPage() {
                 navigate("/register", { state: data });
             } else {
                 localStorage.setItem("token", data.token);
+                console.log("소셜 로그인 성공, 토큰 저장:", token);
                 navigate("/");
             }
         } catch (error) {
