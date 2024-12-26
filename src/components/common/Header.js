@@ -14,11 +14,34 @@ export default function Header() {
         const token = localStorage.getItem("jwtToken");
         console.log("localStorage에서 가져온 토큰:", token);
 
+<<<<<<< HEAD
         if (token) {
             setIsLoggedIn(true);
         } else {
             setIsLoggedIn(false);
         }
+=======
+                if (!token) {
+                    console.log("토큰 없음: 비로그인 상태");
+                    setIsLoggedIn(false);
+                    return;
+                }
+
+                const response = await axios.get(`${BASE_URL}/api/auth/user`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                console.log("사용자 정보:", response.data);
+                setIsLoggedIn(true);
+                setIsSocialUser(response.data.isSocialUser || false); // 소셜 로그인 여부 설정
+            } catch (error) {
+                console.error("사용자 정보 가져오기 실패:", error.response?.data || error.message);
+                setIsLoggedIn(false);
+            }
+        };
+
+        fetchUserInfo();
+>>>>>>> c953db7253487d31cf6dd5517e776158e2f7c64d
     }, []);
 
     useEffect(() => {
