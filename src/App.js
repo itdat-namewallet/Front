@@ -12,9 +12,10 @@ import TextEditor from "./components/qna/TextEditor";
 import MyQnaPost from "./components/qna/MyQnaPost";
 import Admin from "./pages/main/Admin";
 import OAuthCallback from "./pages/auth/Backup/OAuthCallback";
-// import QnaPage from "./pages/main/QnaPage";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./context/AuthContext";
+import DetailInfo from "./components/admin/DetailInfo";
+import BriefInfo from "./components/admin/BriefInfo";
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -43,7 +44,15 @@ export default function App() {
                             <Route path="/callback" element={<OAuthCallback />} />
                             <Route path="/oauth2/:provider" element={<HomePage />} />
                             <Route path="/editor" element={<EditorPage />} />
-                            {/* <Route path="/qna" element={<QnaPage/>}/> */}
+                            <Route path="/qna" element={<QnaPage />}>
+                                <Route index element={<QnaPostBoard />} />
+                                <Route path="write" element={<TextEditor />} />
+                                <Route path="my-qna-post" element={<MyQnaPost />} />
+                            </Route>
+                            <Route path="admin" element={<Admin/>}>
+                                <Route index element={<BriefInfo/>}/>
+                                <Route path="brief-info" element={<DetailInfo/>}/>
+                            </Route>
                         </Route>
                     </Routes>
                 </Router>

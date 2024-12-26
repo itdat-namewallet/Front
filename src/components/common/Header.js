@@ -52,7 +52,7 @@ export default function Header() {
             }
 
             localStorage.removeItem("token");
-            setIsLoggedIn(false); 
+            setIsLoggedIn(false);
             setIsSocialUser(false);
             navigate("/login-and-register");
         } catch (error) {
@@ -65,8 +65,11 @@ export default function Header() {
         <header className="main-header">
             <h1>
                 <div className="itdat-and-green-dot">
-                   ITDAT
-                   <img src={logoGreenDot} alt="Logo" />
+                    ITDAT
+                    <Link to="/admin">
+                        <img src={logoGreenDot} alt="Logo" />
+                    </Link>
+
                 </div>
             </h1>
             <ul>
