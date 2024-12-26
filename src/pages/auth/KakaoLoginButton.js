@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function KakaoLoginButton() {
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (!window.Kakao) {
@@ -71,8 +72,10 @@ export default function KakaoLoginButton() {
                     } else {
                         // 로그인 성공
                         const token = response.data.token;
-                        localStorage.setItem("token", token);
+                        localStorage.setItem("jwtToken", token);
+                        setIsLoggedIn(true);
                         navigate("/");
+                        window.location.reload();
                     }
                 } catch (error) {
                     console.error("카카오 로그인 실패:", error.response?.data || error.message);
