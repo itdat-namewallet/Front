@@ -217,7 +217,7 @@ export default function RegisterPage() {
         console.log("Form Data:", formData);
     
         // 서버로 회원가입 요청 전송
-        const payload = { ...formData };
+        const payload = { ...formData, role: "USER", };
         if (!isSocialRegister) {
             delete payload.providerType;
             delete payload.providerId;
