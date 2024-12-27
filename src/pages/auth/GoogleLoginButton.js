@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function GoogleLoginButton() {
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleGoogleLogin = async (idToken) => {
         // console.log("Google ID Token:", idToken);
@@ -30,8 +31,10 @@ export default function GoogleLoginButton() {
             } else {
                 // 기존 사용자 로그인 성공 처리
                 const token = response.data.token;
-                localStorage.setItem("token", token);
-                navigate("/"); // 로그인 성공 후 대시보드로 이동
+                localStorage.setItem("jwtToken", token);
+                setIsLoggedIn(true);
+                navigate("/");
+                window.location.reload();
             }
         } catch (error) {
             console.error("로그인 실패:", error.response?.data || error.message);

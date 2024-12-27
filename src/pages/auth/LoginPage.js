@@ -22,9 +22,10 @@ export default function LoginPage() {
     
             if (token) {
                 console.log("로그인 성공, 토큰 저장:", token);
-                localStorage.setItem("token", token);
-                setIsLoggedIn(true); // 로그인 상태 즉시 업데이트
+                localStorage.setItem("jwtToken", token);
+                setIsLoggedIn(true);
                 navigate("/");
+                window.location.reload();
             } else {
                 alert("로그인 실패: 토큰 없음");
             }
