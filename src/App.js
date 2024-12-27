@@ -16,6 +16,7 @@ import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./context/AuthContext";
 import DetailInfo from "./components/admin/DetailInfo";
 import BriefInfo from "./components/admin/BriefInfo";
+import ReportUser from "./components/admin/ReportUser";
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -52,6 +53,7 @@ export default function App() {
                             <Route path="admin" element={<Admin/>}>
                                 <Route index element={<BriefInfo/>}/>
                                 <Route path="brief-info" element={<DetailInfo/>}/>
+                                <Route path="report-user" element={<ReportUser/>}/> {/* 테스트 컴포넌트 */}
                             </Route>
                         </Route>
                     </Routes>

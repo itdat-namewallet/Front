@@ -40,14 +40,14 @@ const BriefInfo = () => {
 
     }, [])
 
-    // 검색어 변경 시 필터링
-    useEffect(() => {
-        const filtered = userList.filter((user) =>
-            user.reported_user_id.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredUsers(filtered);
-        setCurrentPage(1); // 검색 시 페이지를 첫 번째로 초기화
-    }, [searchTerm, userList]);
+    // // 검색어 변경 시 필터링
+    // useEffect(() => {
+    //     const filtered = userList.filter((user) =>
+    //         user.reported_user_id.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    //     setFilteredUsers(filtered);
+    //     setCurrentPage(1); // 검색 시 페이지를 첫 번째로 초기화
+    // }, [searchTerm, userList]);
 
     // 현재 페이지에 보여줄 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
