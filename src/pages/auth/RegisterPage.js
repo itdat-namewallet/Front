@@ -173,25 +173,26 @@ export default function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        const requiredFields = [
-            "userId",
-            "userName",
-            "userEmail",
-            "userBirth",
-            "userPhone",
-            "companyRank",
-            "companyDept",
-            "companyPhone",
-            "companyFax",
-            "companyAddr",
-            "providerType",
-        ];
-
-        const missingFields = requiredFields.filter(
-            (field) => !formData[field]
-        );
+        const requiredFields = isSocialRegister
+            ? [
+                "userId",
+                "userName",
+                "userEmail",
+                "userPhone",
+                "userBirth",
+              ]
+            : [
+                "userId",
+                "userName",
+                "userEmail",
+                "userPhone",
+                "userBirth",
+                "password",
+                "confirmPassword",
+              ];
     
-        // 필수 입력값이 누락된 경우 에러 메시지 표시 및 요청 중단
+        const missingFields = requiredFields.filter((field) => !formData[field]);
+    
         if (missingFields.length > 0) {
             console.log("Missing Fields:", missingFields);
             const updatedErrors = {};
@@ -203,7 +204,7 @@ export default function RegisterPage() {
             return;
         }
     
-        // 비밀번호 확인 일치 여부 검증 (소셜 회원가입이 아닌 경우에만)
+        // 비밀번호 확인 검증 (소셜 회원가입이 아닌 경우)
         if (!isSocialRegister && formData.password !== formData.confirmPassword) {
             setErrors((prev) => ({
                 ...prev,
@@ -212,13 +213,21 @@ export default function RegisterPage() {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
-
+    
         console.log("Form Data:", formData);
     
         // 서버로 회원가입 요청 전송
+        const payload = { ...formData };
+        if (!isSocialRegister) {
+            delete payload.providerType;
+            delete payload.providerId;
+        }
+
         try {
-            const endpoint = isSocialRegister ? "/api/oauth/social/register" : "/api/auth/register";
-            const response = await axios.post(`${BASE_URL}${endpoint}`, formData, {
+            const endpoint = isSocialRegister
+                ? "/api/oauth/social/register"
+                : "/api/auth/register";
+            const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
                 headers: { "Content-Type": "application/json" },
             });
             alert("회원가입 성공!");
