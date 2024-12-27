@@ -65,6 +65,8 @@ export default function NaverLoginButton() {
     };
 
     return (
-        <button onClick={handleNaverLogin}>네이버 계정으로 로그인</button>
+        <button className="social-button naver" onClick={handleNaverLogin}>
+            네이버 계정으로 로그인
+        </button>
     );
 }
