@@ -17,7 +17,7 @@ const ReportUser = () => {
 
     // 단순 테스트용
     const reportTest = async () => {
-        const response = await axios.post(`${BASE_URL}/admin/report-user`,
+        const response = await axios.post(`${BASE_URL}/admin/report-user-list`,
             { reportedUserId: "asd", description: "너 신고!", userId: "신고자", reportDateAt: new Date() }
         );
     }
