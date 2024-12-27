@@ -56,7 +56,9 @@ export default function Header() {
             <h1>
                 <div className="itdat-and-green-dot">
                     ITDAT
-                    <img src={logoGreenDot} alt="Logo" />
+                    <Link to="/admin">
+                        <img src={logoGreenDot} alt="Logo" />
+                    </Link>
                 </div>
             </h1>
             <ul>

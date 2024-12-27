@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import React from "react";
+
+import { Outlet } from "react-router-dom";
+
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Admin = () => {
-    const [editorData, setEditorData] = useState("");
+    
     return (
-        <>
-            <h1>관리자 페이지 구성 중..</h1>
-            
-        </>
-
-
-
+        <div>
+            <h1>관리자 페이지</h1>
+            <Outlet/>
+        </div>
     )
 }
 export default Admin;
