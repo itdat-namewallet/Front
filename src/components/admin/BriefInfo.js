@@ -26,7 +26,7 @@ const BriefInfo = () => {
             alert("신고된 유저 목록을 가져오고 있습니다.");
 
             try {
-                const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list-brief`);
+                const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
                 setUserList(response.data);
                 setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
                 console.log(response);
