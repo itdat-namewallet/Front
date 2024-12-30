@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const BriefInfo = () => {
+const ReportedUser = () => {
 
     const [userList, setUserList] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -29,7 +29,7 @@ const BriefInfo = () => {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
                 setUserList(response.data);
                 setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
-                console.log(response);
+                console.log(response.data);
 
             } catch (error) {
                 console.log(error.response.data);
@@ -74,22 +74,29 @@ const BriefInfo = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>User ID</th>
-                        <th>Cumulative Count</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Update Date</th>
-                        <th>Status</th>
+                        <th>제재 대상이 되는 유저의 ID</th>
+                        <th>누적 신고 횟수</th>
+                        <th>제재 시작일</th>
+                        <th>제재 종료일</th>
+                        <th>최근 제재 업데이트 일</th>
+                        <th>제재 상태</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentUsers.map((user, index) => (
                         <tr key={index}>
-                            <td>{user.reported_user_id}</td>
-                            <td>{user.cumulative_count}</td>
+                            <td>{user.user.userId}</td>
+                            <td>{user.cumulativeCount}</td>
+                            <td>{user.startDateAt}</td>
+                            <td>{user.endDateAt}</td>
+                            <td>{user.updateAt}</td>
+                            <td>{user.user.status}</td>
+                            
+                            
+                            {/* <td>{user.cumulative_count}</td>
                             <td>{user.start_date}</td>
                             <td>{user.end_date}</td>
-                            <td>{user.status}</td>
+                            <td>{user.status}</td> */}
                                 {/* BANNED, REPORTED */}
                         </tr>
                     ))}
@@ -113,4 +120,4 @@ const BriefInfo = () => {
         </>
     )
 }
-export default BriefInfo;
+export default ReportedUser;

@@ -8,7 +8,29 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+
+    // 로그인한 user의 관리자 여부 확인
+    useEffect(async () => {
+            const response = await axios.get(`${BASE_URL}/admin/users`);
+
+            // setIsAdmin(response.data.some((admin)=>{admin.userId === CurrentUserId}));
+                // 현재 유저의 정보를 어디서 가져와야 하는 지 고민 중..
+            
+            // response.data.forEach((admin) => {
+            //     if (admin.userId === CurrentUserId){
+            //         setIsAdmin(true);
+            //     } else {
+            //         setIsAdmin(false);
+            //     }
+            // });
+           
+            
+         
+        
+        
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
@@ -63,16 +85,38 @@ export default function Header() {
             </h1>
             <ul>
                 <li>
+                    {isAdmin? (
+                        <Link to="/admin" className="main-header-nav-link">관리자 전용</Link>
+                    ):(
+                        <></>
+                    )}
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
+                </li>
+                <li>
                     <Link to="/" className="main-header-nav-link">소개</Link>
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
                 <li>
                     <span>명함 제작</span>
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
                 <li>
                     <span>NFC 제품</span>
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
                 <li>
                     <Link to="/qna" className="main-header-nav-link">QnA</Link>
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
                 <li>
                     {isLoggedIn ? (
@@ -84,6 +128,9 @@ export default function Header() {
                             로그인
                         </Link>
                     )}
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
             </ul>
         </header>

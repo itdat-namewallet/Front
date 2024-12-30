@@ -31,6 +31,7 @@ const ReportUser = () => {
                 const response = await axios.get(`${BASE_URL}/admin/report-user-list`);
                 setReportUserList(response.data);
                 setFilteredList(response.data);
+                console.log(response.data);
             }catch(error){
                 console.log(error.response.data);
                 return alert(`${error.response.data}`);
@@ -118,7 +119,7 @@ const ReportUser = () => {
                 >
                     이전
                 </button>
-                {Array.from({length: totalPages}, (_, index) => {
+                {Array.from({length: totalPages}, (_, index) => (
                     
                     <button
                         key={index}
@@ -132,7 +133,7 @@ const ReportUser = () => {
                         {index+1}
                     </button>
                     
-                })}
+                ))}
                 <button
                     onClick={() => handlePageChange(currentPage + 1)} 
                     disabled={currentPage === totalPages}

@@ -32,7 +32,7 @@ const DetailInfo = () => {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list-detail`);
                 setUserList(response.data);
                 setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
-                console.log(response);
+                console.log(response.data);
 
             } catch (error) {
                 console.log(error.response.data);

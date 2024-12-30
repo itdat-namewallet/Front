@@ -15,7 +15,7 @@ import OAuthCallback from "./pages/auth/Backup/OAuthCallback";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./context/AuthContext";
 import DetailInfo from "./components/admin/DetailInfo";
-import BriefInfo from "./components/admin/BriefInfo";
+import ReportedUser from "./components/admin/ReportedUser";
 import ReportUser from "./components/admin/ReportUser";
 
 const GlobalStyle = createGlobalStyle`
@@ -51,8 +51,8 @@ export default function App() {
                                 <Route path="my-qna-post" element={<MyQnaPost />} />
                             </Route>
                             <Route path="admin" element={<Admin/>}>
-                                <Route index element={<BriefInfo/>}/>
-                                <Route path="reported-user" element={<DetailInfo/>}/>
+                                <Route index element={<ReportedUser/>}/>
+                                {/* <Route path="reported-user" element={<DetailInfo/>}/> */}
                                 <Route path="report-user" element={<ReportUser/>}/> {/* 테스트 컴포넌트 */}
                             </Route>
                         </Route>
