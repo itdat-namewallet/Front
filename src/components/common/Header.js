@@ -12,19 +12,17 @@ export default function Header() {
     const navigate = useNavigate();
 
     // 로그인한 user의 관리자 여부 확인
-    useEffect(async () => {
-            const response = await axios.get(`${BASE_URL}/admin/users`);
-
-            // setIsAdmin(response.data.some((admin)=>{admin.userId === CurrentUserId}));
-                // 현재 유저의 정보를 어디서 가져와야 하는 지 고민 중..
-            
-            // response.data.forEach((admin) => {
-            //     if (admin.userId === CurrentUserId){
-            //         setIsAdmin(true);
-            //     } else {
-            //         setIsAdmin(false);
-            //     }
-            // });
+    useEffect(() => {
+        const bringAdmin = async () => {
+            const token = localStorage.getItem("jwtToken");
+            const response = await axios.get(`${BASE_URL}/admin/users`,
+                {
+                    headers: { "Authorization": `Bearer ${token}` }
+                }
+            );
+            setIsAdmin(response.data);
+        }
+        bringAdmin();
            
             
          
@@ -40,13 +38,11 @@ export default function Header() {
         } else {
             setIsLoggedIn(false);
         }
-
     }, []);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
-
         if (token) {
             console.log("URL에서 추출한 토큰:", token);
             localStorage.setItem("jwtToken", token);
@@ -63,7 +59,6 @@ export default function Header() {
                     headers: { Authorization: `Bearer ${token}` },
                 });
             }
-
             localStorage.removeItem("jwtToken");
             setIsLoggedIn(false);
             navigate("/login-and-register");
@@ -120,9 +115,9 @@ export default function Header() {
                 </li>
                 <li>
                     {isLoggedIn ? (
-                        <button onClick={handleLogout} className="main-header-nav-link">
+                        <Link onClick={handleLogout} className="main-header-nav-link">
                             로그아웃
-                        </button>
+                        </Link>
                     ) : (
                         <Link to="/login-and-register" className="main-header-nav-link">
                             로그인

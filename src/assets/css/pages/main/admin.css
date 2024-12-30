@@ -1,0 +1,32 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    padding-left: 3%;
+    padding-right: 3%;
+
+    .admin-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        :first-child{
+            margin-right: 3px;
+        }
+        :last-child{
+            margin-left: 3px;
+        }
+
+        .left-text-header{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .right-text-header{
+            display: flex;
+            justify-content: flex-end;
+            align-items: end;
+        }
+    }
+    
+}

@@ -14,6 +14,8 @@ const ReportUser = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // 페이지당 항목 수
     const itemsPerPage = 10;
+    // 선택된 유저 정보를 담는 변수
+    const [selectedUserInfo, setSelectedUserInfo] = useState();
 
     // 단순 테스트용
     const reportTest = async () => {
@@ -44,13 +46,18 @@ const ReportUser = () => {
 
     // 클릭시 input 창의 검색어를 이용하여 특정 문자열을 포함한 객체를 배열로 담아내는 함수
     const handleSearch = () => {
-        const filtered = reportUserList.filter((one) =>
-            one.reportedUserId.toLowerCase().inCludes(searchTerm.toLowerCase())
-            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.
+        
+        const filtered = reportUserList.filter((one) =>{
+      
+            return one.reportedUserId.toLowerCase().includes(searchTerm.toLowerCase())
+        }
+            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.)
+            
         );
         setFilteredList(filtered);
         setCurrentPage(1); // 검색이 이뤄지면 리스트의 첫 페이지로 이동되도록 한다.
     };
+    console.log("필터링된 리스트가 담겼냐? ",filteredList);
 
     // 동적으로 페이지에 보여줄 데이터를 계산
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -71,6 +78,15 @@ const ReportUser = () => {
         setCurrentPage(pageNumber);
     };
 
+    const detailInfo = async (userId) => {
+        console.log("여기 유저 아이디가 담겼어? ",userId);
+        const response = await axios.get(`${BASE_URL}/admin/detail-info`,
+            {
+                params: {userId}
+            }
+        );
+        setSelectedUserInfo(response.data)
+    }
 
 
     return (
@@ -98,7 +114,7 @@ const ReportUser = () => {
                 <tbody>
                     {/* 리스트의 바디 */}
                     {currentUsers.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick={() => detailInfo(user.userId)}>
                             <td>{user.reportedUserId}</td>
                             <td>{user.description}</td>
                             <td>{user.userId}</td>
