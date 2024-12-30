@@ -26,7 +26,7 @@ const BriefInfo = () => {
             alert("신고된 유저 목록을 가져오고 있습니다.");
 
             try {
-                const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list-brief`);
+                const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
                 setUserList(response.data);
                 setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
                 console.log(response);
@@ -40,14 +40,14 @@ const BriefInfo = () => {
 
     }, [])
 
-    // 검색어 변경 시 필터링
-    useEffect(() => {
-        const filtered = userList.filter((user) =>
-            user.reported_user_id.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredUsers(filtered);
-        setCurrentPage(1); // 검색 시 페이지를 첫 번째로 초기화
-    }, [searchTerm, userList]);
+    // // 검색어 변경 시 필터링
+    // useEffect(() => {
+    //     const filtered = userList.filter((user) =>
+    //         user.reported_user_id.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    //     setFilteredUsers(filtered);
+    //     setCurrentPage(1); // 검색 시 페이지를 첫 번째로 초기화
+    // }, [searchTerm, userList]);
 
     // 현재 페이지에 보여줄 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
