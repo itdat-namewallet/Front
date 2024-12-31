@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const ReportUser = () => {
+    const navigate = useNavigate();
+
     // 신고된 신고 리스트를 담는 변수
     const [reportUserList, setReportUserList] = useState([]);
     // 필터링된 리스트
@@ -14,6 +17,8 @@ const ReportUser = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // 페이지당 항목 수
     const itemsPerPage = 10;
+    // 선택된 유저 정보를 담는 변수
+    const [selectedUserInfo, setSelectedUserInfo] = useState();
 
     // 단순 테스트용
     const reportTest = async () => {
@@ -31,6 +36,7 @@ const ReportUser = () => {
                 const response = await axios.get(`${BASE_URL}/admin/report-user-list`);
                 setReportUserList(response.data);
                 setFilteredList(response.data);
+                console.log(response.data);
             }catch(error){
                 console.log(error.response.data);
                 return alert(`${error.response.data}`);
@@ -43,9 +49,13 @@ const ReportUser = () => {
 
     // 클릭시 input 창의 검색어를 이용하여 특정 문자열을 포함한 객체를 배열로 담아내는 함수
     const handleSearch = () => {
-        const filtered = reportUserList.filter((one) =>
-            one.reportedUserId.toLowerCase().inCludes(searchTerm.toLowerCase())
-            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.
+        
+        const filtered = reportUserList.filter((one) =>{
+      
+            return one.reportedUserId.toLowerCase().includes(searchTerm.toLowerCase())
+        }
+            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.)
+            
         );
         setFilteredList(filtered);
         setCurrentPage(1); // 검색이 이뤄지면 리스트의 첫 페이지로 이동되도록 한다.
@@ -70,7 +80,16 @@ const ReportUser = () => {
         setCurrentPage(pageNumber);
     };
 
-
+    const detailInfo = async (reportedUserId) => {
+        const response = await axios.get(`${BASE_URL}/admin/detail-info`,
+            {
+                params: {reportedUserId}
+            }
+        );
+        setSelectedUserInfo(response.data)
+        
+        navigate("/admin/detail-info");
+    }
 
     return (
         <>
@@ -97,7 +116,7 @@ const ReportUser = () => {
                 <tbody>
                     {/* 리스트의 바디 */}
                     {currentUsers.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick={() => detailInfo(user.reportedUserId)}>
                             <td>{user.reportedUserId}</td>
                             <td>{user.description}</td>
                             <td>{user.userId}</td>
@@ -118,7 +137,7 @@ const ReportUser = () => {
                 >
                     이전
                 </button>
-                {Array.from({length: totalPages}, (_, index) => {
+                {Array.from({length: totalPages}, (_, index) => (
                     
                     <button
                         key={index}
@@ -132,7 +151,7 @@ const ReportUser = () => {
                         {index+1}
                     </button>
                     
-                })}
+                ))}
                 <button
                     onClick={() => handlePageChange(currentPage + 1)} 
                     disabled={currentPage === totalPages}
