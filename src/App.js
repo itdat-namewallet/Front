@@ -52,8 +52,8 @@ export default function App() {
                             </Route>
                             <Route path="admin" element={<Admin/>}>
                                 <Route index element={<ReportedUser/>}/>
-                                {/* <Route path="reported-user" element={<DetailInfo/>}/> */}
-                                <Route path="report-user" element={<ReportUser/>}/> {/* 테스트 컴포넌트 */}
+                                <Route path="detail-info" element={<DetailInfo/>}/>
+                                <Route path="report-user" element={<ReportUser/>}/>
                             </Route>
                         </Route>
                     </Routes>

@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const ReportUser = () => {
+    const navigate = useNavigate();
+
     // 신고된 신고 리스트를 담는 변수
     const [reportUserList, setReportUserList] = useState([]);
     // 필터링된 리스트
@@ -57,7 +60,6 @@ const ReportUser = () => {
         setFilteredList(filtered);
         setCurrentPage(1); // 검색이 이뤄지면 리스트의 첫 페이지로 이동되도록 한다.
     };
-    console.log("필터링된 리스트가 담겼냐? ",filteredList);
 
     // 동적으로 페이지에 보여줄 데이터를 계산
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -78,16 +80,16 @@ const ReportUser = () => {
         setCurrentPage(pageNumber);
     };
 
-    const detailInfo = async (userId) => {
-        console.log("여기 유저 아이디가 담겼어? ",userId);
+    const detailInfo = async (reportedUserId) => {
         const response = await axios.get(`${BASE_URL}/admin/detail-info`,
             {
-                params: {userId}
+                params: {reportedUserId}
             }
         );
         setSelectedUserInfo(response.data)
+        
+        navigate("/admin/detail-info");
     }
-
 
     return (
         <>
@@ -114,7 +116,7 @@ const ReportUser = () => {
                 <tbody>
                     {/* 리스트의 바디 */}
                     {currentUsers.map((user, index) => (
-                        <tr key={index} onClick={() => detailInfo(user.userId)}>
+                        <tr key={index} onClick={() => detailInfo(user.reportedUserId)}>
                             <td>{user.reportedUserId}</td>
                             <td>{user.description}</td>
                             <td>{user.userId}</td>
