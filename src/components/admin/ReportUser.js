@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import userInfoStore from "../../store";
+
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -17,8 +19,11 @@ const ReportUser = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // 페이지당 항목 수
     const itemsPerPage = 10;
+    // 선택된 유저 정보를 담는 전역 변수. 쥬스탄드
+    const{ userData, setUserData} = userInfoStore();
     // 선택된 유저 정보를 담는 변수
     const [selectedUserInfo, setSelectedUserInfo] = useState();
+    
 
     // 단순 테스트용
     const reportTest = async () => {
@@ -81,14 +86,18 @@ const ReportUser = () => {
     };
 
     const detailInfo = async (reportedUserId) => {
-        const response = await axios.get(`${BASE_URL}/admin/detail-info`,
+        try{
+            const response = await axios.get(`${BASE_URL}/admin/detail-info`,
             {
                 params: {reportedUserId}
             }
         );
-        setSelectedUserInfo(response.data)
-        
+        setSelectedUserInfo(response.data);
         navigate("/admin/detail-info");
+        }catch(error){
+            alert(error);
+        }
+        // navigate("/admin/detail-info");
     }
 
     return (
