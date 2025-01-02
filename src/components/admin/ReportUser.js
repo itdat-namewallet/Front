@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import userInfoStore from "../../store";
+import {userInfoStore} from "../../store";
 
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -59,8 +59,8 @@ const ReportUser = () => {
       
             return one.reportedUserId.toLowerCase().includes(searchTerm.toLowerCase())
         }
-            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.)
-            
+            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.
+            // includes(): 해당 문자열이 ()안의 문자를 포함하는지 여부를 true, false 가려준다.
         );
         setFilteredList(filtered);
         setCurrentPage(1); // 검색이 이뤄지면 리스트의 첫 페이지로 이동되도록 한다.
@@ -88,14 +88,15 @@ const ReportUser = () => {
     const detailInfo = async (reportedUserId) => {
         try{
             const response = await axios.get(`${BASE_URL}/admin/detail-info`,
-            {
-                params: {reportedUserId}
-            }
-        );
+                {
+                    params: {reportedUserId}
+                }
+            );
         setSelectedUserInfo(response.data);
+        setUserData(response.data);
         navigate("/admin/detail-info");
         }catch(error){
-            alert(error);
+            console.log(error);
         }
         // navigate("/admin/detail-info");
     }
@@ -147,7 +148,7 @@ const ReportUser = () => {
                     이전
                 </button>
                 {Array.from({length: totalPages}, (_, index) => (
-                    
+                    // _는 값이고 index는 값의 인덱스 번호이다. 값은 필요없고 인덱스 번호만 필요할 때 언더바(_)를 사용한다.
                     <button
                         key={index}
                         onClick={()=>handlePageChange(index+1)}

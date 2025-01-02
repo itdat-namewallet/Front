@@ -13,21 +13,30 @@ export default function Header() {
 
     // 로그인한 user의 관리자 여부 확인
     useEffect(() => {
+
         const bringAdmin = async () => {
             const token = localStorage.getItem("jwtToken");
-            const response = await axios.get(`${BASE_URL}/admin/users`,
-                {
-                    headers: { "Authorization": `Bearer ${token}` }
-                }
-            );
-            setIsAdmin(response.data);
+            if (!token) {
+                console.log("토큰이 비어있습니다.");
+                setIsAdmin(false);
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem("jwtToken");
+                const response = await axios.get(`${BASE_URL}/admin/users`,
+                    {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    }
+                );
+                setIsAdmin(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+
+
         }
         bringAdmin();
-           
-            
-         
-        
-        
     }, []);
 
     useEffect(() => {
@@ -80,9 +89,9 @@ export default function Header() {
             </h1>
             <ul>
                 <li>
-                    {isAdmin? (
+                    {isAdmin ? (
                         <Link to="/admin" className="main-header-nav-link">관리자 전용</Link>
-                    ):(
+                    ) : (
                         <></>
                     )}
                     <span className="main-header-icon">
