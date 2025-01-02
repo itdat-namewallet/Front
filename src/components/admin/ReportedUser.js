@@ -8,11 +8,14 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import userInfoStore from "../../store";
+import { useNavigate } from "react-router-dom";
 
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const ReportedUser = () => {
+    const navigate = useNavigate();
 
     const [userList, setUserList] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -20,10 +23,15 @@ const ReportedUser = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    // 선택된 유저 정보를 담는 전역 변수. 쥬스탄드
+    const{ userData, setUserData} = userInfoStore();
+    // 선택된 유저 정보를 담는 변수
+    const [selectedUserInfo, setSelectedUserInfo] = useState();
+
     useEffect(() => {
         const bringUserList = async () => {
             console.log("신고된 유저 목록을 가져오고 있습니다.");
-            alert("신고된 유저 목록을 가져오고 있습니다.");
+            // alert("신고된 유저 목록을 가져오고 있습니다.");
 
             try {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
@@ -53,6 +61,7 @@ const ReportedUser = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+    console.log(currentUsers[0].user.id);
 
     const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
@@ -60,6 +69,25 @@ const ReportedUser = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    const detailInfo = async (reportedUserId) => {
+        try{
+            const response = await axios.get(`${BASE_URL}/admin/detail-info`,
+            {
+                params: {reportedUserId}
+            }
+        );
+        console.log(response.data);
+        setSelectedUserInfo(response.data);
+        setUserData(response.data);
+        navigate("/admin/detail-info");
+        }catch(error){
+            console.log(error);
+            alert(error);
+        }
+        // navigate("/admin/detail-info");
+    }
+
 
     return (
         <>
@@ -84,7 +112,7 @@ const ReportedUser = () => {
                 </thead>
                 <tbody>
                     {currentUsers.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick={() => detailInfo(user.user.userId)}>
                             <td>{user.user.userId}</td>
                             <td>{user.cumulativeCount}</td>
                             <td>{user.startDateAt}</td>

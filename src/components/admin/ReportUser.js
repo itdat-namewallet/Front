@@ -93,6 +93,7 @@ const ReportUser = () => {
             }
         );
         setSelectedUserInfo(response.data);
+        setUserData(response.data);
         navigate("/admin/detail-info");
         }catch(error){
             alert(error);
