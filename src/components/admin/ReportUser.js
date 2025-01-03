@@ -94,7 +94,7 @@ const ReportUser = () => {
             );
         setSelectedUserInfo(response.data);
         setUserData(response.data);
-        navigate("/admin/detail-info");
+        navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
         }catch(error){
             console.log(error);
         }

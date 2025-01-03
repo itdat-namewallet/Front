@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../assets/css/common/header.css';
 import logoGreenDot from "../../assets/images/logo-green-dot.png";
+import { adminStore } from "../../store";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const {isAdmin, setIsAdmin, setLoginedUserId} = adminStore();
+    //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     // 로그인한 user의 관리자 여부 확인
@@ -29,19 +31,26 @@ export default function Header() {
                         headers: { "Authorization": `Bearer ${token}` }
                     }
                 );
-                setIsAdmin(response.data);
+                // console.log(response.data);
+                setLoginedUserId(response.data.userId)
+                if(response.data.role === "ADMIN"){
+                    // console.log("true");
+                    setIsAdmin(true);
+                }else{
+                    console.log("false");
+                    setIsAdmin(false);
+                }
             } catch (error) {
                 console.log(error);
             }
-
-
         }
         bringAdmin();
     }, []);
+    // console.log(isAdmin);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
-        console.log("localStorage에서 가져온 토큰:", token);
+        // console.log("localStorage에서 가져온 토큰:", token);
         if (token) {
             setIsLoggedIn(true);
         } else {

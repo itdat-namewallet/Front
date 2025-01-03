@@ -1,0 +1,26 @@
+/* .detail-info-table {
+    border-collapse: collapse;
+    margin: 20px;
+    width: 100%;
+
+    thead {
+        display: flex;
+        flex-direction: column;
+    }
+
+    tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    tr {
+        display: flex;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid black;
+        text-align: center;
+        width: 150px;
+    }
+} */

@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { qnaPostDetail } from "../../store";
+import { adminStore, qnaPostDetail } from "../../store";
+import { useNavigate } from "react-router-dom";
+import styles from "../../assets/css/qna/qnaPostBoard.module.css";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
 const QnaPostBoard = () => {
+    const navigate = useNavigate();
+
     // QnA 게시물의 List를 담는 변수
     const [qnaList, setQnaList] = useState([]);
     // 필터링된 리스트
@@ -16,6 +20,8 @@ const QnaPostBoard = () => {
     const itemsPerPage = 10;
     // 선택된 qna 게시글
     const {qnaPostData, setQnaPostData} = qnaPostDetail();
+    // 로그인한 유저의 어드민 권한 확인 전역 변수
+    const {isAdmin, loginedUserId} = adminStore();
 
     useEffect(() => {
         const bringList = async () => {
@@ -28,6 +34,7 @@ const QnaPostBoard = () => {
                     // 타입 확인하여 스트링이면 내용을 알러트로 띄움
                 }else if(Array.isArray(response.data)){
                     setQnaList(response.data);
+                    setFilteredList(response.data);
                     // 타입 확인하여 리스트면 상태 업데이트
                 }else {
                     console.error("알수 없는 타입의 데이터가 담겼습니다. ", response.data)
@@ -40,6 +47,7 @@ const QnaPostBoard = () => {
         }
         bringList();
     }, [])
+    // console.log(qnaList);
 
     // 동적으로 페이지에 보여줄 데이터를 계산
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -60,7 +68,17 @@ const QnaPostBoard = () => {
                 const response = await axios.get(`${BASE_URL}/qna/selected-qna-list`, 
                     {params: {selectedId}}
                 );
+                const saveToSessionStorage = (data) => {
+                    sessionStorage.setItem("qnaPostData", JSON.stringify(data));
+                };
+                saveToSessionStorage(response.data);
                 setQnaPostData(response.data);
+
+
+                // 비밀글은 작성자와 관리자만 볼 수 있도록
+                // response.data.isSecret이 true면 클릭이 안 되도록
+
+                navigate(`/qna/post-detail?postId=${selectedId}`);
             }catch(error){
                 console.log(error);
             }
@@ -74,7 +92,7 @@ const QnaPostBoard = () => {
 
     return (
         <>
-            <h1>게시판 조회 구성 중..</h1>
+            {/* <h1>게시판 조회 구성 중..</h1> */}
             <table>
                 <thead>
                     <tr>
@@ -89,19 +107,41 @@ const QnaPostBoard = () => {
                 <tbody>
                     {
                         currentQnaList.map(
-                            (user, index)=>(
-                                <tr key={index} onClick={()=>openQnaPost(user.id)}>
-                                    <td>{user.title}</td>
-                                    <td>{user.contents}</td>
-                                    <td>{user.userId}</td>
-                                    <td>{user.updateAt}</td>
-                                </tr>
-                            )
+                            (post, index)=> {
+                                // 게시글이 비밀글인지 확인
+                                const isAccessible = isAdmin || post.userId === loginedUserId || !post.isSecret;
+                                    // 어드민이거나 작성자이거나 비밀글이 아니면 접근 가능
+
+                                return (
+                                    <tr 
+                                        key={index}
+                                        onClick={()=>isAccessible && openQnaPost(post.id)}
+                                        className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
+                                        // 어드민 여부에 따라 커서와 게시물의 흐림 정도를 다르게 css
+                                    >
+                                        <td>{post.title}</td>
+                                        <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td>
+                                        <td>{post.user.userId}</td>
+                                        <td>{post.createDateAt}</td>
+                                    </tr>
+                                )
+                            }
+                                
                         )
                     }
                 </tbody>
             </table>
             <div>
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)} 
+                    disabled={currentPage === 1}
+                    style={{
+                        margin: "0 5px",
+                        padding: "5px 10px",
+                    }}
+                >
+                    이전
+                </button>
                 {
                     Array.from({length: totalPages}, (_, index) => (
                         <button
@@ -118,6 +158,16 @@ const QnaPostBoard = () => {
                     )
                     )
                 }
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)} 
+                    disabled={currentPage === totalPages}
+                    style={{
+                        margin: "0 5px",
+                        padding: "5px 10px",
+                    }}
+                >
+                    다음
+                </button>
             </div>
         </>
     )
