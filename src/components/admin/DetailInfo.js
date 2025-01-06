@@ -8,59 +8,91 @@
 
 import axios from "axios";
 import userInfoStore from "../../store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
+import "../../assets/css/pages/admin/detailInfo.css"
+import { useLocation } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const DetailInfo = () => {
+    // params에서 넘겨온 값 받아내기
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const reportedUserId = queryParams.get("reportedUserId");
+    console.log(reportedUserId);
+
+    // 선택된 유저 데이터가 담긴 전역 변수. 쥬스탄드
     const { userData, setUserData } = userInfoStore();
+    // 관리자가 수정할 수 있는 유저의 제재 관련 상태들
     const [status, setStatus] = useState("");
     const [startDateAt, setStartDateAt] = useState("");
-    const [endDateAt, setEndDateAt] = useState("");
-    // const [updateAt, setUpdateAt] = useState("");
+    const [endDateAt, setEndDateAt] = useState("");  // const [updateAt, setUpdateAt] = useState(""); // 백에서 처리..
+    
 
+    // 수정 모달 오픈 상태 변수 및 함수들
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    console.log(userData);
+    useEffect(()=>{
+        const fetchSelectedUserDetail = async () => {
+            try{
+                const response = await axios.get(`${BASE_URL}/admin/detail-info`,
+                    {
+                        params: { reportedUserId }
+                    }
+                );
+                setUserData(response.data);
+            }catch (error) {
+                console.log("데이터를 가져오는 중에 오류 발생: ", error);
+            }
+        };
+        if (reportedUserId) {
+            fetchSelectedUserDetail();
+        }
+    },[reportedUserId])
 
+    // 클릭시 수정사항을 백으로 보내는 함수
     const updateReportedInfo = async (id) => {
-        // 클릭하면 제재 관련 정보들을 수정할 수 있는 함수
-        // 제재 상태, 시작일, 종료일, 관리자에 의한 정보 수정일을 수정할 수 있다.
-
-        // 먼저 해당 유저의 정보 수정 모달창을 띄운다.
-
-        // 인풋으로 수정할 값들을 받고, 확인 버튼으로 수정할 정보들을 백을 넘긴다. 취소 버튼도 만든다.
-
-        const response = await axios.post(`${BASE_URL}/admin/reported-info-update`,
-            
-                {status, startDateAt, endDateAt, id}
-            
-        ); // 업데이트 성공 여부 반환
+        try{
+            const response = await axios.post(`${BASE_URL}/admin/reported-info-update`,
+            {status, startDateAt, endDateAt, id}
+        );
         if(response.data =! null){
-            alert("수정 성공")
+            alert("업데이트 성공")
         }else {
             alert(response.data)
         }
         closeModal();
+        }catch(error){
+            console.log(error);
+        }
     }
 
     const deleteRepotedInfo = async (id) => {
-        const response = await axios.delete(`${BASE_URL}/admin/reported-info-delete`,
-            {
-                data: {id},
-                // headers: {Authorization:`Bearer ${localStorage.getItem("jwtToken")}`}
-            }
-        ); // 삭제 성공 여부 반환
+        try{
+            const response = await axios.delete(`${BASE_URL}/admin/reported-info-delete`,
+                {
+                    data: {id},
+                    // headers: {Authorization:`Bearer ${localStorage.getItem("jwtToken")}`}
+                }
+            );
+            alert(response.data)
+        }catch(error){
+            console.log(error);
+        }
+        
+    }
+
+    if(!userData){
+        return <div>Loading...</div>;
     }
 
     return (
         <>
-            <table>
-                <thead>
+            <table className="detail-info-table">
+                <thead >
                     <tr>
                         <td>해당 계정의 고유 번호</td>
                         <td>아이디</td>

@@ -1,0 +1,15 @@
+.text-container {
+    /* width: 900px; */
+}
+.text-container-top{
+    margin-bottom: 2px;
+}
+
+.ck-editor__editable {
+    min-height: 400px; /* 기본 높이 */
+    max-height: 400px; /* 최대 높이 */
+    overflow-y: auto;  /* 스크롤바 추가 */
+    padding: 10px;     /* 내부 여백 */
+    font-size: 14px;   /* 선택 사항: 글꼴 크기 */
+    resize: vertical;  /* 사용자가 크기 조정 가능 */
+}

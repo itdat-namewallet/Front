@@ -85,7 +85,7 @@ const ReportedUser = () => {
             console.log(response.data);
             setSelectedUserInfo(response.data);
             setUserData(response.data);
-            navigate("/admin/detail-info");
+            navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
         } catch (error) {
             console.log(error);
             alert(error);
@@ -105,7 +105,7 @@ const ReportedUser = () => {
                 />
                 <button onClick={handleSearch}>검색</button>
             </div>
-            <table>
+            <table >
                 <thead>
                     <tr>
                         <th>제재 대상이 되는 유저의 ID</th>
@@ -137,6 +137,16 @@ const ReportedUser = () => {
                 </tbody>
             </table>
             <div>
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)} 
+                    disabled={currentPage === 1}
+                    style={{
+                        margin: "0 5px",
+                        padding: "5px 10px",
+                    }}
+                >
+                    이전
+                </button>
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index}
@@ -150,6 +160,16 @@ const ReportedUser = () => {
                         {index + 1}
                     </button>
                 ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)} 
+                    disabled={currentPage === totalPages}
+                    style={{
+                        margin: "0 5px",
+                        padding: "5px 10px",
+                    }}
+                >
+                    다음
+                </button>
             </div>
         </>
     )
