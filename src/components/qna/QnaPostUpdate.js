@@ -134,6 +134,7 @@ const QnaPostUpdate = () => {
                 isSecret,
                 password,
                 loginedUserId,
+                id,
             });
             console.log('서버 응답:', response.data);
             //alert('성공적으로 저장되었습니다!');
@@ -247,7 +248,7 @@ const QnaPostUpdate = () => {
                 {/* 확인 버튼 */}
                 <div style={{ marginTop: '20px' }}>
                     <button onClick={handleSubmit} style={{ padding: '10px 20px', cursor: 'pointer' }}>
-                        확인
+                        수정 확인
                     </button>
                 </div>
             </div>
