@@ -18,6 +18,8 @@ import DetailInfo from "./components/admin/DetailInfo";
 import ReportedUser from "./components/admin/ReportedUser";
 import ReportUser from "./components/admin/ReportUser";
 import QnaPostDetail from "./components/qna/QnaPostDetail";
+import QnaPostUpdate from "./components/qna/QnaPostUpdate";
+
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -51,6 +53,7 @@ export default function App() {
                                 <Route path="write" element={<TextEditor />} />
                                 <Route path="my-qna-post" element={<MyQnaPost />} />
                                 <Route path="post-detail" element={<QnaPostDetail/>}/>
+                                <Route path="post-update" element={<QnaPostUpdate/>}/>
                             </Route>
                             <Route path="admin" element={<Admin/>}>
                                 <Route index element={<ReportedUser/>}/>
