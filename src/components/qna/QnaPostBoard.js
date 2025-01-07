@@ -45,7 +45,7 @@ const QnaPostBoard = () => {
                 }
             }catch(error){
                 console.log(error);
-                alert("error: " + error.message)
+                // alert("error: " + error.message)
                 // 서버에러..
             }
         }
@@ -101,7 +101,8 @@ const QnaPostBoard = () => {
                 <thead>
                     <tr>
                         <td>제목</td>
-                        <td>내용</td> {/* 요약된 내용.. 무슨 수로? 문자열 10번째 까지 보여지고 이후 ... 붙이기 */}
+                        {/* <td>내용</td>  */}
+                            {/* 요약된 내용.. 무슨 수로? 문자열 10번째 까지 보여지고 이후 ... 붙이기 */}
                         <td>작성자</td>
                         <td>작성일</td> {/* 수정일을 클릭 후 확인 가능 */}
                         {/* 비밀글은 제목만 보이도록 */}
@@ -128,7 +129,7 @@ const QnaPostBoard = () => {
                                         // 어드민 여부에 따라 커서와 게시물의 흐림 정도를 다르게 css
                                     >
                                         <td>{post.title}</td>
-                                        <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td>
+                                        {/* <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td> */}
                                         <td>{post.user.userId}</td>
                                         <td>{post.createDateAt}</td>
                                     </tr>
