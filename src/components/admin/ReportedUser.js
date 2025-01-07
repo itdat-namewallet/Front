@@ -35,8 +35,13 @@ const ReportedUser = () => {
 
             try {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
-                setUserList(response.data);
-                setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
+                console.log("1111111111111111111",response.data);
+                const sortedData = response.data.sort((a,b) => new Date(b.updateAt) - new Date(a.updateAt)); 
+                    // first in, last out!!!! 최근 제재 업데이트 일을 기분으로 내림차순 정렬되시겠다.
+                setUserList(sortedData);
+                setFilteredUsers(sortedData);
+                // setUserList(response.data);
+                // setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
                 // console.log(response.data);
 
             } catch (error) {

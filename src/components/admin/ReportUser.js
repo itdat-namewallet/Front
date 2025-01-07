@@ -39,8 +39,13 @@ const ReportUser = () => {
         const bringReportList = async () => {
             try{
                 const response = await axios.get(`${BASE_URL}/admin/report-user-list`);
-                setReportUserList(response.data);
-                setFilteredList(response.data);
+                
+                console.log("2222222222222222222",response.data);
+                const sortedData = response.data.sort((a,b) => new Date(b.reportDateAt) - new Date(a.reportDateAt)); 
+                setReportUserList(sortedData);
+                setFilteredList(sortedData);
+                // setReportUserList(response.data);
+                // setFilteredList(response.data);
                 console.log(response.data);
             }catch(error){
                 console.log(error.response.data);
@@ -92,9 +97,9 @@ const ReportUser = () => {
                     params: {reportedUserId}
                 }
             );
-        setSelectedUserInfo(response.data);
-        setUserData(response.data);
-        navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
+            setSelectedUserInfo(response.data);
+            setUserData(response.data);
+            navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
         }catch(error){
             console.log(error);
         }
@@ -107,7 +112,7 @@ const ReportUser = () => {
                 {/* 검색 기능 */}
                 <input
                     type="text"
-                    placeholder="USER ID 검색"
+                    placeholder="User ID 검색"
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                 />

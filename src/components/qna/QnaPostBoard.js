@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { adminStore, qnaPostDetail } from "../../store";
 import { useNavigate } from "react-router-dom";
-import styles from "../../assets/css/qna/qnaPostBoard.module.css";
+// import styles from "../../assets/css/qna/qnaPostBoard.module.css";
+import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css"
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -33,8 +34,11 @@ const QnaPostBoard = () => {
                     alert(response.data);
                     // 타입 확인하여 스트링이면 내용을 알러트로 띄움
                 }else if(Array.isArray(response.data)){
-                    setQnaList(response.data);
-                    setFilteredList(response.data);
+                    const sortedData = response.data.sort((a,b) => new Date(b.createDateAt) - new Date(a.createDateAt));
+                    setQnaList(sortedData);
+                    setFilteredList(sortedData);
+                    // setQnaList(response.data);
+                    // setFilteredList(response.data);
                     // 타입 확인하여 리스트면 상태 업데이트
                 }else {
                     console.error("알수 없는 타입의 데이터가 담겼습니다. ", response.data)
@@ -65,7 +69,7 @@ const QnaPostBoard = () => {
 
         const openQnaPost = async (selectedId) => {
             try{
-                const response = await axios.get(`${BASE_URL}/qna/selected-qna-list`, 
+                const response = await axios.get(`${BASE_URL}/qna/selected-qna`, 
                     {params: {selectedId}}
                 );
                 const saveToSessionStorage = (data) => {
@@ -109,8 +113,12 @@ const QnaPostBoard = () => {
                         currentQnaList.map(
                             (post, index)=> {
                                 // 게시글이 비밀글인지 확인
-                                const isAccessible = isAdmin || post.userId === loginedUserId || !post.isSecret;
-                                    // 어드민이거나 작성자이거나 비밀글이 아니면 접근 가능
+                                const isAccessible = isAdmin || post.user.userId === loginedUserId || !post.secret;
+                                    // 사용자가 어드민이거나, 게시물의 작성자이거나, 게시물의 상태가 비밀글이 아니면 접근 가능
+                                    // console.log(post);
+                                    // console.log(isAdmin);
+                                    // console.log(isAccessible);
+                                    // console.log(loginedUserId);
 
                                 return (
                                     <tr 
