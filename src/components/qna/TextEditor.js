@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-import "../../assets/css/qna/textEditor.css"
+// import "../../assets/css/qna/textEditor.css"
+import "../../assets/css/pages/qna/textEditor.css"
 import { adminStore } from '../../store';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const TextEditor = () => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState("");
     const [contents, setContents] = useState("");
     const [user, setUser] = useState("");
@@ -41,8 +45,10 @@ const TextEditor = () => {
     // 비밀 여부 변경 이벤트 핸들러
     const handleIsSecretChange = (event) => {
         setIsSecret(event.target.checked);
+        console.log(event.target.checked);
         if (!event.target.checked) setPassword(""); // 비밀글 해제 시 패스워드 초기화
     };
+    console.log(isSecret);
 
     // 패스워드 변경 이벤트 핸들러
     const handlePasswordChange = (event) => {
@@ -61,7 +67,9 @@ const TextEditor = () => {
             return;
         }
 
+        
         try {
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",isSecret);
             const response = await axios.post(`${BASE_URL}/qna/write`, {
                 title,
                 contents,
@@ -72,7 +80,8 @@ const TextEditor = () => {
              });
             console.log('서버 응답:', response.data);
             //alert('성공적으로 저장되었습니다!');
-            //
+            // 작성자의 아이디를 백으로 요청을 보내서 작성자의 마지막 글을 받아낸다.
+            navigate(`/qna`);
         } catch (error) {
             console.error('데이터 전송 오류:', error);
             //alert('저장 중 오류가 발생했습니다.');
