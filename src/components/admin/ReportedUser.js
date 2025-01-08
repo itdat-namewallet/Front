@@ -125,7 +125,7 @@ const ReportedUser = () => {
                     {currentUsers.map((user, index) => (
                         <tr key={index} onClick={() => detailInfo(user.user.userId)}>
                             <td>{user.user.userId}</td>
-                            <td>{user.cumulativeCount}</td>
+                            <td>{user.reportedCount}</td>
                             <td>{user.startDateAt}</td>
                             <td>{user.endDateAt}</td>
                             <td>{user.updateAt}</td>
