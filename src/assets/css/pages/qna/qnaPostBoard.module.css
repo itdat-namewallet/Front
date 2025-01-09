@@ -1,12 +1,114 @@
 /* 기본 스타일 */
-.row {
-    cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.3s, cursor 0.3s;
-}
+.table-container {
+    width: 100%;
+    min-width: 800px;
+    max-width: 1200px;
+    /* 최대 크기 설정 */
+    margin: 0 auto;
+    /* 가운데 정렬 */
+    border-collapse: collapse;
+    /* 테이블 경계선 중복 방지 */
+    overflow: hidden;
+    /* 오버플로우를 숨김 */
 
-/* 비활성화 스타일 */
-.disabledRow {
-    cursor: not-allowed;
-    opacity: 0.5;
+
+    /* 테이블 기본 스타일 */
+    table {
+        width: 100%;
+        border: 1px solid #ddd;
+        /* 테이블 경계선 */
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    /* 헤더 스타일 */
+    thead {
+        background-color: #f4f4f4;
+        /* 헤더 배경색 */
+        font-weight: bold;
+        /* 글씨 두껍게 */
+    }
+
+    /* 헤더 셀 스타일 */
+    thead th {
+        padding: 10px 15px;
+        /* 여백 추가 */
+        text-align: left;
+        /* 텍스트 왼쪽 정렬 */
+        border-bottom: 2px solid #ddd;
+        /* 테이블 본문과 구분되는 선 */
+    }
+
+    /* 테이블 본문 셀 스타일 */
+    tbody td {
+        padding: 10px 15px;
+        text-align: left;
+        /* 텍스트 왼쪽 정렬 */
+        border-bottom: 1px solid #eee;
+        /* 각 행을 구분하는 선 */
+    }
+
+    /* 행 스타일 */
+    .row {
+        cursor: pointer;
+        transition: opacity 0.3s, background-color 0.3s ease;
+        /* 부드러운 변화 */
+    }
+
+    /* 비활성화된 행 스타일 */
+    .disabledRow {
+        cursor: not-allowed;
+        opacity: 0.5;
+        background-color: #f9f9f9;
+        /* 비활성화된 행 배경색 */
+    }
+
+    /* 행에 마우스를 올렸을 때 배경색 변화 */
+    .row:hover {
+        background-color: #f1f1f1;
+        /* 행에 마우스를 올리면 배경색 변화 */
+    }
+
+    /* 페이징 버튼 스타일 */
+    button {
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* 부드러운 배경색 변화 */
+    }
+
+    /* 페이징 버튼 활성화 시 스타일 */
+    button:hover {
+        background-color: #e0e0e0;
+    }
+
+    /* 현재 페이지 버튼 스타일 */
+    button[aria-current="page"] {
+        background-color: lightblue;
+        font-weight: bold;
+    }
+
+    /* 페이지네이션 레이아웃 */
+    .page-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* 페이지네이션 버튼들 사이에 간격 추가 */
+    .page-pagination button {
+        margin: 0 5px;
+    }
+
+    /* 테이블 너비 조정 */
+    table {
+        width: 100%;
+        table-layout: fixed;
+        /* 테이블 크기 고정 */
+    }
+
 }
