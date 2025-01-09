@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import kakaoImage from "../../assets/images/kakao_login_medium_narrow.png";
 
 const KAKAO_JAVASCRIPT_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -90,8 +91,10 @@ export default function KakaoLoginButton() {
     };
 
     return (
-        <button className="social-button kakao" onClick={handleKakaoLogin}>
-            Kakao 계정으로 로그인
-        </button>
+        <div
+      className="social-button kakao"
+      onClick={handleKakaoLogin}
+      style={{ backgroundImage: `url(${kakaoImage})` }}
+    ></div>
     );
 }

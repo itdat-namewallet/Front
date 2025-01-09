@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import naverImage from "../../assets/images/naver_icon.png";
 
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
 const NAVER_REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
@@ -65,8 +66,10 @@ export default function NaverLoginButton() {
     };
 
     return (
-        <button className="social-button naver" onClick={handleNaverLogin}>
-            네이버 계정으로 로그인
-        </button>
+        <div
+      className="social-button naver"
+      onClick={handleNaverLogin}
+      style={{ backgroundImage: `url(${naverImage})` }}
+    ></div>
     );
 }
