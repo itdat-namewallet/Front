@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import googleImage from "../../assets/images/android_light_rd_na@4x.png";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
