@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {userInfoStore} from "../../store";
+import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css";
 
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -107,9 +108,9 @@ const ReportUser = () => {
     }
 
     return (
-        <>
-            <div>
-                {/* 검색 기능 */}
+        <div className={styles["table-container"]}>
+            <>
+            <div className="search-container">
                 <input
                     type="text"
                     placeholder="User ID 검색"
@@ -180,6 +181,80 @@ const ReportUser = () => {
             </div>
             
         </>
+        </div>
+        // <>
+        //     <div>
+        //         {/* 검색 기능 */}
+        //         <input
+        //             type="text"
+        //             placeholder="User ID 검색"
+        //             value={searchTerm}
+        //             onChange={e => setSearchTerm(e.target.value)}
+        //         />
+        //         <button onClick={handleSearch}>검색</button>
+        //     </div>
+        //     <table>
+        //         <thead>
+        //             {/* 리스트의 헤드 */}
+        //             <tr> 
+        //                 <th>신고당한 유저 아이디</th>
+        //                 <th>신고 이유</th>
+        //                 <th>신고한 유저 아이디</th>
+        //                 <th>신고한 날짜</th>
+        //             </tr>
+        //         </thead>
+        //         <tbody>
+        //             {/* 리스트의 바디 */}
+        //             {currentUsers.map((user, index) => (
+        //                 <tr key={index} onClick={() => detailInfo(user.reportedUserId)}>
+        //                     <td>{user.reportedUserId}</td>
+        //                     <td>{user.description}</td>
+        //                     <td>{user.userId}</td>
+        //                     <td>{user.reportDateAt}</td>
+        //                 </tr>
+        //             ))}
+        //         </tbody>
+        //     </table>
+        //     {/* 페이징 처리 버튼 */}
+        //     <div>
+        //         <button
+        //             onClick={() => handlePageChange(currentPage - 1)} 
+        //             disabled={currentPage === 1}
+        //             style={{
+        //                 margin: "0 5px",
+        //                 padding: "5px 10px",
+        //             }}
+        //         >
+        //             이전
+        //         </button>
+        //         {Array.from({length: totalPages}, (_, index) => (
+        //             // _는 값이고 index는 값의 인덱스 번호이다. 값은 필요없고 인덱스 번호만 필요할 때 언더바(_)를 사용한다.
+        //             <button
+        //                 key={index}
+        //                 onClick={()=>handlePageChange(index+1)}
+        //                 style={{
+        //                     margin: "0 5px",
+        //                     padding: "5px 10px",
+        //                     backgroundColor: currentPage === index + 1 ? "lightblue" : "white",
+        //                 }}
+        //             >
+        //                 {index+1}
+        //             </button>
+                    
+        //         ))}
+        //         <button
+        //             onClick={() => handlePageChange(currentPage + 1)} 
+        //             disabled={currentPage === totalPages}
+        //             style={{
+        //                 margin: "0 5px",
+        //                 padding: "5px 10px",
+        //             }}
+        //         >
+        //             다음
+        //         </button>
+        //     </div>
+            
+        // </>
     )
 }
 export default ReportUser;

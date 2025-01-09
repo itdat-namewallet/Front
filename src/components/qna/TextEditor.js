@@ -124,7 +124,7 @@ const TextEditor = () => {
             </div>
 
             {/* CKEditor */}
-            <div className={styles["text-editor-body"]} style={{ marginBottom: "20px" }}>
+            <div className={styles["text-editor-body"]} style={{ marginBottom: "25px" }}>
                 <CKEditor
                     
                     editor={ClassicEditor}
@@ -139,8 +139,8 @@ const TextEditor = () => {
       
                         // 전체 에디터 크기 설정 (너비와 높이 고정)
                         const editorElement = editor.ui.view.element;
-                        editorElement.style.minWidth = '800px'; // 전체 에디터 너비
-                        editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
+                        // editorElement.style.minWidth = '800px'; // 전체 에디터 너비
+                        // editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
                         editorElement.style.height = '400px'; // 전체 에디터 높이
       
                         // 텍스트 입력 영역 (editable) 크기 설정
@@ -170,7 +170,7 @@ const TextEditor = () => {
             </div>
 
             {/* 비밀 여부 및 패스워드 */}
-            <div style={{ marginBottom: "0px", marginTop: "75px"}}>
+            <div style={{ marginBottom: "0px", marginTop: "65px"}}>
                 <label className={styles["secret-checkbox"]}>
                     <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
                     비밀글
