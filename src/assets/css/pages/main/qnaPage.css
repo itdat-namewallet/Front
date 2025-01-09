@@ -4,6 +4,8 @@
     max-width: 100%;
     padding-left: 3%;
     padding-right: 3%;
+    align-items: center; /* 자식 요소들이 가로로 중앙 정렬되도록 설정 */
+    
 
     .qna-header{
         display: flex;
@@ -29,4 +31,17 @@
         }
     }
     
+}
+
+.qna-container .qna-header .left-text-header a,
+.qna-container .qna-header .right-text-header a {
+    text-decoration: none; /* 기본 링크 밑줄 없애기 */
+}
+
+.qna-container .qna-header .left-text-header a:active,
+.qna-container .qna-header .left-text-header a:focus,
+.qna-container .qna-header .right-text-header a:active,
+.qna-container .qna-header .right-text-header a:focus {
+    color: inherit; /* 클릭했을 때 색깔 변경되지 않도록 설정 */
+    outline: none;  /* 클릭 시 외곽선 제거 */
 }

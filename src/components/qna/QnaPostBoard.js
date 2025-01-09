@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { adminStore, qnaPostDetail } from "../../store";
 import { useNavigate } from "react-router-dom";
 // import styles from "../../assets/css/qna/qnaPostBoard.module.css";
-import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css"
+import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -96,87 +96,73 @@ const QnaPostBoard = () => {
 
     return (
         <>
-            {/* <h1>게시판 조회 구성 중..</h1> */}
-            <table>
-                <thead>
-                    <tr>
-                        <td>제목</td>
-                        {/* <td>내용</td>  */}
-                            {/* 요약된 내용.. 무슨 수로? 문자열 10번째 까지 보여지고 이후 ... 붙이기 */}
-                        <td>작성자</td>
-                        <td>작성일</td> {/* 수정일을 클릭 후 확인 가능 */}
-                        {/* 비밀글은 제목만 보이도록 */}
-                        {/* 비밀번호는 클릭시 묻는 용도로 */}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        currentQnaList.map(
-                            (post, index)=> {
-                                // 게시글이 비밀글인지 확인
+            <div className={styles['table-container']}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            currentQnaList.map((post, index) => {
                                 const isAccessible = isAdmin || post.user.userId === loginedUserId || !post.secret;
-                                    // 사용자가 어드민이거나, 게시물의 작성자이거나, 게시물의 상태가 비밀글이 아니면 접근 가능
-                                    // console.log(post);
-                                    // console.log(isAdmin);
-                                    // console.log(isAccessible);
-                                    // console.log(loginedUserId);
 
                                 return (
-                                    <tr 
+                                    <tr
                                         key={index}
-                                        onClick={()=>isAccessible && openQnaPost(post.id)}
+                                        onClick={() => isAccessible && openQnaPost(post.id)}
                                         className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
-                                        // 어드민 여부에 따라 커서와 게시물의 흐림 정도를 다르게 css
                                     >
                                         <td>{post.title}</td>
-                                        {/* <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td> */}
                                         <td>{post.user.userId}</td>
                                         <td>{post.createDateAt}</td>
                                     </tr>
-                                )
-                            }
-                                
-                        )
+                                );
+                            })
+                        }
+                    </tbody>
+                </table>
+                <div className={styles['page-pagination']}>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)} 
+                        disabled={currentPage === 1}
+                    >
+                        이전
+                    </button>
+                    {
+                        Array.from({ length: totalPages }, (_, index) => index + 1)
+                            .filter((page) => {
+                                // 현재 페이지 주변 1개와 시작, 끝 3개 유지
+                                return (
+                                    page === 1 || 
+                                    page === totalPages || 
+                                    (page >= currentPage - 1 && page <= currentPage + 1)
+                                );
+                            })
+                            .map((page, idx, filteredPages) => (
+                                <React.Fragment key={page}>
+                                    {/* ... 생략 버튼 처리 */}
+                                    {idx > 0 && page > filteredPages[idx - 1] + 1 && <span>...</span>}
+
+                                    <button
+                                        onClick={() => handlePageChange(page)}
+                                        aria-current={currentPage === page ? "page" : undefined}
+                                    >
+                                        {page}
+                                    </button>
+                                </React.Fragment>
+                            ))
                     }
-                </tbody>
-            </table>
-            <div>
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)} 
-                    disabled={currentPage === 1}
-                    style={{
-                        margin: "0 5px",
-                        padding: "5px 10px",
-                    }}
-                >
-                    이전
-                </button>
-                {
-                    Array.from({length: totalPages}, (_, index) => (
-                        <button
-                            key={index}
-                            onClick={()=>handlePageChange(index+1)}
-                            style={{
-                                margin: "0 5px",
-                                padding: "5px 10px",
-                                backgroundColor: currentPage === index + 1 ? "lightblue" : "white",
-                            }}
-                        >
-                            {index+1}
-                        </button>
-                    )
-                    )
-                }
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)} 
-                    disabled={currentPage === totalPages}
-                    style={{
-                        margin: "0 5px",
-                        padding: "5px 10px",
-                    }}
-                >
-                    다음
-                </button>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)} 
+                        disabled={currentPage === totalPages}
+                    >
+                        다음
+                    </button>
+                </div>
             </div>
         </>
     )

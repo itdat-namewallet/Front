@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-// import "../../assets/css/qna/textEditor.css"
-import "../../assets/css/pages/qna/textEditor.css"
+// import "../../assets/css/pages/qna/textEditor.css"
+import styles from "../../assets/css/pages/qna/textEditor.module.css"
 import { adminStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
 
@@ -91,18 +91,18 @@ const TextEditor = () => {
     //console.log(loginedUserId);
 
     return (
-        <>
-        <div className='text-container'>
+        <div className={styles["text-container"]}>
             {/* 카테고리 선택 */}
-            <div className='text-container-top' style={{ marginTop: '20px' }}>
-                {/* <label htmlFor="category" style={{ marginRight: '10px' }}>글 분류:</label> */}
+            <div className={styles["text-container-top"]} style={{ marginTop: "20px" }}>
                 <select
                     id="category"
                     value={category}
                     onChange={handleCategoryChange}
-                    style={{ padding: '10px' }}
+                    style={{ padding: "10px" }}
                 >
-                    <option value="" disabled selected>카테고리 선택</option>
+                    <option value="" disabled selected>
+                        카테고리 선택
+                    </option>
                     <option value="MERCHANDISE">명함제작</option>
                     <option value="NFC">NFC</option>
                     <option value="APP">어플리케이션</option>
@@ -112,60 +112,90 @@ const TextEditor = () => {
             </div>
 
             {/* 제목 입력 */}
-            <div className='text-container-top' style={{ marginBottom: '20px' }}>
-                    {/* <label htmlFor="title" style={{ marginRight: '10px' }}>제목:</label> */}
-                    <input
-                        type="text"
-                        id="title"
-                        value={title}
-                        onChange={handleTitleChange}
-                        placeholder="제목을 입력하세요."
-                        style={{ width: '100%', padding: '10px', boxSizing: 'border-box' }}
-                    />
-                </div>
+            <div className={styles["text-container-top"]} style={{ marginBottom: "20px" }}>
+                <input
+                    type="text"
+                    id="title"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="제목을 입력하세요."
+                    style={{ width: "100%", padding: "10px", boxSizing: "border-box" }}
+                />
+            </div>
 
             {/* CKEditor */}
-            <div className="text-editor-body" style={{ marginBottom: '20px' }}>
+            <div className={styles["text-editor-body"]} style={{ marginBottom: "20px" }}>
                 <CKEditor
+                    
                     editor={ClassicEditor}
                     config={{
-                        placeholder: "권리침해, 욕설, 비하, 명예훼손, 혐오, 불법촬영물 등의 내용을 게시하면 운영정책 및 관련 법률에 의해 제재될 수 있습니다. 본인이 쓴 게시글 및 댓글에 대한 법적 책임은 본인에게 있습니다.",
-                       
+                        placeholder:
+                            "권리침해, 욕설, 비하, 명예훼손, 혐오, 불법촬영물 등의 내용을 게시하면 운영정책 및 관련 법률에 의해 제재될 수 있습니다. 본인이 쓴 게시글 및 댓글에 대한 법적 책임은 본인에게 있습니다."
+                        ,
                     }}
                     onChange={handleEditorChange}
+                    onReady={(editor) => {
+                        console.log('Editor is ready to use!', editor);
+      
+                        // 전체 에디터 크기 설정 (너비와 높이 고정)
+                        const editorElement = editor.ui.view.element;
+                        editorElement.style.minWidth = '800px'; // 전체 에디터 너비
+                        editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
+                        editorElement.style.height = '400px'; // 전체 에디터 높이
+      
+                        // 텍스트 입력 영역 (editable) 크기 설정
+                        const editableElement = editor.ui.view.editable.element;
+                        editableElement.style.height = '400px'; // 고정된 높이
+                        editableElement.style.minHeight = '400px'; // 최소 높이 설정
+                        editableElement.style.maxHeight = '400px'; // 최대 높이 설정
+                        editableElement.style.overflowY = 'auto'; // 내용이 넘칠 경우 스크롤이 생기도록 설정
+                        editableElement.style.resize = 'none'; // 크기 조정 방지
+      
+                        // 포커스가 생겨도 크기 변경을 방지하도록 설정
+                        editableElement.addEventListener('focus', () => {
+                            editableElement.style.height = '400px';
+                            editableElement.style.minHeight = '400px';
+                            editableElement.style.maxHeight = '400px';
+                        });
+                        editableElement.addEventListener('blur', () => {
+                            setTimeout(() => {
+                                editableElement.style.height = '400px';
+                                editableElement.style.minHeight = '400px';
+                                editableElement.style.maxHeight = '400px';
+                            }, 0); // setTimeout을 사용하여 스타일을 즉시 적용
+                        });
+                    }}
+      
                 />
             </div>
 
             {/* 비밀 여부 및 패스워드 */}
-            <div style={{ marginBottom: '20px' }}>
-                <label style={{ marginRight: '10px' }}>
-                    <input
-                        type="checkbox"
-                        checked={isSecret}
-                        onChange={handleIsSecretChange}
-                    />
+            <div style={{ marginBottom: "0px", marginTop: "75px"}}>
+                <label className={styles["secret-checkbox"]}>
+                    <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
                     비밀글
                 </label>
                 {isSecret && (
                     <input
                         type="password"
+                        className={styles["secret-password"]}
                         value={password}
                         onChange={handlePasswordChange}
                         placeholder="비밀번호를 입력하세요."
-                        style={{ padding: '10px', marginLeft: '10px' }}
                     />
                 )}
             </div>
 
             {/* 확인 버튼 */}
-            <div style={{ marginTop: '20px' }}>
-                <button onClick={handleSubmit} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+            <div>
+                <button
+                    onClick={handleSubmit}
+                    className={styles["confirm-button"]}
+                >
                     확인
                 </button>
             </div>
         </div>
-            
-        </>
     );
 };
 

@@ -1,0 +1,42 @@
+/* 컨테이너 스타일 */
+.text-container {
+    display: block; /* flex 영향을 받지 않도록 설정 */
+    min-width: 800px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    flex-grow: 0;  /* 부모 컨테이너의 너비를 따르도록 설정 */
+}
+
+/* 상단 영역 스타일 */
+.text-container-top {
+    margin-bottom: 2px;
+}
+
+/* CKEditor의 div */
+.text-editor-body {
+    display: block;  /* 블록 요소로 설정 */
+    width: 100%;     /* 너비 100% */
+    height: auto;    /* 부모 요소의 높이가 자동으로 설정되도록 */
+}
+
+/* CKEditor 스타일은 textEditor.css에 전역으로 관리되고 있다. */
+
+
+/* 비밀 여부 및 패스워드 */
+.secret-checkbox {
+    margin-right: 10px;
+}
+
+.secret-password {
+    padding: 10px;
+    margin-left: 10px;
+}
+
+/* 확인 버튼 */
+.confirm-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
