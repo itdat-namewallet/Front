@@ -90,34 +90,74 @@ const QnaPostDetail = () => {
     }
 
     return (
-        <>
-            <div>
-                <div className={styles.container}>
-                    <h1 className={styles.title}>{qnaPostData.title || "제목 없음"}</h1>
+        <div className={styles.container}>
+            {/* 제목 */}
+            <h1 className={styles.title}>{qnaPostData.title || "제목 없음"}</h1>
 
-                    <div className={styles.meta}>
-                        작성자: <strong>{qnaPostData.user.userId || "알 수 없음"}</strong>
-                    </div>
-
-                    <div className={styles.dateInfo}>
-                        작성일: {qnaPostData.createDateAt || "알 수 없음"} <br />
-                        수정일: {qnaPostData.updateAt || "알 수 없음"}
-                    </div>
-
-                    <div
-                        className={styles.contents}
-                        dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
-                        }}
-                    >
-                    </div>
+            {/* 작성자 정보 */}
+            <div className={styles.meta}>
+                <div>
+                    작성자: <strong>{qnaPostData.user.userId || "알 수 없음"}</strong>
                 </div>
-                <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
-                <button onClick={() => deletePost(qnaPostData.id)}>삭제</button>
+                <div>
+                    작성일: {qnaPostData.createDateAt || "알 수 없음"}
+                </div>
             </div>
 
+            {/* 수정일 정보 */}
+            <div className={styles.dateInfo}>
+                수정일: {qnaPostData.updateAt || "알 수 없음"}
+            </div>
 
-        </>
+            {/* 본문 내용 */}
+            <div
+                className={styles.contents}
+                dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
+                }}
+            ></div>
+
+            {/* 수정/삭제 버튼 */}
+            <div className={styles.buttons}>
+                <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
+                <button
+                    className={styles.delete}
+                    onClick={() => deletePost(qnaPostData.id)}
+                >
+                    삭제
+                </button>
+            </div>
+        </div>
+
+
+        // <>
+        //     <div className={styles.qnaPostDetail}>
+        //         <div className={styles.container}>
+        //             <h1 className={styles.title}>{qnaPostData.title || "제목 없음"}</h1>
+
+        //             <div className={styles.meta}>
+        //                 작성자: <strong>{qnaPostData.user.userId || "알 수 없음"}</strong>
+        //             </div>
+
+        //             <div className={styles.dateInfo}>
+        //                 작성일: {qnaPostData.createDateAt || "알 수 없음"} <br />
+        //                 수정일: {qnaPostData.updateAt || "알 수 없음"}
+        //             </div>
+
+        //             <div
+        //                 className={styles.contents}
+        //                 dangerouslySetInnerHTML={{
+        //                     __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
+        //                 }}
+        //             >
+        //             </div>
+        //         </div>
+        //         <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
+        //         <button onClick={() => deletePost(qnaPostData.id)}>삭제</button>
+        //     </div>
+
+
+        // </>
     )
 }
 export default QnaPostDetail;

@@ -1,10 +1,4 @@
-.text-container {
-    /* width: 900px; */
-}
-.text-container-top{
-    margin-bottom: 2px;
-}
-
+/* CKEditor 스타일 */
 .ck-editor__editable {
     min-height: 400px; /* 기본 높이 */
     max-height: 400px; /* 최대 높이 */
