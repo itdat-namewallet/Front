@@ -1,5 +1,5 @@
 import { qnaPostDetail } from "../../store";
-import styles from "../../assets/css/qna/qnaPostDetail.module.css"
+import styles from "../../assets/css/pages/qna/qnaPostDetail.module.css"
     // className 충돌 방지를 위해. 모듈화하여 사용. test 코드임.
 import DOMPurify from 'dompurify';
 import axios from "axios";

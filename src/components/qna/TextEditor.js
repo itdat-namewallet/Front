@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-import "../../assets/css/qna/textEditor.css"
+import "../../assets/css/pages/qna/textEditor.css"
 import { adminStore } from '../../store';
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;

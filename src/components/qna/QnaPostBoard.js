@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { adminStore, qnaPostDetail } from "../../store";
 import { useNavigate } from "react-router-dom";
-import styles from "../../assets/css/qna/qnaPostBoard.module.css";
+import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
