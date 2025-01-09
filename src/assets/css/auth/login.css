@@ -1,78 +1,117 @@
 .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-container {
+    width: 90%;
     max-width: 400px;
-    margin: 50px auto;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.form-group {
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .register-button {
+    width: 90%;
+    padding: 12px;
+    border: 1px solid #00CA91;
+    background-color: transparent;
+    color: #00CA91;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .register-button:hover {
+    background-color: #00CA91;
+    color: white;
+  }
+  
+  .login-logo {
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .form-group {
     margin-bottom: 15px;
-}
-
-.form-group label {
+    text-align: left;
+  }
+  
+  .form-group label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
+  }
+  
+  .form-group input {
+    width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.login-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
+    border-radius: 15px;
     font-size: 16px;
+  }
+  
+  .login-button {
+    width: 90%;
+    padding: 12px;
+    border: 1px solid #00CA91;
+    background-color: transparent;
+    color: #00CA91;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    margin-bottom: 20px;
     cursor: pointer;
-    border-radius: 4px;
-}
+  }
 
-.separator {
+  .login-button:hover {
+    background-color: #00CA91;
+    color: white;
+  }
+  
+  .separator {
     text-align: center;
     margin: 20px 0;
-}
-
-.or-text {
-    background-color: #f9f9f9;
+  }
+  
+  .or-text {
+    background-color: white;
     padding: 0 10px;
     position: relative;
     top: -12px;
-}
+    font-size: 14px;
+    color: #aaa;
+  }
 
-.social-buttons {
+  .social-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+    flex-direction: column; /* 버튼들을 세로로 배치 */
+    gap: 10px; /* 버튼 간격 */
+    margin-top: 20px;
+    align-items: center; /* 버튼을 가운데 정렬 */
+  }
 
-.social-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
+  .social-button {
+    display: inline-block;
+    width: 205px;
+    height: 40px;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.google {
-    background-color: #db4437;
-    color: white;
-}
-
-.naver {
-    background-color: #03c75a;
-    color: white;
-}
-
-.kakao {
-    background-color: #fee500;
-    color: black;
-}
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s;
+  }
+  
