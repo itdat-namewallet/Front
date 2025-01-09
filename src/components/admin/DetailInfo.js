@@ -11,11 +11,13 @@ import userInfoStore from "../../store";
 import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import "../../assets/css/pages/admin/detailInfo.css"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const DetailInfo = () => {
+    const navigate = useNavigate();
+
     // params에서 넘겨온 값 받아내기
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -79,10 +81,28 @@ const DetailInfo = () => {
                 }
             );
             alert(response.data)
+            navigate("/admin", {replace: true})
         }catch(error){
             console.log(error);
         }
-        
+    }
+
+    const countPlus = async (userId) => {
+        console.log(userId);
+        try{
+            const response = await axios.get(`${BASE_URL}/admin/sanctions-count-up`,
+                {
+                    params: {
+                        userId: userId,
+                    }
+                    
+                }
+            )
+            console.log(response.data);
+            // alert(response.data);
+        }catch(error){
+            console.log(error);
+        }
     }
 
     if(!userData){
@@ -103,11 +123,16 @@ const DetailInfo = () => {
 
                         <td>활동 상태</td> {/* 'ACTIVE','AWAY','BUSY' */}
                         <td>제재 상태</td> {/* 'ACTIVE','BANNED','REPORTED' */}
+                        
                         <td>신고 횟수</td>
+                        <td>제재 횟수</td>
+                        <td>벌점</td>
+
                         <td>제재 시작일</td>
                         <td>제재 종료일</td>
                         <td>관리자에 의한 정보 수정일</td>
-                        <td>수정/삭제</td>
+                        <td>수정/삭제/경고</td>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -122,14 +147,20 @@ const DetailInfo = () => {
 
                         <td>{userData.user.userState}</td>
                         <td>{userData.user.status}</td>
-                        <td>{userData.cumulativeCount}</td>
+
+                        <td>{userData.reportedCount}</td>
+                        <td>{userData.bannedCount}</td>
+                        <td>{userData.demerit}</td>
+
                         <td>{userData.startDateAt}</td>
                         <td>{userData.endDateAt}</td>
                         <td>{userData.updateAt}</td>
                         <td>
                             <button onClick={openModal}>수정</button>/
                             <button onClick={()=>deleteRepotedInfo(userData.user.id)}>삭제</button>
+                            <button onClick={()=>countPlus(userData.user.id)}>누적+1</button>
                         </td>
+                        
                     </tr>
                 </tbody>
             </table>

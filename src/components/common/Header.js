@@ -34,7 +34,7 @@ export default function Header() {
                 // console.log(response.data);
                 setLoginedUserId(response.data.userId)
                 if(response.data.role === "ADMIN"){
-                    // console.log("true");
+                    console.log("true");
                     setIsAdmin(true);
                 }else{
                     console.log("false");
