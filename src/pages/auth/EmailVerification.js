@@ -71,7 +71,7 @@ export default function EmailVerification({ email, setEmail, isVerified, setIsVe
   
     return (
       <div className="email-verification">
-        <label>이메일</label>
+        <label>이메일<span style={{ color: "red" }}>*</span></label>
         <div style={{ display: "flex", alignItems: "center" }}>
           <input
             type="email"
@@ -90,7 +90,7 @@ export default function EmailVerification({ email, setEmail, isVerified, setIsVe
               ? resendCooldown > 0
                 ? `재발송 (${resendCooldown}s)`
                 : "재발송"
-              : "인증 코드 발송"}
+              : "인증 코드"}
           </button>
         </div>
         {isCodeSent && !isVerified && (
