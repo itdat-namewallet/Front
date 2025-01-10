@@ -31,7 +31,7 @@
 
 .register-page form input,
 .register-page form select {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -39,9 +39,9 @@
 }
 
 .register-page form button {
-    width: 20%;
+    width: 100px;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #00CA91;
     color: white;
     border: none;
     border-radius: 5px;
@@ -49,9 +49,9 @@
     cursor: pointer;
 }
 
-.register-page form button:hover {
-    background-color: #0056b3;
-}
+/* .register-page form button:hover {
+    background-color: #00CA91;
+} */
 
 .register-error {
     border: 1px solid red;
