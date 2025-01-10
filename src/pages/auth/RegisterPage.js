@@ -28,6 +28,7 @@ export default function RegisterPage() {
     const provider = searchParams.get("providerType");
     const providerId = searchParams.get("providerId");
     const email = searchParams.get("email");
+    const [isVerified, setIsVerified] = useState(false);
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -172,6 +173,10 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!isVerified) {
+            return;
+          }
     
         const requiredFields = isSocialRegister
             ? [
@@ -288,22 +293,24 @@ export default function RegisterPage() {
                 />
 
                 {/* 이메일 입력 (소셜 회원가입일 경우 비활성화) */}
-                <FormInput
+                {/* <FormInput
                     label="이메일"
                     name="userEmail"
                     value={formData.userEmail}
                     onChange={handleChange}
                     error={errors.userEmail}
                     disabled={isSocialRegister}
-                />
+                /> */}
 
                 {/* 이메일 인증 서비스 추후 다시 개발 */}
-                {/* <EmailVerification
+                <EmailVerification
                     email={formData.userEmail}
                     setEmail={(value) => setFormData((prev) => ({ ...prev, userEmail: value }))}
                     isVerified={isVerified}
                     setIsVerified={setIsVerified}
-                /> */}
+                    error={errors.userEmail}
+                    disabled={isSocialRegister}
+                    />
 
                 {/* 유저 타입 드롭다운 */}
                 <div className="form-group">

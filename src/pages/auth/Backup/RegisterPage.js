@@ -193,7 +193,6 @@ export default function RegisterPage() {
         e.preventDefault();
 
         if (!isVerified) {
-            alert("이메일 인증을 완료해 주세요.");
             return;
         }
         
