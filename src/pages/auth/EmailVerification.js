@@ -12,71 +12,109 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function EmailVerification({ email, setEmail, isVerified, setIsVerified }) {
-    const [isCodeSent, setIsCodeSent] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
-    const [timer, setTimer] = useState(300);
-
+    const [isCodeSent, setIsCodeSent] = useState(false);
+    const [resendCooldown, setResendCooldown] = useState(0);
+    const [verificationTimeLeft, setVerificationTimeLeft] = useState(0);
+    const [verificationStatus, setVerificationStatus] = useState("");
+  
     useEffect(() => {
-        if (isCodeSent && timer > 0) {
-            const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-            return () => clearInterval(interval);
-        }
-    }, [isCodeSent, timer]);
-
+      let resendTimer;
+      let verificationTimer;
+  
+      if (resendCooldown > 0) {
+        resendTimer = setInterval(() => {
+          setResendCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+      }
+  
+      if (verificationTimeLeft > 0) {
+        verificationTimer = setInterval(() => {
+          setVerificationTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+      }
+  
+      return () => {
+        clearInterval(resendTimer);
+        clearInterval(verificationTimer);
+      };
+    }, [resendCooldown, verificationTimeLeft]);
+  
     const sendVerificationCode = async () => {
-        alert("인증 번호가 발송 중입니다. 잠시만 기다려 주세요.");
-        try {
-            await axios.post(`${BASE_URL}/api/auth/send-verification-code`, { email });
-            setIsCodeSent(true);
-            setTimer(300);
-            alert("인증번호가 발송되었습니다.");
-        } catch (error) {
-            alert("인증번호 발송 실패");
+      try {
+        const response = await axios.post(`${BASE_URL}/api/email/send`, { email });
+        if (response.status === 200) {
+          setIsCodeSent(true);
+          setVerificationStatus("인증 코드가 이메일로 발송되었습니다.");
+          setVerificationTimeLeft(300); // 5분
+          setResendCooldown(60); // 재발송 제한 1분
         }
+      } catch (error) {
+        setVerificationStatus("인증 코드 발송에 실패했습니다.");
+      }
     };
-
+  
     const verifyCode = async () => {
-        try {
-            const response = await axios.post(`${BASE_URL}/api/auth/verify-code`, { email, code: verificationCode });
-            if (response.data.success) {
-                setIsVerified(true);
-                alert("인증 성공!");
-            } else {
-                alert("인증 실패");
-            }
-        } catch (error) {
-            alert("인증 확인 실패");
+      try {
+        const response = await axios.post(`${BASE_URL}/api/email/verify`, {
+          email,
+          code: verificationCode,
+        });
+        if (response.status === 200) {
+          setIsVerified(true);
+          setVerificationStatus("이메일 인증이 완료되었습니다.");
         }
+      } catch (error) {
+        setVerificationStatus("인증 코드가 올바르지 않습니다.");
+      }
     };
-
-    const formatTime = (seconds) => `${Math.floor(seconds / 60)}:${seconds % 60}`;
-
+  
     return (
-        <div>
-            <label>이메일</label>
-            <div className="email-container">
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="이메일"
-                />
-                <button onClick={sendVerificationCode} disabled={isCodeSent}>
-                    {isCodeSent ? "재발송" : "발송"}
-                </button>
-            </div>
-            {isCodeSent && (
-                <div>
-                    <input
-                        type="text"
-                        value={verificationCode}
-                        onChange={(e) => setVerificationCode(e.target.value)}
-                        placeholder="인증번호 입력"
-                    />
-                    <button onClick={verifyCode}>확인</button>
-                    <span>{formatTime(timer)}</span>
-                </div>
-            )}
+      <div className="email-verification">
+        <label>이메일</label>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일을 입력하세요"
+            className="form-input"
+            style={{ flex: 1, marginRight: "8px" }}
+          />
+          <button
+            onClick={sendVerificationCode}
+            disabled={resendCooldown > 0 || isVerified}
+            className="btn"
+          >
+            {isCodeSent
+              ? resendCooldown > 0
+                ? `재발송 (${resendCooldown}s)`
+                : "재발송"
+              : "인증 코드 발송"}
+          </button>
         </div>
+        {isCodeSent && !isVerified && (
+          <div style={{ marginTop: "16px", display: "flex", alignItems: "center" }}>
+            <input
+              type="text"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              placeholder="인증 코드를 입력하세요"
+              className="form-input"
+              style={{ flex: 1, marginRight: "8px" }}
+            />
+            <button onClick={verifyCode} className="btn">
+              인증
+            </button>
+          </div>
+        )}
+        {verificationTimeLeft > 0 && !isVerified && (
+          <p style={{ marginTop: "8px", color: "red" }}>
+            유효 시간: {Math.floor(verificationTimeLeft / 60)}분 {verificationTimeLeft % 60}초
+          </p>
+        )}
+        {verificationStatus && <p style={{ marginTop: "8px" }}>{verificationStatus}</p>}
+        {isVerified && <p style={{ color: "green" }}>이메일 인증 완료</p>}
+      </div>
     );
-}
+  }
