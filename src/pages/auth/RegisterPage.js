@@ -251,7 +251,11 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit}>
                 {/* 아이디 입력 (소셜 회원가입일 경우 비활성화) */}
                 <FormInput
-                    label="아이디"
+                    label={
+                        <span>
+                            아이디<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="userId"
                     value={formData.userId}
                     onChange={handleChange}
@@ -261,9 +265,14 @@ export default function RegisterPage() {
                     disabled={false} // 수정 가능
                 />
 
+
                 {/* 비밀번호 입력 (소셜 회원가입일 경우 비활성화) */}
                 <FormInput
-                    label="비밀번호"
+                    label={
+                        <span>
+                            비밀번호<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="password"
                     type="password"
                     value={formData.password}
@@ -272,7 +281,11 @@ export default function RegisterPage() {
                     placeholder="비밀번호"
                 />
                 <FormInput
-                    label="비밀번호 확인"
+                    label={
+                        <span>
+                            비밀번호 확인<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="confirmPassword"
                     type="password"
                     value={formData.confirmPassword}
@@ -284,7 +297,11 @@ export default function RegisterPage() {
 
                 {/* 이름 입력 */}
                 <FormInput
-                    label="이름"
+                    label={
+                        <span>
+                            이름<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="userName"
                     value={formData.userName}
                     onChange={handleChange}
@@ -327,7 +344,11 @@ export default function RegisterPage() {
 
                 {/* 생년월일 입력 */}
                 <FormInput
-                    label="생년월일"
+                    label={
+                        <span>
+                            생년월일<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="userBirth"
                     type="date"
                     value={formData.userBirth}
@@ -337,7 +358,11 @@ export default function RegisterPage() {
 
                 {/* 전화번호 */}
                 <FormInput
-                    label="전화번호"
+                    label={
+                        <span>
+                            전화번호<span style={{ color: "red" }}>*</span>
+                        </span>
+                    }
                     name="userPhone"
                     value={formData.userPhone}
                     onChange={handleChange}
