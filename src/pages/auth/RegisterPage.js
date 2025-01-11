@@ -21,6 +21,7 @@ export default function RegisterPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
+    const [currentStep, setCurrentStep] = useState(0);
 
     // 소셜 회원가입 데이터 (state에서 가져오기)
     const socialData = location.state || {};
@@ -86,7 +87,38 @@ export default function RegisterPage() {
         }
     }, [provider, providerId, email, socialData.provider, socialData.email]);
     
-    
+    const requiredFields = [
+        "userId",
+        "password",
+        "confirmPassword",
+        "userName",
+        "userEmail",
+        "userBirth",
+        "userPhone",
+      ];
+
+    // 단계 전환
+  const nextStep = () => {
+    const missingFields = requiredFields.filter(
+      (field) => !formData[field] || (field === "userEmail" && !isVerified)
+    );
+
+    if (missingFields.length > 0) {
+      const updatedErrors = {};
+      missingFields.forEach((field) => {
+        updatedErrors[field] = "이 필드는 필수 입력 항목입니다.";
+      });
+      setErrors((prev) => ({ ...prev, ...updatedErrors }));
+      alert("필수 입력 항목을 모두 입력해 주세요.");
+      return;
+    }
+    setCurrentStep(1);
+  };
+
+  const previousStep = () => {
+    setCurrentStep(0);
+  };
+
 
     const validateField = (name, value) => {
         let error = "";
@@ -246,183 +278,179 @@ export default function RegisterPage() {
 
 
     return (
-        <div className="register-page">
-            <h1>{provider ? `${provider} 회원가입` : "회원가입"}</h1>
-            <form onSubmit={handleSubmit}>
-                {/* 아이디 입력 (소셜 회원가입일 경우 비활성화) */}
-                <FormInput
-                    label={
-                        <span>
-                            아이디<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="userId"
-                    value={formData.userId}
-                    onChange={handleChange}
-                    error={errors.userId}
-                    onBlur={handleBlur} // 중복 체크 실행
-                    placeholder="아이디를 입력하세요"
-                    disabled={false} // 수정 가능
-                />
+  <div className="register-page">
+    <h1>{provider ? `${provider} 회원가입` : "회원가입"}</h1>
+    <form onSubmit={handleSubmit}>
+      {currentStep === 0 && (
+        <>
+          {/* 아이디 입력 */}
+          <FormInput
+            label={
+              <span>
+                아이디<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="userId"
+            value={formData.userId}
+            onChange={handleChange}
+            error={errors.userId}
+            onBlur={handleBlur}
+            placeholder="아이디를 입력하세요"
+          />
 
+          {/* 비밀번호 입력 */}
+          <FormInput
+            label={
+              <span>
+                비밀번호<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+            placeholder="비밀번호"
+          />
+          <FormInput
+            label={
+              <span>
+                비밀번호 확인<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="confirmPassword"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            error={errors.confirmPassword}
+            placeholder="비밀번호 확인"
+          />
 
-                {/* 비밀번호 입력 (소셜 회원가입일 경우 비활성화) */}
-                <FormInput
-                    label={
-                        <span>
-                            비밀번호<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    error={errors.password}
-                    placeholder="비밀번호"
-                />
-                <FormInput
-                    label={
-                        <span>
-                            비밀번호 확인<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="confirmPassword"
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    error={errors.confirmPassword}
-                    placeholder="비밀번호 확인"
-                />
-                
+          {/* 이름 입력 */}
+          <FormInput
+            label={
+              <span>
+                이름<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="userName"
+            value={formData.userName}
+            onChange={handleChange}
+            error={errors.userName}
+            placeholder="이름"
+          />
 
-                {/* 이름 입력 */}
-                <FormInput
-                    label={
-                        <span>
-                            이름<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="userName"
-                    value={formData.userName}
-                    onChange={handleChange}
-                    error={errors.userName}
-                    placeholder="이름"
-                />
+          {/* 이메일 인증 */}
+          <EmailVerification
+            email={formData.userEmail}
+            setEmail={(value) => setFormData((prev) => ({ ...prev, userEmail: value }))}
+            isVerified={isVerified}
+            setIsVerified={setIsVerified}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.userEmail}
+          />
 
-                {/* 이메일 입력 (소셜 회원가입일 경우 비활성화) */}
-                {/* <FormInput
-                    label="이메일"
-                    name="userEmail"
-                    value={formData.userEmail}
-                    onChange={handleChange}
-                    error={errors.userEmail}
-                    disabled={isSocialRegister}
-                /> */}
+          {/* 생년월일 입력 */}
+          <FormInput
+            label={
+              <span>
+                생년월일<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="userBirth"
+            type="date"
+            value={formData.userBirth}
+            onChange={handleChange}
+            error={errors.userBirth}
+          />
 
-                {/* 이메일 인증 서비스 추후 다시 개발 */}
-                <EmailVerification
-                    email={formData.userEmail}
-                    setEmail={(value) => setFormData((prev) => ({ ...prev, userEmail: value }))}
-                    isVerified={isVerified}
-                    setIsVerified={setIsVerified}
-                    error={errors.userEmail}
-                    disabled={isSocialRegister}
-                    />
+          {/* 전화번호 입력 */}
+          <FormInput
+            label={
+              <span>
+                전화번호<span style={{ color: "red" }}>*</span>
+              </span>
+            }
+            name="userPhone"
+            value={formData.userPhone}
+            onChange={handleChange}
+            error={errors.userPhone}
+            placeholder="전화번호"
+          />
 
-                {/* 유저 타입 드롭다운 */}
-                <div className="form-group">
-                    <label>유저 타입</label>
-                    <select
-                        name="userType"
-                        value={formData.userType}
-                        onChange={handleChange}
-                    >
-                        <option value="PERSONAL">개인</option>
-                        <option value="BUSINESS">비즈니스</option>
-                    </select>
-                </div>
+          {/* 다음 버튼 */}
+          <button type="button" onClick={nextStep}>
+            다음
+          </button>
+        </>
+      )}
 
-                {/* 생년월일 입력 */}
-                <FormInput
-                    label={
-                        <span>
-                            생년월일<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="userBirth"
-                    type="date"
-                    value={formData.userBirth}
-                    onChange={handleChange}
-                    error={errors.userBirth}
-                />
+      {currentStep === 1 && (
+        <>
+          {/* 직급 입력 */}
+          <FormInput
+            label="직급"
+            name="companyRank"
+            value={formData.companyRank}
+            onChange={handleChange}
+            error={errors.companyRank}
+            placeholder="직급"
+          />
 
-                {/* 전화번호 */}
-                <FormInput
-                    label={
-                        <span>
-                            전화번호<span style={{ color: "red" }}>*</span>
-                        </span>
-                    }
-                    name="userPhone"
-                    value={formData.userPhone}
-                    onChange={handleChange}
-                    error={errors.userPhone}
-                    placeholder="전화번호"
-                />
+          {/* 부서명 입력 */}
+          <FormInput
+            label="부서명"
+            name="companyDept"
+            value={formData.companyDept}
+            onChange={handleChange}
+            error={errors.companyDept}
+            placeholder="부서명"
+          />
 
-                {/* 직급 */}
-                <FormInput
-                    label="직급"
-                    name="companyRank"
-                    value={formData.companyRank}
-                    onChange={handleChange}
-                    error={errors.companyRank}
-                    placeholder="직급"
-                />
+          {/* 회사 전화번호 입력 */}
+          <FormInput
+            label="회사 전화번호"
+            name="companyPhone"
+            value={formData.companyPhone}
+            onChange={handleChange}
+            error={errors.companyPhone}
+            placeholder="회사 전화번호"
+          />
 
-                {/* 부서명 */}
-                <FormInput
-                    label="부서명"
-                    name="companyDept"
-                    value={formData.companyDept}
-                    onChange={handleChange}
-                    error={errors.companyDept}
-                    placeholder="부서명"
-                />
+          {/* Fax 입력 */}
+          <FormInput
+            label="fax 번호"
+            name="companyFax"
+            value={formData.companyFax}
+            onChange={handleChange}
+            error={errors.companyFax}
+            placeholder="fax"
+          />
 
-                {/* 회사 전화번호 */}
-                <FormInput
-                    label="회사 전화번호"
-                    name="companyPhone"
-                    value={formData.companyPhone}
-                    onChange={handleChange}
-                    error={errors.companyPhone}
-                    placeholder="회사 전화번호"
-                />
+          {/* 주소 입력 */}
+          <AddressSearch
+            address={formData.companyAddr}
+            setAddress={(value) => setFormData((prev) => ({ ...prev, companyAddr: value }))}
+            detailedAddress={formData.companyAddrDetail}
+            setDetailedAddress={(value) =>
+              setFormData((prev) => ({ ...prev, companyAddrDetail: value }))
+            }
+            company={formData.company}
+            setCompany={(value) => setFormData((prev) => ({ ...prev, company: value }))}
+          />
 
-                {/* fax */}
-                <FormInput
-                    label="fax 번호"
-                    name="companyFax"
-                    value={formData.companyFax}
-                    onChange={handleChange}
-                    error={errors.companyFax}
-                    placeholder="fax"
-                />
+          {/* 이전 버튼 */}
+          <button type="button" onClick={previousStep}>
+            이전
+          </button>
 
-                {/* 주소 입력 */}
-                <AddressSearch
-                    address={formData.companyAddr}
-                    setAddress={(value) => setFormData((prev) => ({ ...prev, companyAddr: value }))}
-                    detailedAddress={formData.companyAddrDetail}
-                    setDetailedAddress={(value) =>
-                        setFormData((prev) => ({ ...prev, companyAddrDetail: value }))
-                    }
-                    company={formData.company}
-                    setCompany={(value) => setFormData((prev) => ({ ...prev, company: value }))}
-                />
-                <button type="submit">회원가입</button>
-            </form>
-        </div>
-    );
+          {/* 회원가입 버튼 */}
+          <button type="submit">회원가입</button>
+        </>
+      )}
+    </form>
+  </div>
+);
+
 }

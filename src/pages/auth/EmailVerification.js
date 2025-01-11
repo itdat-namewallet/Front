@@ -11,7 +11,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-export default function EmailVerification({ email, setEmail, isVerified, setIsVerified }) {
+export default function EmailVerification({ email, setEmail, isVerified, setIsVerified, onBlur, error }) {
     const [verificationCode, setVerificationCode] = useState("");
     const [isCodeSent, setIsCodeSent] = useState(false);
     const [resendCooldown, setResendCooldown] = useState(0);
@@ -77,6 +77,12 @@ export default function EmailVerification({ email, setEmail, isVerified, setIsVe
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={(e) => {
+              console.log("Email input onBlur triggered"); // 디버그 로그
+              if (onBlur) {
+                onBlur({ target: { name: "userEmail", value: e.target.value } }); // 부모로 이벤트 전달
+              }
+            }}
             placeholder="이메일을 입력하세요"
             className="form-input"
             style={{ flex: 1, marginRight: "8px" }}
@@ -93,6 +99,7 @@ export default function EmailVerification({ email, setEmail, isVerified, setIsVe
               : "인증 코드"}
           </button>
         </div>
+        {error && <p style={{ color: "red", marginTop: "4px" }}>{error}</p>}
         {isCodeSent && !isVerified && (
           <div style={{ marginTop: "16px", display: "flex", alignItems: "center" }}>
             <input
