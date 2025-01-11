@@ -9,31 +9,34 @@ import "../../assets/css/auth/login.css";
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
+    const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // 일반 로그인 처리
     const handleLogin = async () => {
-        try {
-            const response = await axios.post(`${BASE_URL}/api/auth/login`, { email, password });
-            const { token } = response.data;
-    
-            if (token) {
-                console.log("로그인 성공, 토큰 저장:", token);
-                localStorage.setItem("jwtToken", token);
-                setIsLoggedIn(true);
-                navigate("/");
-                window.location.reload();
-            } else {
-                alert("로그인 실패: 토큰 없음");
-            }
-        } catch (error) {
-            console.error("로그인 실패:", error.response?.data || error.message);
-            alert("로그인 실패");
-        }
-    };
+      try {
+          const response = await axios.post(`${BASE_URL}/api/auth/login`, {
+              identifier,
+              password,
+          });
+          const { token } = response.data;
+  
+          if (token) {
+              console.log("로그인 성공, 토큰 저장:", token);
+              localStorage.setItem("jwtToken", token);
+              navigate("/");
+              window.location.reload();
+          } else {
+              alert("로그인 실패: 토큰 없음");
+          }
+      } catch (error) {
+          console.error("로그인 실패:", error.response?.data || error.message);
+          alert("로그인 실패");
+      }
+  };
+  
     
 
     // 소셜 로그인 성공 처리
@@ -72,7 +75,7 @@ export default function LoginPage() {
             <h1 className="login-title">로그인</h1>
       
             {/* 이메일 입력 */}
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>이메일</label>
               <input
                 type="email"
@@ -80,8 +83,19 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일 입력"
               />
+            </div> */}
+
+            {/* 아이디 또는 이메일 입력 */}
+            <div className="form-group">
+              <label>아이디 또는 이메일</label>
+              <input
+                type="text"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="아이디 또는 이메일 입력"
+              />
             </div>
-      
+
             {/* 비밀번호 입력 */}
             <div className="form-group">
               <label>비밀번호</label>

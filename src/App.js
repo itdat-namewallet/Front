@@ -19,6 +19,7 @@ import ReportedUser from "./components/admin/ReportedUser";
 import ReportUser from "./components/admin/ReportUser";
 import QnaPostDetail from "./components/qna/QnaPostDetail";
 import QnaPostUpdate from "./components/qna/QnaPostUpdate";
+import "./assets/css/common/App.css"
 
 
 const GlobalStyle = createGlobalStyle`
