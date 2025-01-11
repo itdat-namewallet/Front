@@ -68,50 +68,72 @@ export default function LoginPage() {
 
     return (
         <div className="login-page">
-            <h1>로그인</h1>
+          <div className="login-container">
+            <h1 className="login-title">로그인</h1>
+      
+            {/* 이메일 입력 */}
             <div className="form-group">
-                <label>이메일</label>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="이메일 입력"
-                />
+              <label>이메일</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일 입력"
+              />
             </div>
+      
+            {/* 비밀번호 입력 */}
             <div className="form-group">
-                <label>비밀번호</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="비밀번호 입력"
-                />
+              <label>비밀번호</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="비밀번호 입력"
+              />
             </div>
+      
+            {/* 로그인 버튼 */}
             <button className="login-button" onClick={handleLogin}>
-                로그인
+              로그인
             </button>
-
+      
+            {/* 회원가입 버튼 */}
+            <button
+              className="register-button"
+              onClick={() => navigate("/register")}
+            >
+              회원가입
+            </button>
+      
             {/* 구분선 */}
             <div className="separator">
-                <hr />
-                <span className="or-text">또는</span>
+              <hr />
+              <span className="or-text">또는</span>
             </div>
-
+      
             {/* 소셜 로그인 버튼 */}
             <div className="social-buttons">
-                <GoogleLoginButton
-                    onSuccess={(accessToken) => handleSocialLoginSuccess("google", accessToken)}
-                    onFailure={handleSocialLoginFailure}
-                />
-                <KakaoLoginButton
-                    onSuccess={(accessToken) => handleSocialLoginSuccess("kakao", accessToken)}
-                    onFailure={handleSocialLoginFailure}
-                />
-                <NaverLoginButton
-                    onSuccess={(accessToken) => handleSocialLoginSuccess("naver", accessToken)}
-                    onFailure={handleSocialLoginFailure}
-                />
+              <GoogleLoginButton
+                onSuccess={(accessToken) =>
+                  handleSocialLoginSuccess("google", accessToken)
+                }
+                onFailure={handleSocialLoginFailure}
+              />
+              <KakaoLoginButton
+                onSuccess={(accessToken) =>
+                  handleSocialLoginSuccess("kakao", accessToken)
+                }
+                onFailure={handleSocialLoginFailure}
+              />
+              <NaverLoginButton
+                onSuccess={(accessToken) =>
+                  handleSocialLoginSuccess("naver", accessToken)
+                }
+                onFailure={handleSocialLoginFailure}
+              />
             </div>
+          </div>
         </div>
-    );
+      );
 }
