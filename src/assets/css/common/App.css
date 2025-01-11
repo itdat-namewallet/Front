@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+header {
+    font-family: 'Chosunilbo_myungjo';
+}
+
+body {
+    font-family: 'Chosunilbo_myungjo';
+}
+
+footer {
+    font-family: 'Chosunilbo_myungjo';
+}
