@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "title": "디자이너 명함",
+      "price": "13,000원",
+      "description": "디자인 NFC 카드",
+      "image": "card1.png",
+      "hoverImage": "card1.png"
+    },
+    {
+      "id": 2,
+      "title": "엔터테이먼트 명함",
+      "price": "13,000원",
+      "description": "디자인 NFC 카드",
+      "image": "card2.png",
+      "hoverImage": "card2-1.png"
+    },
+    {
+      "id": 3,
+      "title": "shop 명함",
+      "price": "13,000원",
+      "description": "디자인 NFC 카드",
+      "image": "card3.png",
+      "hoverImage": "card3-1.png"
+    }
+  ]
+  
