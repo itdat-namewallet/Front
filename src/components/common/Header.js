@@ -114,10 +114,10 @@ export default function Header() {
                     </span>
                 </li>
                 <li>
-                    <span>명함 제작</span>
-                    <span className="main-header-icon">
-                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
-                    </span>
+                    <Link to="/business-card-page" className="main-header-nav-link">명함 제작</Link>
+                        <span className="main-header-icon">
+                            <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                        </span>
                 </li>
                 <li>
                     <span>NFC 제품</span>

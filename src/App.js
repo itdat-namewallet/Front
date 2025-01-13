@@ -20,6 +20,7 @@ import ReportUser from "./components/admin/ReportUser";
 import QnaPostDetail from "./components/qna/QnaPostDetail";
 import QnaPostUpdate from "./components/qna/QnaPostUpdate";
 import "./assets/css/common/App.css"
+import BusinessCardPage from "./pages/main/BusinessCardPage";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -43,7 +44,8 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<Layout />}>
                             <Route index element={<HomePage />} />
-                            <Route path="login-and-register" element={<LoginAndRegisterPage />} />
+                            <Route path="login-and-register" element={<LoginPage />} />
+                            <Route path="business-card-page" element={<BusinessCardPage />} />
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/callback" element={<OAuthCallback />} />
