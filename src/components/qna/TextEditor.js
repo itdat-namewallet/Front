@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-// import "../../assets/css/pages/qna/textEditor.css"
+import "../../assets/css/pages/qna/textEditor.css"
 import styles from "../../assets/css/pages/qna/textEditor.module.css"
 import { adminStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
@@ -134,37 +134,46 @@ const TextEditor = () => {
                         ,
                     }}
                     onChange={handleEditorChange}
-                    onReady={(editor) => {
-                        console.log('Editor is ready to use!', editor);
+                    // onReady={(editor)=>{
+
+                    // }}
+
+
+                    // onReady={(editor) => {
+                    //     console.log('Editor is ready to use!', editor);
       
-                        // 전체 에디터 크기 설정 (너비와 높이 고정)
-                        const editorElement = editor.ui.view.element;
-                        // editorElement.style.minWidth = '800px'; // 전체 에디터 너비
-                        // editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
-                        editorElement.style.height = '400px'; // 전체 에디터 높이
+                    //     // 전체 에디터 크기 설정 (너비와 높이 고정)
+                    //     const editorElement = editor.ui.view.element;
+                    //     // editorElement.style.width = "1200px";
+                    //     editorElement.style.minWidth = '800px'; // 전체 에디터 너비
+                    //     editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
+                    //     // editorElement.style.width = "1200px";
+                    //     // editorElement.style.width = "";
+                    //     // editorElement.style.height = '400px'; // 전체 에디터 높이
+                    //     // editorElement.classList.add('custom-editor-container');
       
-                        // 텍스트 입력 영역 (editable) 크기 설정
-                        const editableElement = editor.ui.view.editable.element;
-                        editableElement.style.height = '400px'; // 고정된 높이
-                        editableElement.style.minHeight = '400px'; // 최소 높이 설정
-                        editableElement.style.maxHeight = '400px'; // 최대 높이 설정
-                        editableElement.style.overflowY = 'auto'; // 내용이 넘칠 경우 스크롤이 생기도록 설정
-                        editableElement.style.resize = 'none'; // 크기 조정 방지
+                    //     // 텍스트 입력 영역 (editable) 크기 설정
+                    //     const editableElement = editor.ui.view.editable.element;
+                    //     editableElement.style.height = '400px'; // 고정된 높이
+                    //     editableElement.style.minHeight = '400px'; // 최소 높이 설정
+                    //     editableElement.style.maxHeight = '400px'; // 최대 높이 설정
+                    //     editableElement.style.overflowY = 'auto'; // 내용이 넘칠 경우 스크롤이 생기도록 설정
+                    //     editableElement.style.resize = 'none'; // 크기 조정 방지
       
-                        // 포커스가 생겨도 크기 변경을 방지하도록 설정
-                        editableElement.addEventListener('focus', () => {
-                            editableElement.style.height = '400px';
-                            editableElement.style.minHeight = '400px';
-                            editableElement.style.maxHeight = '400px';
-                        });
-                        editableElement.addEventListener('blur', () => {
-                            setTimeout(() => {
-                                editableElement.style.height = '400px';
-                                editableElement.style.minHeight = '400px';
-                                editableElement.style.maxHeight = '400px';
-                            }, 0); // setTimeout을 사용하여 스타일을 즉시 적용
-                        });
-                    }}
+                    //     // 포커스가 생겨도 크기 변경을 방지하도록 설정
+                    //     editableElement.addEventListener('focus', () => {
+                    //         editableElement.style.height = '400px';
+                    //         editableElement.style.minHeight = '400px';
+                    //         editableElement.style.maxHeight = '400px';
+                    //     });
+                    //     editableElement.addEventListener('blur', () => {
+                    //         setTimeout(() => {
+                    //             editableElement.style.height = '400px';
+                    //             editableElement.style.minHeight = '400px';
+                    //             editableElement.style.maxHeight = '400px';
+                    //         }, 0); // setTimeout을 사용하여 스타일을 즉시 적용
+                    //     });
+                    // }}
       
                 />
             </div>

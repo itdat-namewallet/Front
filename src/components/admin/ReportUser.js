@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {userInfoStore} from "../../store";
+import { adminStore, userInfoStore } from "../../store";
 import styles from "../../assets/css/pages/qna/qnaPostBoard.module.css";
 
 
@@ -21,48 +21,41 @@ const ReportUser = () => {
     // 페이지당 항목 수
     const itemsPerPage = 10;
     // 선택된 유저 정보를 담는 전역 변수. 쥬스탄드
-    const{ userData, setUserData} = userInfoStore();
+    const { userData, setUserData } = userInfoStore();
     // 선택된 유저 정보를 담는 변수
     const [selectedUserInfo, setSelectedUserInfo] = useState();
-    
-
-    // 단순 테스트용
-    const reportTest = async () => {
-        const response = await axios.post(`${BASE_URL}/admin/report-user-list`,
-            { reportedUserId: "asd", description: "너 신고!", userId: "신고자", reportDateAt: new Date() }
-        );
-    }
-    // reportTest();
+    // 로그인한 유저의 어드민 권한 확인 전역 변수
+    const {isAdmin, loginedUserId} = adminStore();
 
     // 신고 목록 가져오기
-    useEffect(()=>{
+    useEffect(() => {
 
         const bringReportList = async () => {
-            try{
+            try {
                 const response = await axios.get(`${BASE_URL}/admin/report-user-list`);
-                
-                console.log("2222222222222222222",response.data);
-                const sortedData = response.data.sort((a,b) => new Date(b.reportDateAt) - new Date(a.reportDateAt)); 
+
+                console.log("2222222222222222222", response.data);
+                const sortedData = response.data.sort((a, b) => new Date(b.reportDateAt) - new Date(a.reportDateAt));
                 setReportUserList(sortedData);
                 setFilteredList(sortedData);
                 // setReportUserList(response.data);
                 // setFilteredList(response.data);
                 console.log(response.data);
-            }catch(error){
+            } catch (error) {
                 console.log(error.response.data);
                 return alert(`${error.response.data}`);
             }
         }
         bringReportList();
-        
+
 
     }, [])
 
     // 클릭시 input 창의 검색어를 이용하여 특정 문자열을 포함한 객체를 배열로 담아내는 함수
     const handleSearch = () => {
-        
-        const filtered = reportUserList.filter((one) =>{
-      
+
+        const filtered = reportUserList.filter((one) => {
+
             return one.reportedUserId.toLowerCase().includes(searchTerm.toLowerCase())
         }
             // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.
@@ -74,17 +67,17 @@ const ReportUser = () => {
 
     // 동적으로 페이지에 보여줄 데이터를 계산
     const indexOfLastItem = currentPage * itemsPerPage;
-        // 현재 페이지(배열) 안에서의 마지막 객체 인덱스 번호를 특정하기 위한 변수
+    // 현재 페이지(배열) 안에서의 마지막 객체 인덱스 번호를 특정하기 위한 변수
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        // 마지막 객체 인덱스 변수에 페이지 당 보여줄 객체의 항목 수를 셈하여, 페이지 배열 안에서의 첫 번째 객체 인덱스 특정
+    // 마지막 객체 인덱스 변수에 페이지 당 보여줄 객체의 항목 수를 셈하여, 페이지 배열 안에서의 첫 번째 객체 인덱스 특정
     const currentUsers = filteredList.slice(indexOfFirstItem, indexOfLastItem);
-        // 현재 페이지에 보여질 객체들을 인덱스 번호로 구간을 특정 짓는 변수 
-        // slice(start, end): start는 인덱스에 포함 되고, end는 포함되지 않는다.
-        // slice(0,10)이면 0~9까지 즉, 10개의 객체가 담긴다.
+    // 현재 페이지에 보여질 객체들을 인덱스 번호로 구간을 특정 짓는 변수 
+    // slice(start, end): start는 인덱스에 포함 되고, end는 포함되지 않는다.
+    // slice(0,10)이면 0~9까지 즉, 10개의 객체가 담긴다.
     const totalPages = Math.ceil(filteredList.length / itemsPerPage);
-        // 리스트의 총 항목 수에 페이지당 보여줄 객체의 항목 수를 셈하여, 적절한 페이지 수를 구한다.
-        // Math.ceil(): 소수점을 올림하여 마지막 페이지까지 구현한다.
-        // Math.ceil(25/10)이면 2.5이므로 3페이지까지 구현하여 객체들을 모두 조회할 수 있도록 한다.
+    // 리스트의 총 항목 수에 페이지당 보여줄 객체의 항목 수를 셈하여, 적절한 페이지 수를 구한다.
+    // Math.ceil(): 소수점을 올림하여 마지막 페이지까지 구현한다.
+    // Math.ceil(25/10)이면 2.5이므로 3페이지까지 구현하여 객체들을 모두 조회할 수 있도록 한다.
 
     // 페이지 변경 핸들러
     const handlePageChange = (pageNumber) => {
@@ -92,16 +85,16 @@ const ReportUser = () => {
     };
 
     const detailInfo = async (reportedUserId) => {
-        try{
+        try {
             const response = await axios.get(`${BASE_URL}/admin/detail-info`,
                 {
-                    params: {reportedUserId}
+                    params: { reportedUserId }
                 }
             );
             setSelectedUserInfo(response.data);
             setUserData(response.data);
             navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
         // navigate("/admin/detail-info");
@@ -110,151 +103,87 @@ const ReportUser = () => {
     return (
         <div className={styles["table-container"]}>
             <>
-            <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="User ID 검색"
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                />
-                <button onClick={handleSearch}>검색</button>
-            </div>
-            <table>
-                <thead>
-                    {/* 리스트의 헤드 */}
-                    <tr> 
-                        <th>신고당한 유저 아이디</th>
-                        <th>신고 이유</th>
-                        <th>신고한 유저 아이디</th>
-                        <th>신고한 날짜</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* 리스트의 바디 */}
-                    {currentUsers.map((user, index) => (
-                        <tr key={index} onClick={() => detailInfo(user.reportedUserId)}>
-                            <td>{user.reportedUserId}</td>
-                            <td>{user.description}</td>
-                            <td>{user.userId}</td>
-                            <td>{user.reportDateAt}</td>
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="User ID 검색"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>검색</button>
+                </div>
+                <table>
+                    <thead>
+                        {/* 리스트의 헤드 */}
+                        <tr>
+                            <th>신고당한 유저 아이디</th>
+                            <th>신고 이유</th>
+                            <th>신고한 유저 아이디</th>
+                            <th>신고한 날짜</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            {/* 페이징 처리 버튼 */}
-            <div>
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)} 
-                    disabled={currentPage === 1}
-                    style={{
-                        margin: "0 5px",
-                        padding: "5px 10px",
-                    }}
-                >
-                    이전
-                </button>
-                {Array.from({length: totalPages}, (_, index) => (
-                    // _는 값이고 index는 값의 인덱스 번호이다. 값은 필요없고 인덱스 번호만 필요할 때 언더바(_)를 사용한다.
+                    </thead>
+                    <tbody>
+                        {/* 리스트의 바디 */}
+                        {currentUsers.map((user, index) => {
+                            const isAccessible = isAdmin;
+                            return (
+                                <tr
+                                    key={index}
+                                    onClick={() => detailInfo(user.reportedUserId)}
+                                    className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
+                                >
+                                    <td>{user.reportedUserId}</td>
+                                    <td>{user.category}</td>
+                                    <td>{user.userId}</td>
+                                    <td>{user.reportDateAt}</td>
+                                </tr>
+                            );
+                        }
+
+                        )}
+                    </tbody>
+                </table>
+
+                <div className={styles['page-pagination']}>
                     <button
-                        key={index}
-                        onClick={()=>handlePageChange(index+1)}
-                        style={{
-                            margin: "0 5px",
-                            padding: "5px 10px",
-                            backgroundColor: currentPage === index + 1 ? "lightblue" : "white",
-                        }}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
                     >
-                        {index+1}
+                        이전
                     </button>
-                    
-                ))}
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)} 
-                    disabled={currentPage === totalPages}
-                    style={{
-                        margin: "0 5px",
-                        padding: "5px 10px",
-                    }}
-                >
-                    다음
-                </button>
-            </div>
-            
-        </>
+                    {
+                        Array.from({ length: totalPages }, (_, index) => index + 1)
+                            .filter((page) => {
+                                // 현재 페이지 주변 1개와 시작, 끝 3개 유지
+                                return (
+                                    page === 1 ||
+                                    page === totalPages ||
+                                    (page >= currentPage - 1 && page <= currentPage + 1)
+                                );
+                            })
+                            .map((page, idx, filteredPages) => (
+                                <React.Fragment key={page}>
+                                    {/* ... 생략 버튼 처리 */}
+                                    {idx > 0 && page > filteredPages[idx - 1] + 1 && <span>...</span>}
+
+                                    <button
+                                        onClick={() => handlePageChange(page)}
+                                        aria-current={currentPage === page ? "page" : undefined}
+                                    >
+                                        {page}
+                                    </button>
+                                </React.Fragment>
+                            ))
+                    }
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        다음
+                    </button>
+                </div>
+            </>
         </div>
-        // <>
-        //     <div>
-        //         {/* 검색 기능 */}
-        //         <input
-        //             type="text"
-        //             placeholder="User ID 검색"
-        //             value={searchTerm}
-        //             onChange={e => setSearchTerm(e.target.value)}
-        //         />
-        //         <button onClick={handleSearch}>검색</button>
-        //     </div>
-        //     <table>
-        //         <thead>
-        //             {/* 리스트의 헤드 */}
-        //             <tr> 
-        //                 <th>신고당한 유저 아이디</th>
-        //                 <th>신고 이유</th>
-        //                 <th>신고한 유저 아이디</th>
-        //                 <th>신고한 날짜</th>
-        //             </tr>
-        //         </thead>
-        //         <tbody>
-        //             {/* 리스트의 바디 */}
-        //             {currentUsers.map((user, index) => (
-        //                 <tr key={index} onClick={() => detailInfo(user.reportedUserId)}>
-        //                     <td>{user.reportedUserId}</td>
-        //                     <td>{user.description}</td>
-        //                     <td>{user.userId}</td>
-        //                     <td>{user.reportDateAt}</td>
-        //                 </tr>
-        //             ))}
-        //         </tbody>
-        //     </table>
-        //     {/* 페이징 처리 버튼 */}
-        //     <div>
-        //         <button
-        //             onClick={() => handlePageChange(currentPage - 1)} 
-        //             disabled={currentPage === 1}
-        //             style={{
-        //                 margin: "0 5px",
-        //                 padding: "5px 10px",
-        //             }}
-        //         >
-        //             이전
-        //         </button>
-        //         {Array.from({length: totalPages}, (_, index) => (
-        //             // _는 값이고 index는 값의 인덱스 번호이다. 값은 필요없고 인덱스 번호만 필요할 때 언더바(_)를 사용한다.
-        //             <button
-        //                 key={index}
-        //                 onClick={()=>handlePageChange(index+1)}
-        //                 style={{
-        //                     margin: "0 5px",
-        //                     padding: "5px 10px",
-        //                     backgroundColor: currentPage === index + 1 ? "lightblue" : "white",
-        //                 }}
-        //             >
-        //                 {index+1}
-        //             </button>
-                    
-        //         ))}
-        //         <button
-        //             onClick={() => handlePageChange(currentPage + 1)} 
-        //             disabled={currentPage === totalPages}
-        //             style={{
-        //                 margin: "0 5px",
-        //                 padding: "5px 10px",
-        //             }}
-        //         >
-        //             다음
-        //         </button>
-        //     </div>
-            
-        // </>
     )
 }
 export default ReportUser;

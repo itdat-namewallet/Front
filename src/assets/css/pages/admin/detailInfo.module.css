@@ -1,0 +1,20 @@
+.table-container {
+
+    table {
+        display: flex;
+        flex-direction: row;
+
+        thead tr{
+            width: 300px;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+
+            td {
+                height: 50px;
+            }
+        }
+    }
+}

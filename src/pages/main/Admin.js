@@ -12,11 +12,11 @@ const Admin = () => {
 
             <div className='admin-header'>
                 <div className='left-text-header'>
-                    <Link to={"/admin"}>
+                    <Link to={"/admin"} style={{ color: 'inherit', textDecoration: 'none' }}>
                         <h3>신고된 유저 현황 조회</h3>
                     </Link>
                     <h3>/</h3>
-                    <Link to={"/admin/report-user"} >
+                    <Link to={"/admin/report-user"} style={{ color: 'inherit', textDecoration: 'none' }}>
                         <h3>신고 현황</h3>
                     </Link>
                 </div>
