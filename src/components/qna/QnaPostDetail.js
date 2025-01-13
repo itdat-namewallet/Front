@@ -100,14 +100,31 @@ const QnaPostDetail = () => {
                     작성자: <strong>{qnaPostData.user.userId || "알 수 없음"}</strong>
                 </div>
                 <div>
-                    작성일: {qnaPostData.createDateAt || "알 수 없음"}
+                    <div>
+                        작성일: {new Date(qnaPostData.createDateAt).toLocaleString("ko-KR",{
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
+                    </div>
+                    {/* 수정일 정보 */}
+                    {/* <div className={styles.dateInfo}> */}
+                    <div>
+                        수정일: {new Date(qnaPostData.updateAt).toLocaleString("ko-KR",{
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
+                    </div>
                 </div>
+                
             </div>
 
-            {/* 수정일 정보 */}
-            <div className={styles.dateInfo}>
-                수정일: {qnaPostData.updateAt || "알 수 없음"}
-            </div>
+            
 
             {/* 본문 내용 */}
             <div
