@@ -7,8 +7,8 @@ export default function BusinessCardPage() {
 
   return (
     <div className="business-card-page">
-      <h1>ITDAT NFC 카드</h1>
-      <p>ITDAT만의 다양한 카드 디자인을 만나보세요.</p>
+      <h1>ITDAT 명함</h1>
+      <p>ITDAT만의 다양한 명함 디자인을 만나보세요.</p>
       <div className="card-grid">
         {cards.map((card) => (
           <div
