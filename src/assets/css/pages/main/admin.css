@@ -30,3 +30,16 @@
     }
     
 }
+
+.admin-container .admin-header .left-text-header a,
+.admin-container .admin-header .right-text-header a {
+    text-decoration: none; /* 기본 링크 밑줄 없애기 */
+}
+
+.admin-container .admin-header .left-text-header a:active,
+.admin-container .admin-header .left-text-header a:focus,
+.admin-container .admin-header .right-text-header a:active,
+.admin-container .admin-header .right-text-header a:focus {
+    color: inherit; /* 클릭했을 때 색깔 변경되지 않도록 설정 */
+    outline: none;  /* 클릭 시 외곽선 제거 */
+}

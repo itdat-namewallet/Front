@@ -16,8 +16,8 @@
 
 /* CKEditor의 div */
 .text-editor-body {
-    display: block;  /* 블록 요소로 설정 */
-    width: 100%;     /* 너비 100% */
+    
+    flex-grow: 0;
     height: auto;    /* 부모 요소의 높이가 자동으로 설정되도록 */
 }
 
