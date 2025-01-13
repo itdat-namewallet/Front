@@ -184,7 +184,6 @@ const ReportUser = () => {
                 </div>
             </>
         </div>
-        
     )
 }
 export default ReportUser;
