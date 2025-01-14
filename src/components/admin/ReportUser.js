@@ -266,7 +266,6 @@ const ReportUser = () => {
                 </ReactModal>
             </>
         </div>
-        
     )
 }
 export default ReportUser;
