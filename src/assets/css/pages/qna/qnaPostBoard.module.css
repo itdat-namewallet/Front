@@ -1,3 +1,88 @@
+/* 모달 콘텐츠 */
+.modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff; /* 순수 흰색 배경 */
+    padding: 30px 20px; /* 여백 추가 */
+    border-radius: 10px; /* 더 부드러운 모서리 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* 그림자 강조 */
+    width: 400px; /* 너비 유지 */
+    max-width: 90%; /* 화면 크기 줄어들 때 대응 */
+    color: #333; /* 텍스트 색상 */
+    font-family: Arial, sans-serif; /* 기본 폰트 */
+    line-height: 1.5; /* 가독성 향상 */
+}
+
+/* 모달 제목 스타일 */
+.modalContent h2 {
+    font-size: 20px; /* 제목 크기 */
+    font-weight: bold; /* 강조 */
+    margin-bottom: 20px; /* 아래 여백 */
+    text-align: center; /* 중앙 정렬 */
+    color: #444; /* 제목 색상 */
+}
+
+/* 모달 텍스트 스타일 */
+.modalContent p {
+    margin: 10px 0; /* 위아래 간격 */
+    font-size: 14px; /* 텍스트 크기 */
+    color: #555; /* 텍스트 색상 약간 부드럽게 */
+}
+
+/* 버튼 컨테이너 */
+.modalContent .button-container {
+    display: flex;
+    justify-content: space-between; /* 버튼 간격 균등 배치 */
+    margin-top: 20px; /* 위 여백 */
+}
+
+/* 모달 버튼 스타일 */
+.modalContent button {
+    padding: 10px 20px; /* 버튼 크기 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold; /* 텍스트 강조 */
+    border: none; /* 기본 테두리 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 손 모양 커서 */
+    transition: background-color 0.3s ease; /* 색상 변화 부드럽게 */
+}
+
+/* 상세보기 버튼 */
+.modalContent button:first-of-type {
+    background-color: #007bff; /* 파란색 버튼 */
+    color: white; /* 텍스트 흰색 */
+}
+
+.modalContent button:first-of-type:hover {
+    background-color: #0056b3; /* 어두운 파란색 */
+}
+
+/* 닫기 버튼 */
+.modalContent button:last-of-type {
+    background-color: #f0f0f0; /* 회색 버튼 */
+    color: #333; /* 텍스트 색상 */
+}
+
+.modalContent button:last-of-type:hover {
+    background-color: #dcdcdc; /* 어두운 회색 */
+}
+
+/* 모달 오버레이 */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* 어두운 투명 오버레이 */
+    z-index: 1000; /* 우선순위 설정 */
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+}
+
 /* 검색 입력창 및 버튼 */
 .search-container {
     margin-bottom: 20px; /* 검색 창과 테이블 사이의 간격 */
@@ -5,6 +90,38 @@
     justify-content: flex-start;
     gap: 10px; /* 입력창과 버튼 사이의 간격 */
     align-items: center; /* 수직 중앙 정렬 */
+}
+
+/* 검색 카테고리 select 스타일 */
+.search-container select {
+    width: 150px;
+    padding: 8px 12px; /* 여백 추가 */
+    font-size: 14px; /* 글자 크기 */
+    border: 1px solid #ddd; /* 테두리 */
+    border-radius: 4px; /* 둥근 모서리 */
+    background-color: white; /* 배경색 */
+    color: #333; /* 텍스트 색상 */
+    outline: none; /* 포커스 시 기본 테두리 제거 */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* 변화 부드럽게 */
+    cursor: pointer; /* 커서 손 모양 */
+}
+
+/* select 태그 호버 시 */
+.search-container select:hover {
+    border-color: #bbb; /* 테두리 색상 변경 */
+    background-color: #f9f9f9; /* 배경색 약간 밝게 */
+}
+
+/* select 태그 포커스 시 */
+.search-container select:focus {
+    border-color: #999; /* 포커스 시 테두리 색상 강조 */
+}
+
+/* select 태그 비활성화 시 */
+.search-container select:disabled {
+    background-color: #f5f5f5; /* 비활성화된 배경색 */
+    color: #aaa; /* 텍스트 색상 흐리게 */
+    cursor: not-allowed; /* 커서 비활성화 */
 }
 
 /* 검색 입력창 스타일 */

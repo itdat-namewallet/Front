@@ -23,6 +23,19 @@ const QnaPostBoard = () => {
     const {qnaPostData, setQnaPostData} = qnaPostDetail();
     // 로그인한 유저의 어드민 권한 확인 전역 변수
     const {isAdmin, loginedUserId} = adminStore();
+    // 검색한 값을 담는 변수
+    const [searchTerm, setSearchTerm] = useState("");
+    // 신고 카테고리를 저장
+    const [category, setCategory] = useState("");
+
+    const categoryMap = {
+        "MERCHANDISE": "명함 제작",
+        "NFC": "NFC",
+        "APP": "어플리케이션",
+        "ACCOUNT": "계정 관련",
+        "ETC": "기타",
+        null: "기타",
+    };
 
     useEffect(() => {
         const bringList = async () => {
@@ -51,7 +64,25 @@ const QnaPostBoard = () => {
         }
         bringList();
     }, [])
-    // console.log(qnaList);
+    
+    const handleSearch = () => {
+
+        const filtered = qnaList.filter((one) => {
+            // 카테고리가 빈 값이면 ETC로 간주
+            const normalizedCategory = one.category === null ? "ETC" : one.category;
+
+            const matchesCategory = category ? normalizedCategory == category : true;
+            const matchesSearchTerm = one.title
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
+            return matchesCategory && matchesSearchTerm;
+        }
+            // toLowerCase(): 대소문자 구분 없이 검색 가능하도록 소문자로 변환시켜준다.
+            // includes(): 해당 문자열이 ()안의 문자를 포함하는지 여부를 true, false 가려준다.
+        );
+        setFilteredList(filtered);
+        setCurrentPage(1); // 검색이 이뤄지면 리스트의 첫 페이지로 이동되도록 한다.
+    };
 
     // 동적으로 페이지에 보여줄 데이터를 계산
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,9 +128,31 @@ const QnaPostBoard = () => {
     return (
         <>
             <div className={styles['table-container']}>
+            <div className={styles["search-container"]}>
+                    {/* 신고 카테고리 선택창 */}
+                    <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                        <option value="">전체 카테고리</option>
+                        <option value="MERCHANDISE">명함 제작</option>
+                        <option value="NFC">NFC</option>
+                        <option value="APP">어플리케이션</option>
+                        <option value="ACCOUNT">계정 관련</option>
+                        <option value="ETC">기타</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="제목 검색"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>검색</button>
+                </div>
                 <table>
                     <thead>
                         <tr>
+                            <th>카테고리</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
@@ -116,9 +169,19 @@ const QnaPostBoard = () => {
                                         onClick={() => isAccessible && openQnaPost(post.id)}
                                         className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                     >
+                                        <td>{categoryMap[post.category] || "알 수 없음"}</td>
                                         <td>{post.title}</td>
                                         <td>{post.user.userId}</td>
-                                        <td>{post.createDateAt}</td>
+                                        <td>
+                                            {new Date(post.createDateAt).toLocaleString("ko-KR", {
+                                                year: "numeric",
+                                                month: "2-digit",
+                                                day: "2-digit",
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        
                                     </tr>
                                 );
                             })

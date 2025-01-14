@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../../assets/css/pages/admin/detailInfo.module.css"
+import "../../assets/css/common/reactModal.css"
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -77,6 +78,29 @@ const DetailInfo = () => {
             fetchSelectedUserDetail();
         }
     }, [reportedUserId, isChange])
+
+    // <td>{new Date(userData.startDateAt).toLocaleString("ko-KR",{
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    // })}</td>
+
+    const changeDateType = (date) => {
+        if(date != null){
+            return new Date(date).toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+            })
+        } else {
+            return "제재 중인 유저가 아닙니다."
+        }
+        
+    }
 
     // 클릭시 수정사항을 백으로 보내는 함수
     const updateReportedInfo = async (id) => {
@@ -157,9 +181,9 @@ const DetailInfo = () => {
     return (
         <>
             <div class={styles['table-container']}>
-                <table>
-                    <thead >
-                        <tr>
+                <div className={styles["table-box"]}>
+                    <side >
+                        <tc>
                             {/* <td>해당 계정의 고유 번호</td> */}
                             <td>아이디</td>
                             <td>E-mail</td>
@@ -179,17 +203,17 @@ const DetailInfo = () => {
                             <td>관리자에 의한 정보 수정일</td>
                             <td>수정/초기화/벌점부여</td>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                        </tc>
+                    </side>
+                    <body>
 
-                        <tr>
+                        <tc>
                             {/* <td>{userData.user.id}</td> */}
                             <td>{userData.user.userId}</td>
                             <td>{userData.user.userEmail}</td>
                             <td>{userData.user.providerType}</td>
-                            <td>{userData.user.createdAt}</td>
-                            <td>{userData.user.updatedAt}</td>
+                            <td>{changeDateType(userData.user.createdAt)}</td>
+                            <td>{changeDateType(userData.user.updatedAt)}</td>
 
                             <td>{userData.user.userState}</td>
                             <td>{userData.user.status}</td>
@@ -211,19 +235,20 @@ const DetailInfo = () => {
 
                             </td>
 
-                            <td>{userData.startDateAt}</td>
-                            <td>{userData.endDateAt}</td>
-                            <td>{userData.updateAt}</td>
+                            {/* <td>{userData.startDateAt}</td> */}
+                            <td>{changeDateType(userData.startDateAt)}</td>
+                            <td>{changeDateType(userData.endDateAt)}</td>
+                            <td>{changeDateType(userData.updateAt)}</td>
                             <td>
-                                <button onClick={openModal}>직접 수정</button>/
-                                <button onClick={() => resetState(userData.user.id)}>초기화</button>/
+                                <button onClick={openModal}>직접 수정</button>
+                                <button onClick={() => resetState(userData.user.id)}>초기화</button>
                                 {/* <button onClick={()=>deleteRepotedInfo(userData.user.id)}>삭제</button> */}
                                 <button onClick={() => countPlus(userData.user.id)}>벌점({`${userData.demerit}`})+1</button>
                             </td>
 
-                        </tr>
-                    </tbody>
-                </table>
+                        </tc>
+                    </body>
+                </div>
             </div>
 
             <ReactModal

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../assets/css/common/header.css';
 import logoGreenDot from "../../assets/images/logo-green-dot.png";
@@ -9,7 +9,8 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const {isAdmin, setIsAdmin, setLoginedUserId} = adminStore();
+    const [activeIndex, setActiveIndex] = useState(null); // 현재 활성화된 li의 index를 저장
+    const { isAdmin, setIsAdmin, setLoginedUserId } = adminStore();
     //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
@@ -32,11 +33,12 @@ export default function Header() {
                     }
                 );
                 // console.log(response.data);
+                console.log(response.data);
                 setLoginedUserId(response.data.userId)
-                if(response.data.role === "ADMIN"){
+                if (response.data.role === "ADMIN") {
                     console.log("true");
                     setIsAdmin(true);
-                }else{
+                } else {
                     console.log("false");
                     setIsAdmin(false);
                 }
@@ -69,6 +71,23 @@ export default function Header() {
         }
     }, [navigate]);
 
+    let location = useLocation(); // 현재 경로 정보를 가져옴
+    let currentPath = location.pathname; // 현재 URL의 경로
+    useEffect(() => {
+        const currentPath = location.pathname; // 현재 URL의 경로
+        if (currentPath.includes("/admin")) {
+            setActiveIndex(0)
+        }else if(currentPath.includes("/qna")){
+            setActiveIndex(4)
+        }else if(currentPath.includes("/login")){
+            setActiveIndex(5)
+        }else if(currentPath.includes("/register")){
+            setActiveIndex(5)
+        }else if(currentPath.includes("/")){
+            setActiveIndex(1)
+        }
+    }, [currentPath, location]);
+
     const handleLogout = async () => {
         try {
             const token = localStorage.getItem("jwtToken");
@@ -86,6 +105,10 @@ export default function Header() {
         }
     };
 
+    const handleClick = (index) => {
+        setActiveIndex(index); // 클릭한 li의 index를 저장
+    };
+
     return (
         <header className="main-header">
             <h1>
@@ -97,9 +120,17 @@ export default function Header() {
                 </div>
             </h1>
             <ul>
-                <li>
+                <li
+                    className={activeIndex === 0 ? "active" : ""}
+                    onClick={() => handleClick(0)}
+                >
                     {isAdmin ? (
-                        <Link to="/admin" className="main-header-nav-link">관리자 전용</Link>
+                        <Link
+                            to="/admin"
+                            className="main-header-nav-link"
+                        >
+                            관리자 전용
+                        </Link>
                     ) : (
                         <></>
                     )}
@@ -107,37 +138,62 @@ export default function Header() {
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
                 </li>
-                <li>
-                    <Link to="/" className="main-header-nav-link">소개</Link>
+                <li
+                    className={activeIndex === 1 ? "active" : ""}
+                    onClick={() => handleClick(1)}
+                >
+                    <Link to="/" className="main-header-nav-link">
+                        소개
+                    </Link>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
                 </li>
-                <li>
-                    <Link to="/business-card-page" className="main-header-nav-link">명함 제작</Link>
-                        <span className="main-header-icon">
-                            <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
-                        </span>
+                <li
+                    className={activeIndex === 2 ? "active" : ""}
+                    onClick={() => handleClick(2)}
+                >
+                    <span>명함 제작</span>
+                    <span className="main-header-icon">
+                        <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
+                    </span>
                 </li>
-                <li>
+                <li
+                    className={activeIndex === 3 ? "active" : ""}
+                    onClick={() => handleClick(3)}
+                >
                     <span>NFC 제품</span>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
                 </li>
-                <li>
-                    <Link to="/qna" className="main-header-nav-link">QnA</Link>
+                <li
+                    className={activeIndex === 4 ? "active" : ""}
+                    onClick={() => handleClick(4)}
+                >
+                    <Link to="/qna" className="main-header-nav-link">
+                        QnA
+                    </Link>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
                 </li>
-                <li>
+                <li
+                    className={activeIndex === 5 ? "active" : ""}
+                    onClick={() => handleClick(5)}
+                >
                     {isLoggedIn ? (
-                        <Link onClick={handleLogout} className="main-header-nav-link">
+                        <Link
+                            onClick={handleLogout}
+                            className="main-header-nav-link"
+                        >
                             로그아웃
                         </Link>
                     ) : (
-                        <Link to="/login-and-register" className="main-header-nav-link">
+                        <Link
+                            to="/login-and-register"
+                            className="main-header-nav-link"
+                        >
                             로그인
                         </Link>
                     )}

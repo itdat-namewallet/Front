@@ -103,10 +103,10 @@ const TextEditor = () => {
                     <option value="" disabled selected>
                         카테고리 선택
                     </option>
-                    <option value="MERCHANDISE">명함제작</option>
+                    <option value="MERCHANDISE">명함 제작</option>
                     <option value="NFC">NFC</option>
                     <option value="APP">어플리케이션</option>
-                    <option value="ACCOUNT">계정관련</option>
+                    <option value="ACCOUNT">계정 관련</option>
                     <option value="ETC">기타</option>
                 </select>
             </div>

@@ -24,6 +24,9 @@ const ReportedUser = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    // 신고 카테고리를 저장
+    const [category, setCategory] = useState("");
+
     // 로그인한 유저의 어드민 권한 확인 전역 변수
     const {isAdmin, loginedUserId} = adminStore();
 
@@ -31,6 +34,13 @@ const ReportedUser = () => {
     const { userData, setUserData } = userInfoStore();
     // 선택된 유저 정보를 담는 변수
     const [selectedUserInfo, setSelectedUserInfo] = useState();
+
+    const categoryMap = {
+        "BANNED": "제재 중인 계정",
+        "REPORTED": "신고된 계정",
+        "ACTIVE": "제재 이력이 남은 계정",
+        null: "기타",
+    };
 
     useEffect(() => {
         const bringUserList = async () => {
@@ -40,7 +50,7 @@ const ReportedUser = () => {
             try {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
                 console.log("1111111111111111111", response.data);
-                const sortedData = response.data.sort((a, b) => new Date(b.updateAt) - new Date(a.updateAt));
+                const sortedData = response.data.sort((a, b) => new Date(b.lastReportedDateAt) - new Date(a.lastReportedDateAt));
                 // first in, last out!!!! 최근 제재 업데이트 일을 기분으로 내림차순 정렬되시겠다.
                 setUserList(sortedData);
                 setFilteredUsers(sortedData);
@@ -57,11 +67,34 @@ const ReportedUser = () => {
 
     }, [])
 
+    // 날짜 형식 변환 함수
+    const changeDateType = (date) => {
+        if(date != null){
+            return new Date(date).toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+            })
+        } else {
+            return "제재 중인 유저가 아닙니다."
+        }
+        
+    }
+
     // 검색 버튼 클릭 시
     const handleSearch = () => {
         const filtered = userList.filter((user) => {
-            console.log(user.user.userId)
-            return user.user.userId.toLowerCase().includes(searchTerm.toLowerCase())
+            console.log(category, typeof category);
+            console.log(user.user.status, typeof user.user.status);
+            const matchesCategory = category ? user.user.status == category : true;
+            const matchesSearchTerm = user.user.userId
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
+            return matchesCategory && matchesSearchTerm;
+            // console.log(user.user.userId)
+            // return user.user.userId.toLowerCase().includes(searchTerm.toLowerCase())
         }
 
 
@@ -106,7 +139,15 @@ const ReportedUser = () => {
     return (
         <>
             <div className={styles['table-container']}>
-                <div>
+                <div className={styles["search-container"]}>
+                    <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                        <option value="">전체 카테고리</option>
+                        <option value="REPORTED">신고된 계정</option>
+                        <option value="BANNED">제재 중인 계정</option>
+                    </select>
                     <input
                         type="text"
                         placeholder="User ID 검색"
@@ -118,12 +159,14 @@ const ReportedUser = () => {
                 <table >
                     <thead>
                         <tr>
-                            <th>제재 대상이 되는 유저의 ID</th>
+                            <th>제재 상태</th>
+                            <th>유저 아이디</th>
+                            
                             <th>누적 신고 횟수</th>
                             <th>제재 시작일</th>
                             <th>제재 종료일</th>
-                            <th>최근 제재 업데이트 일</th>
-                            <th>제재 상태</th>
+                            <th>마지막 신고일</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -136,19 +179,15 @@ const ReportedUser = () => {
                                     onClick={() => detailInfo(user.user.userId)}
                                     className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                 >
+                                    <td>{ categoryMap[user.user.status] || "알 수 없음" }</td>
                                     <td>{user.user.userId}</td>
+                                    
                                     <td>{user.reportedCount}</td>
-                                    <td>{user.startDateAt}</td>
-                                    <td>{user.endDateAt}</td>
-                                    <td>{user.updateAt}</td>
-                                    <td>{user.user.status}</td>
 
-
-                                    {/* <td>{user.cumulative_count}</td>
-                            <td>{user.start_date}</td>
-                            <td>{user.end_date}</td>
-                            <td>{user.status}</td> */}
-                                    {/* BANNED, REPORTED */}
+                                    <td>{changeDateType(user.startDateAt)}</td>
+                                    <td>{changeDateType(user.endDateAt)}</td>
+                                    <td>{changeDateType(user.lastReportedDateAt)}</td>
+                                
                                 </tr>
                             );
                         }
