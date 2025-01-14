@@ -1,7 +1,10 @@
 .admin-container {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    max-width: 1200px;
+    min-width: 800px;
+    margin: 0 auto;
+    /* max-width: 100%; */
     padding-left: 3%;
     padding-right: 3%;
 

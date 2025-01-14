@@ -48,11 +48,10 @@
     }
 }
 
-.main-header li:hover .main-header-icon{
-    opacity: 1; 
-    /* 반투명 설정 */
-    transform: translate(-50%, -50%) scale(1.1); 
-    /* 살짝 확대 효과 추가 */
+.main-header li:hover .main-header-icon,
+.main-header li.active .main-header-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
 .main-header-nav-link {

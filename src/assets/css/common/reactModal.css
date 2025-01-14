@@ -1,0 +1,63 @@
+/* 수정 모달 */
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ReactModal__Content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    height: min-content;
+    position: relative !important;
+}
+
+/* 모달 내부의 레이블과 입력 필드 */
+.ReactModal__Content label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.ReactModal__Content input,
+.ReactModal__Content select {
+    width: -webkit-fill-available;
+    padding: 8px;
+    font-size: 14px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.ReactModal__Content input[type="datetime-local"] {
+    padding-left: 10px;
+}
+
+.ReactModal__Content button {
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 4px;
+}
+
+.ReactModal__Content button:hover {
+    background-color: #218838;
+}
+
+.ReactModal__Content button:last-child {
+    background-color: #dc3545;
+}
+
+.ReactModal__Content button:last-child:hover {
+    background-color: #c82333;
+}

@@ -94,6 +94,7 @@ const MyQnaPost = () => {
                 <table>
                     <thead>
                         <tr>
+                            <th>카테고리</th>
                             <th>제목</th>
                             {/* <td>내용</td>  */}
                                 {/* 요약된 내용.. 무슨 수로? 문자열 10번째 까지 보여지고 이후 ... 붙이기 */}
@@ -114,7 +115,7 @@ const MyQnaPost = () => {
                                         // console.log(isAdmin);
                                         // console.log(isAccessible);
                                         // console.log(loginedUserId);
-
+                                    console.log(post);
                                     return (
                                         <tr 
                                             key={index}
@@ -122,10 +123,20 @@ const MyQnaPost = () => {
                                             className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                             // 어드민 여부에 따라 커서와 게시물의 흐림 정도를 다르게 css
                                         >
+                                            <td>{post.category}</td>
                                             <td>{post.title}</td>
                                             {/* <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td> */}
                                             <td>{post.user.userId}</td>
-                                            <td>{post.createDateAt}</td>
+                                            {/* <td>{post.createDateAt}</td> */}
+                                            <td>
+                                                {new Date(post.createDateAt).toLocaleString("ko-KR", {
+                                                    year: "numeric",
+                                                    month: "2-digit",
+                                                    day: "2-digit",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })}
+                                            </td>
                                         </tr>
                                     )
                                 }
