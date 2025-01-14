@@ -79,7 +79,9 @@ export default function Header() {
             setActiveIndex(0)
         }else if(currentPath.includes("/qna")){
             setActiveIndex(4)
-        }else if(currentPath.includes("/login-and-register")){
+        }else if(currentPath.includes("/login")){
+            setActiveIndex(5)
+        }else if(currentPath.includes("/register")){
             setActiveIndex(5)
         }else if(currentPath.includes("/")){
             setActiveIndex(1)
