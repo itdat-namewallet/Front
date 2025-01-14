@@ -7,7 +7,7 @@
     padding-right: 3%;
     margin: 0 auto;
     align-items: center; /* 자식 요소들이 가로로 중앙 정렬되도록 설정 */
-    
+    margin-top: 100px;
 
     .qna-header{
         display: flex;
