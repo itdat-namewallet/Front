@@ -1,6 +1,22 @@
-.home-page-main-container {
+.home-page-wrapper {
+    width: 100%;
+    height: 100%; /* 전체 화면 크기 */
+    overflow-y: auto; /* 수직 스크롤 활성화 */
+    /* scroll-snap-type: y mandatory; 스크롤 스냅 적용 (옵션) */
+}
 
-    display: flex;
+.home-page-main-container,
+.home-page-second-box {
+    scroll-snap-align: start; /* 각 섹션이 스냅 */
+}
+
+
+.home-page-main-container {
+    /* margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto; */
+
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
     justify-content: center;
@@ -9,6 +25,15 @@
     max-width: 750px;
     margin: 0 auto;
     overflow: hidden;
+    box-sizing: border-box; */
+
+    width: 100%;
+    height: 75vh; /* 화면 전체를 차지 */
+    max-width: 750px; /* 최대 너비 제한 */
+    margin: 0 auto; /* 가로 중앙 정렬 */
+    display: flex; /* Flexbox 레이아웃 */
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
 
     .left-container {
@@ -62,8 +87,83 @@
             margin-top: 14px;
         }
     }
-
-    
 }
 
+.home-page-second-box{
+    /* margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto; */
 
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    max-width: 750px;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box; */
+
+    width: 100%;
+    height: 70vh; /* 화면 전체를 차지 */
+    max-width: 750px; /* 최대 너비 제한 */
+    margin: 0 auto; /* 가로 중앙 정렬 */
+    display: flex; /* Flexbox 레이아웃 */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+
+
+
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center; */
+    /* align-items: center; */
+
+    .second-left-container{
+        flex: 1;
+        max-width: 50%;
+        padding: 20px;
+        box-sizing: border-box;
+        padding-left: 50px;
+        padding-bottom: 150px;
+
+        :last-child{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            justify-content: end;
+            align-items: end;
+            padding-right: 35px;
+        }
+
+        /* display: flex;
+        flex-direction: column;
+        align-items: start; */
+
+        p{
+            margin: 4px;
+            font-size: 16px;
+        }
+    }
+
+    .second-right-container{
+        flex: 1;
+        max-width: 50%;
+
+        .name-card-img {
+            max-width: 100%; /* 이미지가 부모 너비에 맞도록 설정 */
+            max-height: 100%; /* 이미지가 부모 높이에 맞도록 설정 */
+            object-fit: contain; /* 이미지 비율 유지하며 크기 조정 */
+        }
+    }
+    .slick-slide {
+        display: flex !important; /* 슬라이더 내부 요소를 Flexbox로 설정 */
+        justify-content: center; /* 이미지 수평 중앙 정렬 */
+        align-items: center; /* 이미지 수직 중앙 정렬 */
+        height: auto; /* 높이는 자동으로 */
+    }
+}

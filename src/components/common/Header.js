@@ -79,6 +79,10 @@ export default function Header() {
             setActiveIndex(0)
         }else if(currentPath.includes("/qna")){
             setActiveIndex(4)
+        }else if(currentPath.includes("/business-card-page")){
+            setActiveIndex(2)
+        }else if(currentPath.includes("/nfc")){
+            setActiveIndex(3)
         }else if(currentPath.includes("/login")){
             setActiveIndex(5)
         }else if(currentPath.includes("/register")){
@@ -153,7 +157,9 @@ export default function Header() {
                     className={activeIndex === 2 ? "active" : ""}
                     onClick={() => handleClick(2)}
                 >
-                    <span>명함 제작</span>
+                    <Link to="business-card-page" className="main-header-nav-link">
+                        명함 제작
+                    </Link>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
@@ -162,7 +168,9 @@ export default function Header() {
                     className={activeIndex === 3 ? "active" : ""}
                     onClick={() => handleClick(3)}
                 >
-                    <span>NFC 제품</span>
+                    <Link to="nfc" className="main-header-nav-link">
+                        NFC 제품
+                    </Link>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
