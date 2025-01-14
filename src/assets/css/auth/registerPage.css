@@ -114,3 +114,41 @@
     font-size: 0.9rem;
     color: #555;
 }
+
+.checkbox-group {
+    margin-bottom: 20px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    margin-left: 10px; /* 문구와 체크박스 간 여백 */
+  transform: translateY(-17px); /* 체크박스를 위로 2px 이동 */
+  vertical-align: middle; /* 문구와 정렬 */
+  }
+  
+  .terms-button {
+    display: block; /* 문구 아래에 위치 */
+    margin-top: 2px; /* 기존 여백을 줄이거나 음수 값을 사용해 버튼을 위로 이동 */
+    padding: 5px 15px;
+    background-color: #00CA91;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative; /* 위치 조정을 위해 설정 */
+    transform: translateY(-15px); /* 버튼을 위로 5px 이동 */
+  }
+  
+  .terms-button:hover {
+    background-color: #007b5e;
+  }
+  
