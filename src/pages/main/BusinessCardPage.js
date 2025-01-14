@@ -34,7 +34,6 @@ export default function BusinessCardPage() {
               </div>
           ))}
       </div>
-      
       <div className="notice-message">
         <p>현재 이용에 불편을 드려 죄송합니다. 회사 내부 사정으로 인해 오픈이 잠시 미뤄졌습니다.</p>
         <p>양해 부탁드립니다.</p>

@@ -78,7 +78,9 @@
 }
 
 .notice-message {
-  margin-top: 30px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   padding: 15px;
   background-color: #f8d7da;
   color: #721c24;
@@ -86,6 +88,8 @@
   border-radius: 8px;
   text-align: center;
   font-size: 14px;
-  width: 30%;
-  margin: 0 auto; 
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
 }
+
