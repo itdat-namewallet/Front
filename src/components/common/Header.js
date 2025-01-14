@@ -13,6 +13,22 @@ export default function Header() {
     const { isAdmin, setIsAdmin, setLoginedUserId } = adminStore();
     //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     // 로그인한 user의 관리자 여부 확인
     useEffect(() => {
@@ -77,6 +93,8 @@ export default function Header() {
         const currentPath = location.pathname; // 현재 URL의 경로
         if (currentPath.includes("/admin")) {
             setActiveIndex(0)
+        }else if (currentPath === "/business-card-page") {
+            setActiveIndex(2);
         }else if(currentPath.includes("/qna")){
             setActiveIndex(4)
         }else if(currentPath.includes("/business-card-page")){
@@ -89,7 +107,7 @@ export default function Header() {
             setActiveIndex(5)
         }else if(currentPath.includes("/")){
             setActiveIndex(1)
-        }
+        } 
     }, [currentPath, location]);
 
     const handleLogout = async () => {
@@ -114,7 +132,7 @@ export default function Header() {
     };
 
     return (
-        <header className="main-header">
+        <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
                 <div className="itdat-and-green-dot">
                     ITDAT
@@ -157,7 +175,7 @@ export default function Header() {
                     className={activeIndex === 2 ? "active" : ""}
                     onClick={() => handleClick(2)}
                 >
-                    <Link to="business-card-page" className="main-header-nav-link">
+                    <Link to="/business-card-page" className="main-header-nav-link">
                         명함 제작
                     </Link>
                     <span className="main-header-icon">
