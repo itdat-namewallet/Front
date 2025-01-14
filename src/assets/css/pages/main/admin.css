@@ -46,3 +46,43 @@
     color: inherit; /* 클릭했을 때 색깔 변경되지 않도록 설정 */
     outline: none;  /* 클릭 시 외곽선 제거 */
 }
+
+.admin-link {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: black;
+}
+
+.left-text-header div{
+    /* margin-left: 30px; */
+    display: flex;
+    flex-direction: row;
+}
+
+.admin-header-separator {
+    margin-right: 4px;
+}
+
+.right-text-header div{
+    display: flex;
+    flex-direction: row;
+}
+
+.admin-header-icon {
+    transform: translate(-550%, 35%); /* 정확히 가운데 정렬 */
+    opacity: 0; /* 초기 상태에서 보이지 않음 */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* 투명도와 위치 변화를 천천히 */
+    pointer-events: none; /* 호버 시 클릭 방지 */
+
+    width: 2px; /* 예시 값 */
+
+    img{
+        width: 6px;
+        position: absolute;
+    }
+}
+
+.admin-header div div:hover .admin-header-icon,
+.admin-header div div.active .admin-header-icon {
+    opacity: 1;
+    transform: translate(-550%, 35%) scale(1.1);
+}

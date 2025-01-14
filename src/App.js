@@ -21,6 +21,7 @@ import QnaPostDetail from "./components/qna/QnaPostDetail";
 import QnaPostUpdate from "./components/qna/QnaPostUpdate";
 import "./assets/css/common/App.css"
 import BusinessCardPage from "./pages/main/BusinessCardPage";
+import NfcPage from "./pages/main/NfcPage";
 import TermsOfService from './data/TermsOfService';
 import PrivacyPolicy from './data/PrivacyPolicy';
 
@@ -53,6 +54,7 @@ export default function App() {
                             <Route path="/callback" element={<OAuthCallback />} />
                             <Route path="/oauth2/:provider" element={<HomePage />} />
                             <Route path="/editor" element={<EditorPage />} />
+                            <Route path="/nfc" element={<NfcPage/>}/>
                             <Route path="/terms-of-service" element={<TermsOfService />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/qna" element={<QnaPage />}>
