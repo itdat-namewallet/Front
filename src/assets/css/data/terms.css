@@ -1,0 +1,36 @@
+.terms-page {
+    max-width: 800px;
+    height: 500px; /* 내부 높이 제한 설정 */
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    overflow-x: hidden; /* 가로 스크롤 비활성화 */
+  }
+  
+  .terms-page h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .terms-section h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #555;
+  }
+  
+  .terms-section p {
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #666;
+  }
+  
+  .effective-date {
+    margin-top: 30px;
+    font-weight: bold;
+    color: #333;
+  }
+  

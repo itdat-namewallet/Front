@@ -77,6 +77,8 @@ export default function Header() {
         const currentPath = location.pathname; // 현재 URL의 경로
         if (currentPath.includes("/admin")) {
             setActiveIndex(0)
+        }else if (currentPath === "/business-card-page") {
+            setActiveIndex(2);
         }else if(currentPath.includes("/qna")){
             setActiveIndex(4)
         }else if(currentPath.includes("/login")){
@@ -85,7 +87,7 @@ export default function Header() {
             setActiveIndex(5)
         }else if(currentPath.includes("/")){
             setActiveIndex(1)
-        }
+        } 
     }, [currentPath, location]);
 
     const handleLogout = async () => {
@@ -153,7 +155,9 @@ export default function Header() {
                     className={activeIndex === 2 ? "active" : ""}
                     onClick={() => handleClick(2)}
                 >
-                    <span>명함 제작</span>
+                    <Link to="/business-card-page" className="main-header-nav-link">
+                        명함 제작
+                    </Link>
                     <span className="main-header-icon">
                         <img className="logo-image" src={logoGreenDot} alt="이미지 로고" />
                     </span>
