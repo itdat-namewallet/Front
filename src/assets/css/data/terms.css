@@ -1,13 +1,19 @@
 .terms-page {
     max-width: 800px;
-    height: 500px; /* 내부 높이 제한 설정 */
+    height: 730px;
     margin: 50px auto;
     padding: 20px;
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow-y: auto; /* 세로 스크롤 활성화 */
-    overflow-x: hidden; /* 가로 스크롤 비활성화 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 70px;
+  }
+
+  .terms-title {
+    margin-top: 160px;
+    margin-left: 750px;
   }
   
   .terms-page h1 {
