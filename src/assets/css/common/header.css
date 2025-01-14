@@ -4,11 +4,28 @@
     max-width: 100%;
     padding-left: 3%;
     padding-right: 3%;
-    
+    position: fixed;
+    width: 97%;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.main-header.scrolled {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.main-header-nav-link {
+    color: black;
+    transition: color 0.3s ease;
+}
+
 .itdat-and-green-dot{
     display: flex;
     position: relative;
+    margin-left: 100px;
 
     img {
         position: absolute;
@@ -24,6 +41,7 @@
     list-style: none;
     justify-content: flex-end;
     width: 100%;
+    margin-right: 150px;
 }
 
 .main-header li{
@@ -55,10 +73,13 @@
 }
 
 .main-header-nav-link {
-    text-decoration: none; /* 링크 밑줄 제거 */
+    text-decoration: none;
     color: black;
+    font-size: 17px;
 }
 
 .main-header-nav-link:visited {
     color: black;
+    font-size: 17px;
 }
+

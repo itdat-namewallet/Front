@@ -13,6 +13,22 @@ export default function Header() {
     const { isAdmin, setIsAdmin, setLoginedUserId } = adminStore();
     //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     // 로그인한 user의 관리자 여부 확인
     useEffect(() => {
@@ -112,7 +128,7 @@ export default function Header() {
     };
 
     return (
-        <header className="main-header">
+        <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
                 <div className="itdat-and-green-dot">
                     ITDAT
