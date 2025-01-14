@@ -10,6 +10,8 @@ export default function TermsOfService() {
   }
 
   return (
+    <>
+    <h1 className="terms-title">서비스 이용약관 v1.0(현재)</h1>
     <div className="terms-page">
       <h1>{terms.title}</h1>
       {terms.sections.map((section, index) => (
@@ -22,5 +24,6 @@ export default function TermsOfService() {
       ))}
       <p className="effective-date">시행일: {terms.effectiveDate}</p>
     </div>
+    </>
   );
 }

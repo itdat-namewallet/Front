@@ -10,6 +10,8 @@ export default function PrivacyPolicy() {
   }
 
   return (
+    <>
+    <h1 className="terms-title">개인정보 처리방침 v1.0(현재)</h1>
     <div className="terms-page">
       <h1>{policy.title}</h1>
       {policy.sections.map((section, index) => (
@@ -22,5 +24,6 @@ export default function PrivacyPolicy() {
       ))}
       <p className="effective-date">시행일: {policy.effectiveDate}</p>
     </div>
+    </>
   );
 }

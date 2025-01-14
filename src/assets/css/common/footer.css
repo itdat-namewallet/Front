@@ -86,11 +86,11 @@
   .center-links li a {
     text-decoration: none;
     font-weight: bold;
-    color: black;
+    color: #333;
   }
   
   .center-links li a:hover {
-    text-decoration: underline;
+    color: #777;
   }
   
   
@@ -113,11 +113,11 @@
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: bold;
-    color: black;
+    color: #333;
   }
   
   .right-links li a:hover {
-    text-decoration: underline;
+    color: #777;
   }
   
   .footer-bottom {
