@@ -4,29 +4,34 @@
   }
   
   .card-grid {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    justify-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
   
   .card-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    /* background-color: #fff; */
+    /* border: 1px solid #ddd; */
+    position: relative;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 280px;
     height: 270px;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
   }
   
   .card-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); */
   }
   
   .card-image {
@@ -41,19 +46,46 @@
     font-size: 16px;
     margin: 10px 0;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
   }
   
   .card-price {
     font-size: 14px;
     color: #333;
     margin-bottom: 8px;
-    text-align: center;
+    text-align: left;
   }
   
   .card-description {
     font-size: 12px;
     color: #666;
-    text-align: center;
+    text-align: left;
   }
   
+  .soldout-overlay {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-image: url('/src/assets/images/card/comming_soon1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.notice-message {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  width: 30%;
+  margin: 0 auto; 
+}

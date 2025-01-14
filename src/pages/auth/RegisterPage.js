@@ -5,6 +5,9 @@ import "../../assets/css/auth/registerPage.css";
 import EmailVerification from "./EmailVerification";
 import AddressSearch from "./AddressSearch";
 import FormInput from "./FormInput";
+import Modal from "../../data/modal";
+import termsData from "../../data/termsOfService.json";
+import privacyData from "../../data/privacyPolicy.json";
 
 /*
     --------------------------------------------------------
@@ -30,6 +33,11 @@ export default function RegisterPage() {
     const providerId = searchParams.get("providerId");
     const email = searchParams.get("email");
     const [isVerified, setIsVerified] = useState(false);
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const [acceptedPrivacyPolicy, setAcceptedPrivacyPolicy] = useState(false);
+    const [allAccepted, setAllAccepted] = useState(false);
+    const [showTermsModal, setShowTermsModal] = useState(false);
+    const [showPrivacyModal, setShowPrivacyModal] = useState(false); 
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -53,20 +61,23 @@ export default function RegisterPage() {
 
     const [errors, setErrors] = useState({});
     const isSocialRegister = Boolean(socialData.provider);
-    // const [isVerified, setIsVerified] = useState(false);     이메일 인증 관련 로직
+    
+    // 전체 동의 핸들러
+    const handleAllAcceptedChange = (value) => {
+      setAllAccepted(value);
+      setAcceptedTerms(value);
+      setAcceptedPrivacyPolicy(value);
+    };
+  
+    const handleAgreeTerms = () => {
+      setAcceptedTerms(!acceptedTerms);
+    };
+  
+    const handleAgreePrivacy = () => {
+      setAcceptedPrivacyPolicy(!acceptedPrivacyPolicy);
+    };
 
-    // useEffect(() => {
-    //     if (isSocialRegister) {
-    //         setFormData((prev) => ({
-    //             ...prev,
-    //             userId: socialData.email || "",
-    //             userEmail: socialData.email || "",
-    //             password: "",
-    //             confirmPassword: "",
-    //             providerType: socialData.provider || "",
-    //         }));
-    //     }
-    // }, [socialData]);
+    
 
     useEffect(() => {
         if (provider && providerId && email) {
@@ -273,6 +284,13 @@ export default function RegisterPage() {
         } catch (error) {
             alert(error.response?.data?.message || "회원가입 실패");
         }
+
+        // 필수 동의 검증
+      if (!acceptedTerms || !acceptedPrivacyPolicy) {
+        setErrors({ message: "필수 약관에 동의해야 회원가입이 가능합니다." });
+        return;
+      }
+
     };
     
 
@@ -439,6 +457,72 @@ export default function RegisterPage() {
             company={formData.company}
             setCompany={(value) => setFormData((prev) => ({ ...prev, company: value }))}
           />
+
+          {/* 전체 동의 */}
+          <div className="checkbox-group">
+            <label className="checkbox-label">
+              전체 동의
+              <input
+                type="checkbox"
+                checked={allAccepted}
+                onChange={(e) => handleAllAcceptedChange(e.target.checked)}
+              />
+            </label>
+          </div>
+
+          <div className="checkbox-group">
+            <label className="checkbox-label">
+              서비스 이용약관 동의 (필수)
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+              />
+            </label>
+            <button type="button" className="terms-button" onClick={() => setShowTermsModal(true)}>
+              약관 보기
+            </button>
+          </div>
+
+          <div className="checkbox-group">
+            <label className="checkbox-label">
+              개인정보 처리방침 동의 (필수)
+              <input
+                type="checkbox"
+                checked={acceptedPrivacyPolicy}
+                onChange={(e) => setAcceptedPrivacyPolicy(e.target.checked)}
+              />
+            </label>
+            <button type="button" className="terms-button" onClick={() => setShowPrivacyModal(true)}>
+              약관 보기
+            </button>
+          </div>
+
+
+          {/* 모달 - 서비스 이용약관 */}
+          <Modal
+            title={termsData.termsOfService.title}
+            sections={termsData.termsOfService.sections}
+            isOpen={showTermsModal}
+            onClose={() => setShowTermsModal(false)}
+            onAgree={handleAgreeTerms}
+            isAgreed={acceptedTerms}
+          />
+
+          {/* 모달 - 개인정보 처리방침 */}
+          <Modal
+            title={privacyData.privacyPolicy.title}
+            sections={privacyData.privacyPolicy.sections}
+            isOpen={showPrivacyModal}
+            onClose={() => setShowPrivacyModal(false)}
+            onAgree={handleAgreePrivacy}
+            isAgreed={acceptedPrivacyPolicy}
+          />
+
+          {/* 에러 메시지 */}
+          {!acceptedTerms || !acceptedPrivacyPolicy ? (
+            <p style={{ color: "red" }}>필수 약관에 동의해야 회원가입이 가능합니다.</p>
+          ) : null}
 
           {/* 이전 버튼 */}
           <button type="button" onClick={previousStep}>
