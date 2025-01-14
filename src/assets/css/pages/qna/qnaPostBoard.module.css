@@ -1,6 +1,6 @@
 /* 모달 콘텐츠 */
 .modalContent {
-    position: absolute;
+    position: inherit;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -47,6 +47,7 @@
     border-radius: 5px; /* 둥근 모서리 */
     cursor: pointer; /* 손 모양 커서 */
     transition: background-color 0.3s ease; /* 색상 변화 부드럽게 */
+    margin-right: 4px;
 }
 
 /* 상세보기 버튼 */

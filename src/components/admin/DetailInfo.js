@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../../assets/css/pages/admin/detailInfo.module.css"
-import "../../assets/css/common/reactModal.css"
+// import "../../assets/css/common/reactModal.css"
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -30,12 +30,15 @@ const DetailInfo = () => {
     // 관리자가 수정할 수 있는 유저의 제재 관련 상태들
     const [status, setStatus] = useState("");
     const [startDateAt, setStartDateAt] = useState("");
-    const [endDateAt, setEndDateAt] = useState("");  // const [updateAt, setUpdateAt] = useState(""); // 백에서 처리..
-    const [isChange, setIsCange] = useState(true);
+    const [endDateAt, setEndDateAt] = useState("");
     // 원래 값을 저장하기 위한 상태
     const [originalStatus, setOriginalStatus] = useState("");
     const [originalStartDateAt, setOriginalStartDateAt] = useState("");
     const [originalEndDateAt, setOriginalEndDateAt] = useState("");
+
+    // useEffect를 실행시켜 바뀐 정보를 브라우저에 뿌려주기 위한 용도..
+    const [isChange, setIsChange] = useState(true);
+    
 
     // 수정 모달 오픈 상태 변수 및 함수들
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,14 +82,6 @@ const DetailInfo = () => {
         }
     }, [reportedUserId, isChange])
 
-    // <td>{new Date(userData.startDateAt).toLocaleString("ko-KR",{
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    // })}</td>
-
     const changeDateType = (date) => {
         if(date != null){
             return new Date(date).toLocaleString("ko-KR", {
@@ -110,6 +105,7 @@ const DetailInfo = () => {
             );
             if (response.data = ! null) {
                 alert("업데이트 성공")
+                setIsChange(!isChange)
             } else {
                 alert(response.data)
             }
@@ -129,7 +125,7 @@ const DetailInfo = () => {
                 }
             );
             if (response.data) {
-                setIsCange(!isChange);
+                setIsChange(!isChange);
                 alert("해당 유저의 제재 상태가 초기화 되었습니다.");
             } else {
                 alert("해당 유저의 정보 초기화에 실패하였습니다.")
@@ -167,7 +163,7 @@ const DetailInfo = () => {
                 }
             )
             console.log(response.data);
-            setIsCange(!isChange);
+            setIsChange(!isChange);
             // alert(response.data);
         } catch (error) {
             console.log(error);
@@ -254,6 +250,9 @@ const DetailInfo = () => {
             <ReactModal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
+                contentLabel="관리자 직접 수정 모달"
+                className={styles.modalContent} // 스타일 클래스
+                overlayClassName={styles.modalOverlay} // 오버레이 스타일 클래스
             >
                 <div>
                     <h2>유저 제재 정보 수정</h2>
