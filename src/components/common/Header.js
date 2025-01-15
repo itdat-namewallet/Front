@@ -10,7 +10,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null); // 현재 활성화된 li의 index를 저장
-    const { isAdmin, setIsAdmin, setLoginedUserId } = adminStore();
+    const { isAdmin, setIsAdmin, loginedUserId, setLoginedUserId } = adminStore();
     //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
@@ -131,6 +131,13 @@ export default function Header() {
         setActiveIndex(index); // 클릭한 li의 index를 저장
     };
 
+    const loginCheck = (e) => {
+        if(loginedUserId === ""){
+            e.preventDefault();
+            alert("로그인 후 이용해 주세요.");
+        }
+    }
+
     return (
         <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
@@ -195,7 +202,7 @@ export default function Header() {
                     className={activeIndex === 4 ? "active" : ""}
                     onClick={() => handleClick(4)}
                 >
-                    <Link to="/qna" className="main-header-nav-link">
+                    <Link to="/qna" className="main-header-nav-link" onClick={loginCheck}>
                         QnA
                     </Link>
                     <span className="main-header-icon">
