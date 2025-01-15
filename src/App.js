@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App() {
-    const { isAdmin } = adminStore();
+    const { isAdmin, loginedUserId} = adminStore();
 
     // {/* 어드민 접근 제어 */ }
     // {
@@ -73,13 +73,32 @@ export default function App() {
                             <Route path="/nfc" element={<NfcPage />} />
                             <Route path="/terms-of-service" element={<TermsOfService />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                            <Route path="/qna" element={<QnaPage />}>
+
+                            {
+                                loginedUserId
+                                    ? 
+                                    <Route path="/qna" element={<QnaPage />}>
+                                        <Route index element={<QnaPostBoard />} />
+                                        <Route path="write" element={<TextEditor />} />
+                                        <Route path="my-qna-post" element={<MyQnaPost />} />
+                                        <Route path="post-detail" element={<QnaPostDetail />} />
+                                        <Route path="post-update" element={<QnaPostUpdate />} />
+                                    </Route>
+                                    : (
+                                        <>
+                                            {alert("로그인 후 이용해 주세요.")}
+                                        </>
+                                    )
+                                    
+
+                            }
+                             {/* <Route path="/qna" element={<QnaPage />}>
                                 <Route index element={<QnaPostBoard />} />
                                 <Route path="write" element={<TextEditor />} />
                                 <Route path="my-qna-post" element={<MyQnaPost />} />
                                 <Route path="post-detail" element={<QnaPostDetail />} />
                                 <Route path="post-update" element={<QnaPostUpdate />} />
-                            </Route>
+                             </Route> */}
                             {
                                 isAdmin
                                     ?

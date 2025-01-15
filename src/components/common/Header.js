@@ -31,7 +31,6 @@ export default function Header() {
     }, []);
 
     // 로그인한 user의 관리자 여부 확인
-    //test
     useEffect(() => {
 
         const bringAdmin = async () => {
