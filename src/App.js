@@ -41,19 +41,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App() {
-    const { isAdmin, loginedUserId} = adminStore();
-
-    // {/* 어드민 접근 제어 */ }
-    // {
-    //     isAdmin
-    //         ?
-    //         <Route path="admin" element={<Admin />}>
-    //             <Route index element={<ReportedUser />} />
-    //             <Route path="detail-info" element={<DetailInfo />} />
-    //             <Route path="report-user" element={<ReportUser />} />
-    //         </Route>
-    //         : <Route path="/admin" element={<Navigate to="/" replace />} />
-    // }
+    const { isAdmin } = adminStore();
 
     return (
         <>
@@ -73,32 +61,13 @@ export default function App() {
                             <Route path="/nfc" element={<NfcPage />} />
                             <Route path="/terms-of-service" element={<TermsOfService />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
-                            {
-                                loginedUserId
-                                    ? 
-                                    <Route path="/qna" element={<QnaPage />}>
-                                        <Route index element={<QnaPostBoard />} />
-                                        <Route path="write" element={<TextEditor />} />
-                                        <Route path="my-qna-post" element={<MyQnaPost />} />
-                                        <Route path="post-detail" element={<QnaPostDetail />} />
-                                        <Route path="post-update" element={<QnaPostUpdate />} />
-                                    </Route>
-                                    : (
-                                        <>
-                                            {alert("로그인 후 이용해 주세요.")}
-                                        </>
-                                    )
-                                    
-
-                            }
-                             {/* <Route path="/qna" element={<QnaPage />}>
+                             <Route path="/qna" element={<QnaPage />}>
                                 <Route index element={<QnaPostBoard />} />
                                 <Route path="write" element={<TextEditor />} />
                                 <Route path="my-qna-post" element={<MyQnaPost />} />
                                 <Route path="post-detail" element={<QnaPostDetail />} />
                                 <Route path="post-update" element={<QnaPostUpdate />} />
-                             </Route> */}
+                             </Route>
                             {
                                 isAdmin
                                     ?
@@ -110,11 +79,9 @@ export default function App() {
                                     : <></>
                                     // <Route path="/admin" element={<Navigate to="/" replace />} />
                             }
-                          
                         </Route>
                         <Route path="/*" element={<ErrorPage/>}/>
                     </Routes>
-                    
                 </Router>
             </AuthProvider>
         </>
