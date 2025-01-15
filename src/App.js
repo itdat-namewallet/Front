@@ -110,11 +110,7 @@ export default function App() {
                                     : <></>
                                     // <Route path="/admin" element={<Navigate to="/" replace />} />
                             }
-                            {/* <Route path="admin" element={<Admin />}>
-                                <Route index element={<ReportedUser />} />
-                                <Route path="detail-info" element={<DetailInfo />} />
-                                <Route path="report-user" element={<ReportUser />} />
-                            </Route> */}
+                          
                         </Route>
                         <Route path="/*" element={<ErrorPage/>}/>
                     </Routes>
