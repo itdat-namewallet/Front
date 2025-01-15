@@ -34,6 +34,7 @@ export default function HomePage() {
       {/* 전체 스크롤 가능한 래퍼 */}
       <div className="home-page-wrapper">
         <div className="home-page-main-container">
+          
           <div className="left-container">
             <div>
               <Slider {...settings}>
@@ -51,8 +52,8 @@ export default function HomePage() {
                 </div>
               </Slider>
             </div>
-
           </div>
+
           <div className="right-container">
             <div className="text-container">
               <h1>명함 플랫폼</h1>
