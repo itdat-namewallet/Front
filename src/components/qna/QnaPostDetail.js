@@ -18,9 +18,11 @@ const QnaPostDetail = () => {
     // const loginedUserId = queryParams.get("loginedUserId");
 
     const { qnaPostData, setQnaPostData } = qnaPostDetail();
-    const { loginedUserId } = adminStore();
+    const { isAdmin, loginedUserId } = adminStore();
 
     const [qnaAnswerList, setQnaAnswerList] = useState([]);
+
+    const [contents, setContents] = useState("");
 
     useEffect(() => {
         const fetchQnaPost = async () => {
@@ -114,6 +116,34 @@ const QnaPostDetail = () => {
         return <div>Loading...</div>; // 데이터가 로딩 중일 때 표시할 내용
     }
 
+    // 관리자가 답변하는 버튼
+    const reportAnswer = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/qna/answer-write`, {
+                contents,
+                loginedUserId,
+                postId
+            });
+            console.log('서버 응답: ', response.data);
+            if(response.data){
+                alert("답변을 성공적으로 달았습니다.")
+            }else{
+                throw (error) => {
+                    console.error('데이터 전송 오류: ', error);
+                    alert('저장 중 오류가 발생했습니다.');
+                }
+            }
+        }catch (error) {
+            console.error('데이터 전송 오류: ', error);
+            alert('저장 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 답변 변경 이벤트 핸들러
+    const handleContentsChange = (event) => {
+        setContents(event.target.value);
+    }
+
     return (
         <div className={styles.container}>
             {/* 제목 */}
@@ -158,9 +188,44 @@ const QnaPostDetail = () => {
                     __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
                 }}
             ></div>
-
+            
+            {/* 내용, 작성자, 작성일 */}
+            <div className="answer-container">
+                {
+                    qnaAnswerList.map((answer, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{answer.description}</td>
+                                <td>{answer.adminId}</td>
+                                <td>{answer.createDateAt}</td>
+                            </tr>
+                        )
+                    })
+                }
+            </div>  
+            {/* 관리자에게만 보이는 답변을 다는 태그들.. */}
+            {     
+                isAdmin
+                ?
+                <div className="answer-input-and-button-box">
+                    <input 
+                        type="text"
+                        value={contents}
+                        onChange={handleContentsChange}
+                        placeholder="답변 내용을 입력하세요."
+                        style={{ width: "100%", padding: "10px", boxSizing: "border-box" }}
+                    />
+                    <button onClick={reportAnswer}>답변 달기</button>
+                </div>
+                : <></>
+            }
             {/* 수정/삭제 버튼 */}
             <div className={styles.buttons}>
+
+                {
+                    isAdmin? <button onClick={reportAnswer}>답변 달기</button> : <></>
+                }
+
                 <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
                 <button
                     className={styles.delete}
@@ -170,36 +235,6 @@ const QnaPostDetail = () => {
                 </button>
             </div>
         </div>
-
-
-        // <>
-        //     <div className={styles.qnaPostDetail}>
-        //         <div className={styles.container}>
-        //             <h1 className={styles.title}>{qnaPostData.title || "제목 없음"}</h1>
-
-        //             <div className={styles.meta}>
-        //                 작성자: <strong>{qnaPostData.user.userId || "알 수 없음"}</strong>
-        //             </div>
-
-        //             <div className={styles.dateInfo}>
-        //                 작성일: {qnaPostData.createDateAt || "알 수 없음"} <br />
-        //                 수정일: {qnaPostData.updateAt || "알 수 없음"}
-        //             </div>
-
-        //             <div
-        //                 className={styles.contents}
-        //                 dangerouslySetInnerHTML={{
-        //                     __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
-        //                 }}
-        //             >
-        //             </div>
-        //         </div>
-        //         <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
-        //         <button onClick={() => deletePost(qnaPostData.id)}>삭제</button>
-        //     </div>
-
-
-        // </>
     )
 }
 export default QnaPostDetail;
