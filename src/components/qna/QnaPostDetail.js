@@ -28,7 +28,11 @@ const QnaPostDetail = () => {
                 const response = await axios.get(`${BASE_URL}/qna/selected-qna`, {
                     params: { selectedId: postId },
                 });
-                setQnaPostData(response.data);
+                if(typeof response.data === "string"){
+                    alert(response.data);
+                }else if(Array.isArray(response.data)){
+                    setQnaPostData(response.data);
+                }
             } catch (error) {
                 console.log("데이터를 가져오는 중에 오류 발생: ", error);
             }
@@ -45,7 +49,11 @@ const QnaPostDetail = () => {
                 const response = await axios.get(`${BASE_URL}/qna/selected-qna-answer-list`, {
                     params: {selectedId: postId}
                 });
-                setQnaAnswerList(response.data);
+                if(typeof response.data === "string"){
+                    alert(response.data);
+                }else if(Array.isArray(response.data)){
+                    setQnaAnswerList(response.data);
+                }
             } catch (error) {
                 console.log("데이터를 가져오는 중에 오류 발생: ", error);
             }
