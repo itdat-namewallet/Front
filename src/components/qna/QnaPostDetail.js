@@ -20,6 +20,7 @@ const QnaPostDetail = () => {
     const { qnaPostData, setQnaPostData } = qnaPostDetail();
     const { loginedUserId } = adminStore();
 
+    const [qnaAnswerList, setQnaAnswerList] = useState([]);
 
     useEffect(() => {
         const fetchQnaPost = async () => {
@@ -34,9 +35,25 @@ const QnaPostDetail = () => {
         };
 
         if (postId) {
-            fetchQnaPost(); // postId로 데이터 가져오기
+            fetchQnaPost();
         }
     }, [postId]);
+
+    useEffect(() => {
+        const fetchQnaAnswerList = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/qna/selected-qna-answer-list`, {
+                    params: {selectedId: postId}
+                });
+                setQnaAnswerList(response.data);
+            } catch (error) {
+                console.log("데이터를 가져오는 중에 오류 발생: ", error);
+            }
+        };
+        if (postId) {
+            fetchQnaAnswerList();
+        }
+    }, [postId])
 
     // 선택된 게시물 수정
     const updatePost = async () => {
