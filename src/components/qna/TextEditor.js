@@ -66,8 +66,6 @@ const TextEditor = () => {
             alert("비밀글 비밀번호를 입력해 주세요.");
             return;
         }
-
-        
         try {
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",isSecret);
             const response = await axios.post(`${BASE_URL}/qna/write`, {
@@ -78,13 +76,13 @@ const TextEditor = () => {
                 password,
                 loginedUserId,
              });
-            console.log('서버 응답:', response.data);
+            console.log('서버 응답: ', response.data);
             //alert('성공적으로 저장되었습니다!');
             // 작성자의 아이디를 백으로 요청을 보내서 작성자의 마지막 글을 받아낸다.
             navigate(`/qna`);
         } catch (error) {
-            console.error('데이터 전송 오류:', error);
-            //alert('저장 중 오류가 발생했습니다.');
+            console.error('데이터 전송 오류: ', error);
+            alert('저장 중 오류가 발생했습니다.');
         }
     };
 

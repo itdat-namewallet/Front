@@ -171,17 +171,19 @@ const QnaPostBoard = () => {
                                     >
                                         <td>{categoryMap[post.category] || "알 수 없음"}</td>
                                         <td>{post.title}</td>
-                                        <td>{post.user.userId}</td>
+                                        {/* <td>{post.user.userName}</td> */}
+                                        <td>
+                                            {post.user.userName.length >= 2
+                                                ? post.user.userName[0] + "*" + post.user.userName.slice(2)
+                                                : post.user.userName}
+                                        </td>
                                         <td>
                                             {new Date(post.createDateAt).toLocaleString("ko-KR", {
                                                 year: "numeric",
                                                 month: "2-digit",
                                                 day: "2-digit",
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })}
+                                            }).replace(/\ /g, "")}
                                         </td>
-                                        
                                     </tr>
                                 );
                             })
