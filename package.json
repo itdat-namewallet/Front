@@ -2,6 +2,7 @@
   "name": "itdat",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://www.itdat.store",
   "proxy": "http://localhost:8082",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^36.0.1",
@@ -27,7 +28,7 @@
     "zustand": "^5.0.2"
   },
   "scripts": {
-    "start": "set HTTPS=false&&react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

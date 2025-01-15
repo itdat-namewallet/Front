@@ -41,7 +41,8 @@ export const loginUser = async (credentials) => {
 
     // JWT 토큰을 로컬 스토리지에 저장
     localStorage.setItem("jwtToken", data.token);
-    console.log("로그인 성공, 토큰 저장:", data.token);
+    // console.log("로그인 성공, 토큰 저장:", data.token);
+    console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
 
     return data;
 };
