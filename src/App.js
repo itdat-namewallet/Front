@@ -24,6 +24,8 @@ import BusinessCardPage from "./pages/main/BusinessCardPage";
 import NfcPage from "./pages/main/NfcPage";
 import TermsOfService from './data/TermsOfService';
 import PrivacyPolicy from './data/PrivacyPolicy';
+import ErrorPage from "./components/common/Error";
+import { adminStore } from "./store";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -39,6 +41,20 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App() {
+    const { isAdmin } = adminStore();
+
+    // {/* 어드민 접근 제어 */ }
+    // {
+    //     isAdmin
+    //         ?
+    //         <Route path="admin" element={<Admin />}>
+    //             <Route index element={<ReportedUser />} />
+    //             <Route path="detail-info" element={<DetailInfo />} />
+    //             <Route path="report-user" element={<ReportUser />} />
+    //         </Route>
+    //         : <Route path="/admin" element={<Navigate to="/" replace />} />
+    // }
+
     return (
         <>
             <GlobalStyle />
@@ -54,23 +70,36 @@ export default function App() {
                             <Route path="/callback" element={<OAuthCallback />} />
                             <Route path="/oauth2/:provider" element={<HomePage />} />
                             <Route path="/editor" element={<EditorPage />} />
-                            <Route path="/nfc" element={<NfcPage/>}/>
+                            <Route path="/nfc" element={<NfcPage />} />
                             <Route path="/terms-of-service" element={<TermsOfService />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/qna" element={<QnaPage />}>
                                 <Route index element={<QnaPostBoard />} />
                                 <Route path="write" element={<TextEditor />} />
                                 <Route path="my-qna-post" element={<MyQnaPost />} />
-                                <Route path="post-detail" element={<QnaPostDetail/>}/>
-                                <Route path="post-update" element={<QnaPostUpdate/>}/>
+                                <Route path="post-detail" element={<QnaPostDetail />} />
+                                <Route path="post-update" element={<QnaPostUpdate />} />
                             </Route>
-                            <Route path="admin" element={<Admin/>}>
-                                <Route index element={<ReportedUser/>}/>
-                                <Route path="detail-info" element={<DetailInfo/>}/>
-                                <Route path="report-user" element={<ReportUser/>}/>
-                            </Route>
+                            {
+                                isAdmin
+                                    ?
+                                    <Route path="admin" element={<Admin />}>
+                                        <Route index element={<ReportedUser />} />
+                                        <Route path="detail-info" element={<DetailInfo />} />
+                                        <Route path="report-user" element={<ReportUser />} />
+                                    </Route>
+                                    : <></>
+                                    // <Route path="/admin" element={<Navigate to="/" replace />} />
+                            }
+                            {/* <Route path="admin" element={<Admin />}>
+                                <Route index element={<ReportedUser />} />
+                                <Route path="detail-info" element={<DetailInfo />} />
+                                <Route path="report-user" element={<ReportUser />} />
+                            </Route> */}
                         </Route>
+                        <Route path="/*" element={<ErrorPage/>}/>
                     </Routes>
+                    
                 </Router>
             </AuthProvider>
         </>
