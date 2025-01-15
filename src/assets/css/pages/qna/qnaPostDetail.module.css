@@ -74,6 +74,28 @@
     }
 }
 
+.answer-container {
+    border-color: #555;
+
+    tr{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px; 
+    }
+
+    td {
+        margin-right: 10px;
+    }
+}
+
+.answer-input-and-button-box {
+    display: flex;
+    flex-direction: row;
+
+    input {
+        margin-right: 20px;
+    }
+}
 
 
 
