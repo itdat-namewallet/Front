@@ -11,7 +11,7 @@
             "headers": [
                 {
                     "key": "Access-Control-Allow-Origin",
-                    "value": "http://localhost:3000"
+                    "value": "https://www.itdat.store"
                 },
                 {
                     "key": "Access-Control-Allow-Methods",
