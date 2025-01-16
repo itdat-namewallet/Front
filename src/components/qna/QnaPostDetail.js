@@ -190,7 +190,7 @@ const QnaPostDetail = () => {
             ></div>
             
             {/* 내용, 작성자, 작성일 */}
-            <div className="answer-container">
+            <div className={styles["answer-container"]}>
                 {
                     qnaAnswerList.map((answer, index) => {
                         return (
@@ -207,7 +207,7 @@ const QnaPostDetail = () => {
             {     
                 isAdmin
                 ?
-                <div className="answer-input-and-button-box">
+                <div className={styles["answer-input-and-button-box"]}>
                     <input 
                         type="text"
                         value={contents}
@@ -215,7 +215,7 @@ const QnaPostDetail = () => {
                         placeholder="답변 내용을 입력하세요."
                         style={{ width: "100%", padding: "10px", boxSizing: "border-box" }}
                     />
-                    <button onClick={reportAnswer}>답변 달기</button>
+                    <button className={styles.buttons} onClick={reportAnswer}>답변 달기</button>
                 </div>
                 : <></>
             }
