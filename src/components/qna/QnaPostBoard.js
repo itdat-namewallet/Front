@@ -156,6 +156,7 @@ const QnaPostBoard = () => {
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
+                            <th>답변 여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,6 +185,7 @@ const QnaPostBoard = () => {
                                                 day: "2-digit",
                                             }).replace(/\ /g, "")}
                                         </td>
+                                        <td>{post.answered? "O" : "X"}</td>
                                     </tr>
                                 );
                             })
