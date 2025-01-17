@@ -24,6 +24,8 @@ const QnaPostDetail = () => {
 
     const [contents, setContents] = useState("");
 
+    const [isChange, setIsChange] = useState(true);
+
     useEffect(() => {
         const fetchQnaPost = async () => {
             try {
@@ -51,9 +53,12 @@ const QnaPostDetail = () => {
                 const response = await axios.get(`${BASE_URL}/qna/selected-qna-answer-list`, {
                     params: {selectedId: postId}
                 });
+                console.log(response.data);
                 if(typeof response.data === "string"){
+                    console.log("string");
                     alert(response.data);
                 }else if(Array.isArray(response.data)){
+                    console.log("array");
                     setQnaAnswerList(response.data);
                 }
             } catch (error) {
@@ -63,7 +68,8 @@ const QnaPostDetail = () => {
         if (postId) {
             fetchQnaAnswerList();
         }
-    }, [postId])
+    }, [postId, isChange])
+    console.log(qnaAnswerList);
 
     // 선택된 게시물 수정
     const updatePost = async () => {
@@ -109,11 +115,28 @@ const QnaPostDetail = () => {
         } catch (error) {
             console.log("삭제하는 중 오류 발생: ", error);
         }
-
     }
-
     if (!qnaPostData) {
         return <div>Loading...</div>; // 데이터가 로딩 중일 때 표시할 내용
+    }
+
+    // 선택된 답변 삭제
+    const deleteAnswer = async (id) => {
+        try{
+            const response = await axios.delete(`${BASE_URL}/qna/answer-delete`,
+                {
+                    params: {
+                        selectedId: id
+                    }
+                }
+            )
+            if (response.data){
+                alert("답변이 삭제되었습니다.")
+            }
+            setIsChange(!isChange);
+        } catch (error) {
+            console.log("삭제하는 중 오류 발생: ", error);
+        }
     }
 
     // 관리자가 답변하는 버튼
@@ -127,6 +150,8 @@ const QnaPostDetail = () => {
             console.log('서버 응답: ', response.data);
             if(response.data){
                 alert("답변을 성공적으로 달았습니다.")
+                setContents("");
+                setIsChange(!isChange);
             }else{
                 throw (error) => {
                     console.error('데이터 전송 오류: ', error);
@@ -144,6 +169,18 @@ const QnaPostDetail = () => {
         setContents(event.target.value);
     }
 
+    // 날짜 형식 변경 함수
+    const changeDateType = (localDateTime) => {
+        return (
+            new Date(new Date(localDateTime).getTime() +9*60*60*1000).toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        }))
+    }
+
     return (
         <div className={styles.container}>
             {/* 제목 */}
@@ -156,24 +193,12 @@ const QnaPostDetail = () => {
                 </div>
                 <div>
                     <div>
-                        작성일: {new Date(qnaPostData.createDateAt).toLocaleString("ko-KR",{
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
+                        작성일: {changeDateType(qnaPostData.createDateAt)}
                     </div>
                     {/* 수정일 정보 */}
                     {/* <div className={styles.dateInfo}> */}
                     <div>
-                        수정일: {new Date(qnaPostData.updateAt).toLocaleString("ko-KR",{
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
+                        수정일: {changeDateType(qnaPostData.updateAt)}
                     </div>
                 </div>
                 
@@ -188,44 +213,9 @@ const QnaPostDetail = () => {
                     __html: DOMPurify.sanitize(qnaPostData.contents) || "내용이 없습니다."
                 }}
             ></div>
-            
-            {/* 내용, 작성자, 작성일 */}
-            <div className={styles["answer-container"]}>
-                {
-                    qnaAnswerList.map((answer, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{answer.description}</td>
-                                <td>{answer.adminId}</td>
-                                <td>{answer.createDateAt}</td>
-                            </tr>
-                        )
-                    })
-                }
-            </div>  
-            {/* 관리자에게만 보이는 답변을 다는 태그들.. */}
-            {     
-                isAdmin
-                ?
-                <div className={styles["answer-input-and-button-box"]}>
-                    <input 
-                        type="text"
-                        value={contents}
-                        onChange={handleContentsChange}
-                        placeholder="답변 내용을 입력하세요."
-                        style={{ width: "100%", padding: "10px", boxSizing: "border-box" }}
-                    />
-                    <button className={styles.buttons} onClick={reportAnswer}>답변 달기</button>
-                </div>
-                : <></>
-            }
+
             {/* 수정/삭제 버튼 */}
             <div className={styles.buttons}>
-
-                {
-                    isAdmin? <button onClick={reportAnswer}>답변 달기</button> : <></>
-                }
-
                 <button onClick={() => updatePost(qnaPostData.id)}>수정</button>
                 <button
                     className={styles.delete}
@@ -234,6 +224,49 @@ const QnaPostDetail = () => {
                     삭제
                 </button>
             </div>
+            
+            {/* 관리자에게만 보이는 답변을 다는 태그들.. */}
+            {     
+                isAdmin
+                ?
+                <div className={styles["answer-input-and-button-box"]}>
+                    <textarea 
+                        type="text"
+                        value={contents}
+                        onChange={handleContentsChange}
+                        placeholder="답변 내용을 입력하세요."
+                    />
+                    <div className={styles.buttons}>
+                        <button onClick={reportAnswer} >
+                            답변 작성
+                        </button>
+                    </div>
+                </div>
+                : <></>
+            }
+
+            {/* 답변 내용, 작성자, 작성일 */}
+            <div className={styles["answer-container"]}>
+                {
+                    qnaAnswerList.map((answer, index) => {
+                        return (
+                            <div className={styles["out-line"]} key={index}>
+                                {/* 왼쪽 위 콘텐츠 */}
+                                <div className={styles["content"]}>
+                                    <pre>{answer.contents}</pre>
+                                </div>
+                                
+                                {/* 오른쪽 아래 메타데이터 */}
+                                <div className={styles["metadata-container"]}>
+                                    <div>관리자 ID: {answer.user.userId}</div>
+                                    <div>{changeDateType(answer.createDateAt)}</div>
+                                    {isAdmin? <button onClick={()=>deleteAnswer(answer.id)}>삭제</button> : <></>}
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>  
         </div>
     )
 }
