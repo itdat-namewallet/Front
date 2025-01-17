@@ -167,3 +167,15 @@
         height: auto; /* 높이는 자동으로 */
     }
 }
+
+.mywallet-wrapper {
+    position: relative;
+    z-index: 1;
+    margin-top: 50px;
+  }
+  
+  .my-wallet .video-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
