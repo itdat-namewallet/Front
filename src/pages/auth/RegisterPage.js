@@ -406,6 +406,21 @@ export default function RegisterPage() {
 
       {currentStep === 1 && (
         <>
+          {/* 사용자 타입 입력 */}
+          <div className="form-group">
+            <label htmlFor="userType">명함 유형</label>
+            <select
+              id="userType"
+              name="userType"
+              value={formData.userType || "BUSINESS"}
+              onChange={handleChange}
+              className="form-control"
+            >
+              <option value="BUSINESS">비즈니스</option>
+              <option value="PERSONAL">개인</option>
+            </select>
+          </div>
+
           {/* 직급 입력 */}
           <FormInput
             label="직급"
