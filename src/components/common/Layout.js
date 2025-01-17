@@ -5,6 +5,7 @@ import "../../assets/css/common/layout.css";
 import { Outlet } from "react-router-dom";
 import LeftAside from "./LeftAside";
 import RightAside from "./RightAside";
+import MyWallet from "../../pages/main/MyWallet";
 
 const Layout = () => {
   const [showFooter, setShowFooter] = useState(false);
