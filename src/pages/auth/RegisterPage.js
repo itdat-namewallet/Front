@@ -278,11 +278,11 @@ export default function RegisterPage() {
             const response = await axios.post(`${BASE_URL}${endpoint}`, payload, {
                 headers: { "Content-Type": "application/json" },
             });
-            alert("회원가입 성공!");
+            alert("회원가입 되었습니다. 로그인 후 이용해주세요.");
             localStorage.setItem("token", response.data.token);
             navigate("/");
         } catch (error) {
-            alert(error.response?.data?.message || "회원가입 실패");
+            alert(error.response?.data?.message || "회원가입에 실패하였습니다.");
         }
 
         // 필수 동의 검증

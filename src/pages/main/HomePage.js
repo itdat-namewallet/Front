@@ -11,6 +11,7 @@ import Slider from "react-slick";
 import "slick-carousel"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MyWallet from "./MyWallet";
 
 export default function HomePage() {
   const settings = {
@@ -110,7 +111,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </div>
+      </div>      
+
     </>
 
   );

@@ -1,0 +1,35 @@
+.my-wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .content {
+    max-width: 50%;
+  }
+  
+  .content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .video-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .video {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
