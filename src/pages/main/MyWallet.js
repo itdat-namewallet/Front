@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import '../../assets/css/main/MyWallet.css';
+import videoSrc from '../../assets/video/mywallet.mp4';
 
 const MyWallet = () => {
   const videoRef = useRef(null);
@@ -33,29 +34,29 @@ const MyWallet = () => {
 
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
-          console.warn("Video playback issue:", error);
+          console.warn('Video playback issue:', error);
         });
       }
     }
   }, [isVisible]);
 
   return (
-    <div className="my-wallet">
-      <div className="content">
+    <div className="mywallet">
+      <div className="mywallet-content">
         <h2>공유 받은 명함의 손쉬운 관리</h2>
         <p>
-          공유받은 명함을 나의 명함첩에서
-          폴더로 손쉽게 관리하고 확인할 수 있습니다. 
+          공유받은 명함을 나의 명함첩에서<br />
+          폴더로 손쉽게 관리하고 확인할 수 있습니다.
         </p>
       </div>
-      <div className="video-container">
+      <div className="mywallet-video-container">
         <video
           ref={videoRef}
-          src="assets/video/mywallet.mp4"
+          src={videoSrc}
           type="video/mp4"
           muted
           loop
-          className="video"
+          className="mywallet-video"
         />
       </div>
     </div>

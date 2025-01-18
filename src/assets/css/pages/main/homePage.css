@@ -178,4 +178,15 @@
     overflow: hidden;
     position: relative;
   }
+
+.opencard-wrapper {
+    position: relative;
+    z-index: 1;
+    margin-top: 50px;
+}
+
+.opencard .video-container {
+    overflow: hidden;
+    position: relative;
+}
   
