@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import '../../assets/css/main/MyWallet.css';
+import '../../assets/css/main/myWallet.css';
 import videoSrc from '../../assets/video/mywallet.mp4';
 
 const MyWallet = () => {
@@ -46,7 +46,7 @@ const MyWallet = () => {
         <h2>공유 받은 명함의 손쉬운 관리</h2>
         <p>
           공유받은 명함을 나의 명함첩에서<br />
-          폴더로 손쉽게 관리하고 확인할 수 있습니다.
+          폴더로 손쉽게 관리하고 확인해 보세요.
         </p>
       </div>
       <div className="mywallet-video-container">
