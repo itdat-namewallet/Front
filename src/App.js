@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/main/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./components/common/Layout";
-import LoginAndRegisterPage from "./pages/main/LoginAndRegisterPage";
-import EditorPage from "./pages/editor/figma/EditorPage";
 import QnaPage from "./pages/main/QnaPage";
 import QnaPostBoard from "./components/qna/QnaPostBoard";
 import TextEditor from "./components/qna/TextEditor";
@@ -57,7 +54,6 @@ export default function App() {
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/callback" element={<OAuthCallback />} />
                             <Route path="/oauth2/:provider" element={<HomePage />} />
-                            <Route path="/editor" element={<EditorPage />} />
                             <Route path="/nfc" element={<NfcPage />} />
                             <Route path="/terms-of-service" element={<TermsOfService />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

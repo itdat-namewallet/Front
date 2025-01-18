@@ -11,10 +11,16 @@ import thirdImage1 from "../../assets/images/homepage/third-image1.jpg"
 import thirdImage2 from "../../assets/images/homepage/third-image2.jpg"
 import thirdImage3 from "../../assets/images/homepage/third-image3.jpg"
 import thirdImage4 from "../../assets/images/homepage/third-image4.jpg"
+import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg";
+import slideImage0001 from "../../assets/images/management.jpg";
+import slideImage0002 from "../../assets/images/eco.png";
 import Slider from "react-slick";
-import "slick-carousel"
+import "slick-carousel";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MyWallet from "./MyWallet";
+import OpenCard from "./OpenCard";
+import CardMake from "./CardMake";
 
 export default function HomePage() {
   const settings = {
@@ -32,37 +38,31 @@ export default function HomePage() {
   // };
 
   return (
-
     <>
       {/* 전체 스크롤 가능한 래퍼 */}
       <div className="home-page-wrapper">
         <div className="home-page-main-container">
-          
           <div className="left-container">
-            <div>
-              <Slider {...settings}>
-                <div>
-                  <img className="name-card-img" src={nameCard000} alt="Name Card 000" />
-                </div>
-                <div>
-                  <img className="name-card-img" src={nameCard001} alt="Name Card 001" />
-                </div>
-                <div>
-                  <img className="name-card-img" src={nameCard100} alt="Name Card 100" />
-                </div>
-                <div>
-                  <img className="name-card-img" src={nameCard101} alt="Name Card 101" />
-                </div>
-              </Slider>
-            </div>
+            <Slider {...settings}>
+              <div>
+                <img className="name-card-img" src={nameCard000} alt="Name Card 000" />
+              </div>
+              <div>
+                <img className="name-card-img" src={nameCard001} alt="Name Card 001" />
+              </div>
+              <div>
+                <img className="name-card-img" src={nameCard100} alt="Name Card 100" />
+              </div>
+              <div>
+                <img className="name-card-img" src={nameCard101} alt="Name Card 101" />
+              </div>
+            </Slider>
           </div>
-
           <div className="right-container">
             <div className="text-container">
               <h1>명함 플랫폼</h1>
               <h1>편리한 관리</h1>
               <h1>NFC 연동 지원</h1>
-
               <br />
               <h1>사람과 사람을 잇다</h1>
               <div className="text-box">
@@ -73,7 +73,6 @@ export default function HomePage() {
         </div>
 
         <div className="home-page-second-box">
-
           <div className="second-left-container">
             <p>쉽게 버려지는 명함의 특성상</p>
             <p>필히 따라오는 개인정보 유출을 막고,</p>
@@ -82,35 +81,26 @@ export default function HomePage() {
             <p>더 성장한 내 커리어를 바로 반영 시켜</p>
             <p>번거롭게 명함을 다시 제작할 이유도,</p>
             <p>나눠줄 필요도 없습니다.</p>
-            {/* <p>쉽게 수정하세요.</p> */}
             <br />
             <p>필요에 따라 각기 다른 명함을 제작하고,</p>
             <p>상대방에겐 꼭 필요한 정보만을 넘겨</p>
             <p>전문성을 지키세요.</p>
-            {/* <br /> */}
-            {/* <p>그리고 모든 명함을 ITDAT에서 한번에 관리하세요.</p> */}
             <br />
             <h2>명함 관리의 모든 게 잇다</h2>
             <h2>ITDAT</h2>
           </div>
-
           <div className="second-right-container">
-            <div>
-              <Slider {...settings}>
-                <div>
-                  <img className="name-card-img" src={slideImage0000} alt="Name Card 000" />
-                </div>
-                <div>
-                  <img className="name-card-img" src={slideImage0001} alt="Name Card 001" />
-                </div>
-                <div>
-                  <img className="name-card-img" src={slideImage0002} alt="Name Card 100" />
-                </div>
-                {/* <div>
-                  <img className="name-card-img" src={slideImage0000} alt="Name Card 101" />
-                </div> */}
-              </Slider>
-            </div>
+            <Slider {...settings}>
+              <div>
+                <img className="name-card-img" src={slideImage0000} alt="Name Card 000" />
+              </div>
+              <div>
+                <img className="name-card-img" src={slideImage0001} alt="Name Card 001" />
+              </div>
+              <div>
+                <img className="name-card-img" src={slideImage0002} alt="Name Card 100" />
+              </div>
+            </Slider>
           </div>
         </div>
         <div className="home-page-third-box">
@@ -143,8 +133,22 @@ export default function HomePage() {
           
             
         </div>
+
+        {/* 명함첨 컴포넌트 */}
+        <div className="mywallet-wrapper">
+          <MyWallet />
+        </div>
+
+        {/* 명함제작 컴포넌트 */}
+        <div className="cardmake-wrapper">
+          <CardMake />
+        </div>
+
+        {/* 공개명함 컴포넌트 */}
+        <div className="opencard-wrapper">
+          <OpenCard />
+        </div>
       </div>
     </>
-
   );
 }

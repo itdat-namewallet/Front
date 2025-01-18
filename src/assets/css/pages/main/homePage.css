@@ -187,7 +187,18 @@
         margin-left: 20px;
         border-radius: 20px;
     }
-    }
+  }
 
     
+.mywallet-wrapper,
+.cardmake-wrapper {
+  position: relative;
+  z-index: 1;
+  margin-top: 50px;
+}
+
+.my-wallet .video-container,
+.cardmake .image-container {
+  overflow: hidden;
+  position: relative;
 }
