@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MyWallet from "./MyWallet";
 import OpenCard from "./OpenCard";
+import CardMake from "./CardMake";
 
 export default function HomePage() {
   const settings = {
@@ -92,14 +93,21 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* MyWallet 컴포넌트 추가 */}
+        {/* 명함첨 컴포넌트 */}
         <div className="mywallet-wrapper">
           <MyWallet />
         </div>
-        
+
+        {/* 명함제작 컴포넌트 */}
+        <div className="cardmake-wrapper">
+          <CardMake />
+        </div>
+
+        {/* 공개명함 컴포넌트 */}
         <div className="opencard-wrapper">
           <OpenCard />
         </div>
+
       </div>
     </>
   );
