@@ -3,7 +3,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #343D55;
     color: #555;
     border-top: 1px solid #ddd;
     text-align: center;
@@ -56,13 +56,13 @@
   .footer-left h4 {
     margin-bottom: 3px;
     font-size: 0.9rem;
-    color: #333;
+    color: #F1F1F3;
   }
   
   .footer-left p {
     margin: 2px 0;
     font-size: 0.8rem;
-    color: #666;
+    color: #F1F1F3;
   }
   
   .footer-center {
@@ -87,7 +87,7 @@
   .center-links li a {
     text-decoration: none;
     font-weight: bold;
-    color: #333;
+    color: #F1F1F3;
   }
   
   .center-links li a:hover {
@@ -114,7 +114,7 @@
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: bold;
-    color: #333;
+    color: #F1F1F3;
   }
   
   .right-links li a:hover {
@@ -124,7 +124,7 @@
   .footer-bottom {
     margin-top: 5px;
     font-size: 0.75rem;
-    color: #777;
+    color: #F1F1F3;
   }
   
   .scroll-to-top-image {
