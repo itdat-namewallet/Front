@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import '../../assets/css/main/OpenCard.css';
+import '../../assets/css/main/openCard.css';
 import videoSrc from '../../assets/video/opencard.mp4';
 
 const OpenCard = () => {
@@ -42,6 +42,15 @@ const OpenCard = () => {
 
   return (
     <div className="opencard">
+
+    <div className="opencard-content">
+        <h2>나의 가치를 공개해보세요</h2>
+        <p>
+          명함을 공개 설정하면 나의 명함을<br />
+          많은 사람들이 확인할 수 있습니다.
+        </p>
+    </div>
+
         <div className="opencard-video-container">
             <video
             ref={videoRef}
@@ -52,13 +61,6 @@ const OpenCard = () => {
             className="opencard-video"
             />
         </div>
-      <div className="opencard-content">
-        <h2>공개 명함 설정</h2>
-        <p>
-          명함을 공개 설정하여 더 많은 사람들과<br />
-          쉽게 연결될 수 있습니다.
-        </p>
-      </div>
     </div>
   );
 };
