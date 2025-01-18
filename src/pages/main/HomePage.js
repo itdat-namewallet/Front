@@ -7,6 +7,10 @@ import nameCard101 from "../../assets/images/test-name-card/101.png";
 import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg"
 import slideImage0001 from "../../assets/images/management.jpg"
 import slideImage0002 from "../../assets/images/eco.png"
+import thirdImage1 from "../../assets/images/homepage/third-image1.jpg"
+import thirdImage2 from "../../assets/images/homepage/third-image2.jpg"
+import thirdImage3 from "../../assets/images/homepage/third-image3.jpg"
+import thirdImage4 from "../../assets/images/homepage/third-image4.jpg"
 import Slider from "react-slick";
 import "slick-carousel"
 import "slick-carousel/slick/slick.css";
@@ -21,12 +25,11 @@ export default function HomePage() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-
-    // vertical : true,
-    // variableWidth: false,
-    // vertical: true,
-    // centerMode: true,
   };
+
+  // const settings3 = {
+  //   slidesToShow: 4,
+  // };
 
   return (
 
@@ -109,6 +112,36 @@ export default function HomePage() {
               </Slider>
             </div>
           </div>
+        </div>
+        <div className="home-page-third-box">
+          <div>
+            {/* <Slider {...settings3}>
+              <div>
+                <img className="name-card-img" src={thirdImage1} alt="Third Image 1" />
+              </div>
+              <div>
+                <img className="name-card-img" src={thirdImage2} alt="Third Image 2" />
+              </div>
+              <div>
+                <img className="name-card-img" src={thirdImage3} alt="Third Image 3" />
+              </div>
+              <div>
+                <img className="name-card-img" src={thirdImage4} alt="Third Image 4" />
+              </div>
+            </Slider> */}
+            <div className="center-box">
+              <>
+                <p>내 명함</p>
+                <img src={thirdImage1}/>
+              </>
+              
+              <img src={thirdImage2}/>
+              <img src={thirdImage3}/>
+              <img src={thirdImage4}/>
+            </div>
+          </div>
+          
+            
         </div>
       </div>
     </>
