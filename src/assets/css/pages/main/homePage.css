@@ -168,6 +168,28 @@
     }
 }
 
+.home-page-third-box{
+    background-color: #a4bd8e;
+    padding-top: 250px;
+    padding-bottom: 250px;
+
+    display: flex;
+    /* margin-bottom: 250px; */
+    justify-content: center;
+    align-items: center;
+   
+    .center-box{
+        width: 100%;
+
+        img {
+        width: 250px;
+        margin-right: 20px;
+        margin-left: 20px;
+        border-radius: 20px;
+    }
+  }
+
+    
 .mywallet-wrapper,
 .cardmake-wrapper {
   position: relative;
