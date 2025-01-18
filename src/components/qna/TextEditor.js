@@ -6,8 +6,158 @@ import "../../assets/css/pages/qna/textEditor.css"
 import styles from "../../assets/css/pages/qna/textEditor.module.css"
 import { adminStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
+// import { reject, resolve } from 'core-js/fn/promise';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+// import { MyCustomUploadAdapterPlugin } from './textEditorPlugin/MyUploadAdapter';
 
+
+console.log(ClassicEditor.builtinPlugins.map(plugin => plugin.pluginName));
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+class MyCustomUploadAdapter {
+    constructor(loader) {
+        this.loader = loader;
+    }
+
+    upload = () => {
+        return this.loader.file
+            .then(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+
+                    reader.onloadend = () => {
+                        // Base64로 로컬 미리보기
+                        const base64 = reader.result;
+                        console.log("base64: ",base64);
+                        resolve({
+                            default: base64, // Base64로 로컬 미리보기
+                        });
+                    };
+                    reader.onerror = () => {
+                        reject('이미지 업로드에 실패했습니다');
+                    };
+
+                    reader.readAsDataURL(file); // Base64로 변환
+
+                    // // 2. 서버로 이미지 업로드
+                    // const formData = new FormData();
+                    // formData.append('file', file); // 파일을 FormData에 추가
+                    //     // 이미지가 등록되는 순간 해당 이미지는 db에 저장된다.
+                    //     // 저장된 이미지의 url이 게시물의 contents에 태그 형식으로 저장된다.
+                    //     // 만약 이대로 게시물이 저장되면 이미 db에 저장된 이미지는 그대로 db에 남기고
+                    //     // 게시물에서 이미지가 빠지면 해당 이미지의 url 주소를 요청에 담아 백을 통해 db에서 삭제한다.
+
+                    // axios.post(`${BASE_URL}/qna/image-upload`, formData)
+                    //     .then(response => response.json())
+                    //     .then(data => {
+                    //         // 서버에서 이미지 URL을 받아옴
+                    //         const imageUrl = data.url;
+                    //         resolve({
+                    //             default: imageUrl, // 서버 URL을 통해 이미지 표시
+                    //         });
+                    //     })
+                    //     .catch(err => {
+                    //         reject('이미지 업로드에 실패했습니다');
+                    //     });
+                });
+            });
+    }
+
+    abort = () => {
+        // 업로드 중 취소 처리가 필요하다면 여기에 구현할 수 있습니다.
+        console.log("업로드가 취소되었습니다.");
+    }
+}
+
+function MyCustomUploadAdapterPlugin(editor) {
+    console.log("여기는??? ", editor);
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return new MyCustomUploadAdapter(loader);
+    };
+}
+
+// const MyCustomUploadAdapter = () => {
+//     constructor = (loader) => {
+//         console.log("생거",loader);
+//         this.loader = loader;
+//     };
+
+//     const upload = () => {
+//         return this.loader.file
+//             .then(file => {
+//                 return new Promise((resolve, reject) => {
+//                     const reader = new FileReader();
+
+//                     reader.onloadend = () => {
+//                         // Base64로 로컬 미리보기
+//                         const base64 = reader.result;
+//                         resolve({
+//                             default: base64, // Base64로 로컬 미리보기
+//                         });
+//                     };
+//                     reader.onerror = () => {
+//                         reject('이미지 업로드에 실패했습니다');
+//                     };
+//                     reader.readAsDataURL(file); // Base64로 변환
+//                 });
+//             });
+
+//         // return new Promise((resolve, reject) => {
+//         //     // 로컬에서 미리보기
+//         //     const file = this.loader.file;
+//         //     const reader = new FileReader();
+            
+//         //     reader.onloadend = () => {
+//         //         // Base64로 로컬 미리보기
+//         //         const base64 = reader.result;
+//         //         resolve({
+//         //             default: base64, // Base64로 로컬 미리보기
+//         //         });
+//         //     };
+
+//         //     reader.onerror = () => {
+//         //         reject('이미지 업로드에 실패했습니다');
+//         //     };
+
+//         //     reader.readAsDataURL(file); // Base64로 변환
+//         // });
+
+//         // return this.loader.file
+//         //     .then(file => {
+//         //         return new Promise((resolve, reject) => {
+//         //             const data = new FormData();
+//         //             data.append('file', file);  // 파일을 FormData로 추가
+//         //             const fileData = data.get('file'); // 'file' 키에 해당하는 값 가져오기
+//         //             console.log("asdasdasdsa   " , fileData); // 파일 객체 출력
+        
+//         //             axios.post(`${BASE_URL}/qna/image-upload`, data)
+//         //                 .then(response => response.json())
+//         //                 .then(data => {
+//         //                     resolve({
+//         //                         default: data.url,  // 서버에서 반환한 이미지 URL을 CKEditor에 전달
+//         //                     });
+//         //                 })
+//         //                 .catch(err => {
+//         //                     reject('이미지 업로드에 실패했습니다');
+//         //                 });
+//         //         });
+//         //     })
+//     }
+//     upload();
+
+//     const abort = () => {
+//         // 업로드 중 취소 처리가 필요하다면 여기에 구현할 수 있습니다.
+//     }
+//     abort();
+// }
+
+// function MyCustomUploadAdapterPlugin(editor) {
+//     console.log("여기는??? ",editor);
+//     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+//         return new MyCustomUploadAdapter(loader);
+//     };
+// }
 
 const TextEditor = () => {
     const navigate = useNavigate();
@@ -48,7 +198,6 @@ const TextEditor = () => {
         console.log(event.target.checked);
         if (!event.target.checked) setPassword(""); // 비밀글 해제 시 패스워드 초기화
     };
-    console.log(isSecret);
 
     // 패스워드 변경 이벤트 핸들러
     const handlePasswordChange = (event) => {
@@ -130,49 +279,22 @@ const TextEditor = () => {
                         placeholder:
                             "권리침해, 욕설, 비하, 명예훼손, 혐오, 불법촬영물 등의 내용을 게시하면 운영정책 및 관련 법률에 의해 제재될 수 있습니다. 본인이 쓴 게시글 및 댓글에 대한 법적 책임은 본인에게 있습니다."
                         ,
+                        extraPlugins: [MyCustomUploadAdapterPlugin], // CustomUploadAdapter 추가
+                        toolbar: [
+                            'heading',
+                            '|',
+                            'bold',
+                            'italic',
+                            'link',
+                            'bulletedList',
+                            'numberedList',
+                            'blockQuote',
+                            // 'imageUpload',
+                            'undo',
+                            'redo',
+                        ],
                     }}
                     onChange={handleEditorChange}
-                    // onReady={(editor)=>{
-
-                    // }}
-
-
-                    // onReady={(editor) => {
-                    //     console.log('Editor is ready to use!', editor);
-      
-                    //     // 전체 에디터 크기 설정 (너비와 높이 고정)
-                    //     const editorElement = editor.ui.view.element;
-                    //     // editorElement.style.width = "1200px";
-                    //     editorElement.style.minWidth = '800px'; // 전체 에디터 너비
-                    //     editorElement.style.maxWidth = '1200px'; // 전체 에디터 너비
-                    //     // editorElement.style.width = "1200px";
-                    //     // editorElement.style.width = "";
-                    //     // editorElement.style.height = '400px'; // 전체 에디터 높이
-                    //     // editorElement.classList.add('custom-editor-container');
-      
-                    //     // 텍스트 입력 영역 (editable) 크기 설정
-                    //     const editableElement = editor.ui.view.editable.element;
-                    //     editableElement.style.height = '400px'; // 고정된 높이
-                    //     editableElement.style.minHeight = '400px'; // 최소 높이 설정
-                    //     editableElement.style.maxHeight = '400px'; // 최대 높이 설정
-                    //     editableElement.style.overflowY = 'auto'; // 내용이 넘칠 경우 스크롤이 생기도록 설정
-                    //     editableElement.style.resize = 'none'; // 크기 조정 방지
-      
-                    //     // 포커스가 생겨도 크기 변경을 방지하도록 설정
-                    //     editableElement.addEventListener('focus', () => {
-                    //         editableElement.style.height = '400px';
-                    //         editableElement.style.minHeight = '400px';
-                    //         editableElement.style.maxHeight = '400px';
-                    //     });
-                    //     editableElement.addEventListener('blur', () => {
-                    //         setTimeout(() => {
-                    //             editableElement.style.height = '400px';
-                    //             editableElement.style.minHeight = '400px';
-                    //             editableElement.style.maxHeight = '400px';
-                    //         }, 0); // setTimeout을 사용하여 스타일을 즉시 적용
-                    //     });
-                    // }}
-      
                 />
             </div>
 
