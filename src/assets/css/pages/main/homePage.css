@@ -29,7 +29,6 @@
 
     width: 100%;
     height: 100vh; /* 화면 전체를 차지 */
-    max-width: 750px; /* 최대 너비 제한 */
     margin: 0 auto; /* 가로 중앙 정렬 */
     display: flex; /* Flexbox 레이아웃 */
     justify-content: center;
