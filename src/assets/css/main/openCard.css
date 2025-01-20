@@ -4,12 +4,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px 0;
+    padding-top: 50px;
     box-sizing: border-box;
     position: relative;
     z-index: 1;
   }
-  
+  /* test */
   .opencard {
     width: 100%;
     display: flex;
@@ -17,9 +17,9 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 1.5rem; 
-    background-color: #F1F3F6; 
+    background-color: #8fcab8;
     box-sizing: border-box;
-    height: 800px;
+    height: 100vh;
   }
   
   .opencard-content {
@@ -27,6 +27,7 @@
     max-width: 50%;
     margin-right: -11.5rem;
     margin-left: 415px;
+    color: #fff;
   }
   
   .opencard-content h2 {

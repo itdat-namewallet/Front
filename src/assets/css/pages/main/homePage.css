@@ -11,87 +11,11 @@
 }
 
 
-.home-page-main-container {
-    /* margin-top: 200px;
-    margin-left: auto;
-    margin-right: auto; */
-
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    max-width: 750px;
-    margin: 0 auto;
-    overflow: hidden;
-    box-sizing: border-box; */
-
-    width: 100%;
-    height: 100vh; /* 화면 전체를 차지 */
-    margin: 0 auto; /* 가로 중앙 정렬 */
-    display: flex; /* Flexbox 레이아웃 */
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-
-    .left-container {
-        flex: 1;
-        max-width: 50%;
-
-        .name-card-img {
-        max-width: 100%; /* 이미지가 부모 너비에 맞도록 설정 */
-        max-height: 100%; /* 이미지가 부모 높이에 맞도록 설정 */
-        object-fit: contain; /* 이미지 비율 유지하며 크기 조정 */
-        }
-
-    .slick-slide {
-        display: flex !important; /* 슬라이더 내부 요소를 Flexbox로 설정 */
-        justify-content: center; /* 이미지 수평 중앙 정렬 */
-        align-items: center; /* 이미지 수직 중앙 정렬 */
-        height: auto; /* 높이는 자동으로 */
-    }
-       
-    }
-
-    .right-container {
-        flex: 1;
-        max-width: 50%;
-        padding: 20px;
-        box-sizing: border-box;
-        padding-left: 50px;
-
-        .text-container h1 {
-            margin: 0;
-            /* 기본 마진 제거 */
-            padding: 0;
-            /* 기본 패딩 제거 */
-            line-height: 1.4;
-            /* 줄 간격 조정 */
-            font-size: 35px;
-            /* font-weight:1500; */
-        }
-
-        .text-container :last-child{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-end;
-            justify-content: end;
-            align-items: end;
-            
-        }
-
-        .text-container br{
-            margin-top: 14px;
-        }
-    }
-}
 
 .home-page-second-box{
     width: 100%;
-    height: 70vh;
-    max-width: 750px;
+    height: 100vh;
+    max-width: 1000px;
     margin: 0 auto; 
     display: flex;
     justify-content: center;
@@ -104,8 +28,7 @@
         max-width: 50%;
         padding: 20px;
         box-sizing: border-box;
-        padding-left: 50px;
-        padding-bottom: 150px;
+
 
         :last-child{
             display: flex;
@@ -114,12 +37,17 @@
             justify-content: flex-end;
             justify-content: end;
             align-items: end;
-            padding-right: 35px;
+            padding-right: 180px;
+            font-size: 2.2rem;
+            line-height: 0;
+        }
+    
+        h2{
+            font-size: 1.7rem;
         }
 
         p{
-            margin: 4px;
-            font-size: 16px;
+            font-size: 1.2rem;
         }
     }
 
@@ -143,12 +71,15 @@
 }
 
 .home-page-third-box{
-    display: flex;
+/*     display: flex;
     flex-direction: column;
     background-color: #0f182e;
     padding-top: 70px;
     padding-bottom: 100px;
-    margin-bottom: 50px;
+    margin-bottom: 50px; */
+    background-color: #8fcab8;
+    padding-top: 250px;
+    padding-bottom: 250px;
     justify-content: center;
     align-items: center;
     color: white;

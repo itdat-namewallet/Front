@@ -3,7 +3,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #0f182e;
+    background-color: #ffffff8f;
     color: #555;
     border-top: 1px solid #ddd;
     text-align: center;
@@ -29,7 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
     width: 50%;
     margin: 0 auto;
   }
@@ -56,13 +56,13 @@
   .footer-left h4 {
     margin-bottom: 3px;
     font-size: 0.9rem;
-    color: #F1F1F3;
+    color: #303030;
   }
   
   .footer-left p {
     margin: 2px 0;
     font-size: 0.8rem;
-    color: #F1F1F3;
+    color: #303030;
   }
   
   .footer-center {
@@ -87,11 +87,11 @@
   .center-links li a {
     text-decoration: none;
     font-weight: bold;
-    color: #F1F1F3;
+    color: #303030;
   }
   
   .center-links li a:hover {
-    color: #777;
+    color: rgba(0, 202, 145, 1);
   }
   
   
@@ -114,17 +114,17 @@
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: bold;
-    color: #F1F1F3;
+    color: #303030;
   }
   
   .right-links li a:hover {
-    color: #777;
+    color: rgba(0, 202, 145, 1);
   }
   
   .footer-bottom {
     margin-top: 5px;
     font-size: 0.75rem;
-    color: #F1F1F3;
+    color: #303030;
   }
   
   .scroll-to-top-image {

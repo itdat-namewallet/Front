@@ -9,7 +9,7 @@
   position: relative;
   z-index: 1;
 }
-
+/* test */
 .mywallet {
   width: 100%;
   display: flex;
@@ -17,9 +17,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem;
-  background-color: #F1F3F6;
+  background-color: #8fcab8;
   box-sizing: border-box;
-  height: 800px;
+  height: 100vh;
 }
 
 .mywallet-content {
@@ -27,6 +27,7 @@
   max-width: 50%;
   margin-right: -40.5rem;
   margin-left: 400px;
+  color: #fff;
 }
 
 .mywallet-content h2 {
