@@ -11,7 +11,6 @@ import thirdImage1 from "../../assets/images/homepage/third-image1.svg"
 import thirdImage2 from "../../assets/images/homepage/third-image2.svg"
 import thirdImage3 from "../../assets/images/homepage/third-image3.svg"
 import thirdImage4 from "../../assets/images/homepage/third-image4.svg"
-
 import Slider from "react-slick";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";

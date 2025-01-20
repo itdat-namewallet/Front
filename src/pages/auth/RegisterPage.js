@@ -38,6 +38,7 @@ export default function RegisterPage() {
     const [allAccepted, setAllAccepted] = useState(false);
     const [showTermsModal, setShowTermsModal] = useState(false);
     const [showPrivacyModal, setShowPrivacyModal] = useState(false); 
+    const [isEmailAvailable, setIsEmailAvailable] = useState(false);
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -191,21 +192,22 @@ export default function RegisterPage() {
     };
     
     const handleBlur = async (e) => {
-        const { name, value } = e.target;
-        if (name === "userId") {
-            const isAvailable = await checkAvailability("userId", value);
-            setErrors((prev) => ({
-                ...prev,
-                userId: isAvailable ? "" : "이미 사용 중인 아이디입니다.",
-            }));
-        } else if (name === "userEmail") {
-            const isAvailable = await checkAvailability("userEmail", value);
-            setErrors((prev) => ({
-                ...prev,
-                userEmail: isAvailable ? "" : "이미 사용 중인 이메일입니다.",
-            }));
-        }
-    };
+      const { name, value } = e.target;
+      if (name === "userId") {
+          const isAvailable = await checkAvailability("userId", value);
+          setErrors((prev) => ({
+              ...prev,
+              userId: isAvailable ? "" : "이미 사용 중인 아이디입니다.",
+          }));
+      } else if (name === "userEmail") {
+        const isAvailable = await checkAvailability("userEmail", value);
+        setIsEmailAvailable(isAvailable);
+        setErrors((prev) => ({
+          ...prev,
+          userEmail: isAvailable ? "" : "이미 사용 중인 이메일입니다.",
+        }));
+      }
+  };
     
 
     const handleChange = (e) => {
