@@ -1,9 +1,5 @@
 import React from "react";
 import "../../assets/css/pages/main/homePage.css";
-import nameCard000 from "../../assets/images/test-name-card/000.png";
-import nameCard001 from "../../assets/images/test-name-card/001.png";
-import nameCard100 from "../../assets/images/test-name-card/100.png";
-import nameCard101 from "../../assets/images/test-name-card/101.png";
 import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg"
 import slideImage0001 from "../../assets/images/management.jpg"
 import slideImage0002 from "../../assets/images/eco.png"
@@ -18,6 +14,8 @@ import "slick-carousel/slick/slick-theme.css";
 import MyWallet from "./MyWallet";
 import OpenCard from "./OpenCard";
 import CardMake from "./CardMake";
+import MyCard from "./MyCard";
+import MainPage from "./MainPage";
 
 export default function HomePage() {
   const settings = {
@@ -34,36 +32,11 @@ export default function HomePage() {
     <>
       {/* 전체 스크롤 가능한 래퍼 */}
       <div className="home-page-wrapper">
-        <div className="home-page-main-container">
-          <div className="left-container">
-            <Slider {...settings}>
-              <div>
-                <img className="name-card-img" src={nameCard000} alt="Name Card 000" />
-              </div>
-              <div>
-                <img className="name-card-img" src={nameCard001} alt="Name Card 001" />
-              </div>
-              <div>
-                <img className="name-card-img" src={nameCard100} alt="Name Card 100" />
-              </div>
-              <div>
-                <img className="name-card-img" src={nameCard101} alt="Name Card 101" />
-              </div>
-            </Slider>
+
+          {/* 메인 페이지 */}
+          <div className="mainPage-wrapper">
+            <MainPage/>
           </div>
-          <div className="right-container">
-            <div className="text-container">
-              <h1>명함 플랫폼</h1>
-              <h1>편리한 관리</h1>
-              <h1>NFC 연동 지원</h1>
-              <br />
-              <h1>사람과 사람을 잇다</h1>
-              <div className="text-box">
-                <h1>ITDAT</h1>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="home-page-second-box">
           <div className="second-left-container">
@@ -117,6 +90,11 @@ export default function HomePage() {
               </div>
             </div>
          
+        </div>
+
+        {/* 내명함 컴포넌트 */}
+        <div className="myCard-wrapper">
+          <MyCard />
         </div>
 
         {/* 명함첨 컴포넌트 */}
