@@ -11,7 +11,6 @@ export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null); // 현재 활성화된 li의 index를 저장
     const { isAdmin, setIsAdmin, loginedUserId, setLoginedUserId } = adminStore();
-    //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -36,7 +35,6 @@ export default function Header() {
         const bringAdmin = async () => {
             const token = localStorage.getItem("jwtToken");
             if (!token) {
-                console.log("토큰이 비어있습니다.");
                 setIsAdmin(false);
                 return;
             }
@@ -48,8 +46,6 @@ export default function Header() {
                         headers: { "Authorization": `Bearer ${token}` }
                     }
                 );
-                // console.log(response.data);
-                console.log(response.data);
                 setLoginedUserId(response.data.userId)
                 if (response.data.role === "ADMIN") {
                     console.log("true");
@@ -64,11 +60,9 @@ export default function Header() {
         }
         bringAdmin();
     }, []);
-    // console.log(isAdmin);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
-        // console.log("localStorage에서 가져온 토큰:", token);
         if (token) {
             setIsLoggedIn(true);
         } else {
@@ -80,7 +74,6 @@ export default function Header() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
         if (token) {
-            console.log("URL에서 추출한 토큰:", token);
             localStorage.setItem("jwtToken", token);
             setIsLoggedIn(true);
             navigate("/", { replace: true });
@@ -141,10 +134,10 @@ export default function Header() {
     return (
         <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
-                <div className="itdat-and-green-dot">
-                    ITDAT
-                    <img src={logoGreenDot} alt="Logo" />
-                </div>
+            <div className="itdat-and-green-dot">
+                <Link to="/" className="main-logo">ITDAT</Link>
+                <img src={logoGreenDot} alt="Logo" />
+            </div>
             </h1>
             <ul>
                 <li
