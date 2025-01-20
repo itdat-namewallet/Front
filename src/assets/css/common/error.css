@@ -1,3 +1,15 @@
 .error-page-main-container {
     margin: 200px;
+    margin-left: 700px;
+    margin-top: 300px;
+}
+
+.logo-img {
+    width: 150px;
+    cursor: pointer;
+}
+
+.link-to-main {
+    text-decoration: none; 
+    color: inherit;
 }

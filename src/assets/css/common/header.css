@@ -83,3 +83,15 @@
     font-size: 17px;
 }
 
+.main-logo {
+    text-decoration: none;
+    color: inherit;
+}
+
+.main-logo:link, 
+.main-logo:visited, 
+.main-logo:hover, 
+.main-logo:active {
+    text-decoration: none;
+    color: inherit;
+}
