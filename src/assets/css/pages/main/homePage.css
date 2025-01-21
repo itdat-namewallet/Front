@@ -71,10 +71,13 @@
 }
 
 .home-page-third-box{
-
+    display: flex;
+    flex-direction: column;
     background-color: #8fcab8;
     padding-top: 250px;
     padding-bottom: 250px;
+    padding-left: 130px;
+    padding-right: 130px;
     justify-content: center;
     align-items: center;
     color: white;
@@ -123,11 +126,17 @@
             justify-content: center;
             background-color: white;
             padding: 20px;
-            max-width: 60%;
+            max-width: 75%;
             max-height: 600px;
             border-radius: 45px;
-            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.356);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .img-box:hover {
+            transform: translateY(-5px);
+        }
+
         img {
             background-color: white;
             max-width: 100%;
