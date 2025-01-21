@@ -26,6 +26,8 @@
     display: flex;
     position: relative;
     margin-left: 100px;
+    text-decoration: none; /* 밑줄 제거 */
+    color: black;
 
     img {
         position: absolute;

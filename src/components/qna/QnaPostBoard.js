@@ -150,11 +150,11 @@ const QnaPostBoard = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>카테고리</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>답변 여부</th>
+                            <th className={styles.category}>카테고리</th>
+                            <th className={styles.title}>제목</th>
+                            <th className={styles.author}>작성자</th>
+                            <th className={styles.date}>작성일</th>
+                            <th className={styles.status}>답변 여부</th>
                         </tr>
                     </thead>
                     <tbody>

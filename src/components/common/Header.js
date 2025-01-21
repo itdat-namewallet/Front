@@ -116,8 +116,8 @@ export default function Header() {
             }
             localStorage.removeItem("jwtToken");
             setIsLoggedIn(false);
-            window.location.reload();
             navigate("/login-and-register");
+            window.location.reload();
         } catch (error) {
             console.error("로그아웃 실패:", error.response?.data || error.message);
             alert("로그아웃 실패");
@@ -135,13 +135,17 @@ export default function Header() {
         }
     }
 
+    const handleScrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" }); // 부드럽게 스크롤
+    };
+
     return (
         <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
-                <div className="itdat-and-green-dot">
+                <Link to="/" className="itdat-and-green-dot" onClick={handleScrollToTop}>
                     ITDAT
                     <img src={logoGreenDot} alt="Logo" />
-                </div>
+                </Link>
             </h1>
             <ul>
                 <li
