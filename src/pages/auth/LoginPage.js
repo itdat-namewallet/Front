@@ -40,7 +40,7 @@ export default function LoginPage() {
     
 
     // 소셜 로그인 성공 처리
-    const handleSocialLogin = async (provider, token) => {
+    const handleSocialLoginSuccess = async (provider, token) => {
       try {
           console.log("로그인 요청 시작");
           console.log("BASE_URL:", BASE_URL);
@@ -68,7 +68,12 @@ export default function LoginPage() {
           alert(`${provider} 로그인 실패`);
       }
   };
-  
+    
+    // 소셜 로그인 실패 처리
+    const handleSocialLoginFailure = (provider, error) => {
+        console.error(`${provider} 로그인 실패:`, error);
+        alert(`${provider} 로그인 중 문제가 발생했습니다.`);
+    };
     
 
     return (
