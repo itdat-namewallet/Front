@@ -11,7 +11,6 @@ export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null); // 현재 활성화된 li의 index를 저장
     const { isAdmin, setIsAdmin, loginedUserId, setLoginedUserId } = adminStore();
-    //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -36,7 +35,6 @@ export default function Header() {
         const bringAdmin = async () => {
             const token = localStorage.getItem("jwtToken");
             if (!token) {
-                console.log("토큰이 비어있습니다.");
                 setIsAdmin(false);
                 return;
             }
@@ -76,7 +74,6 @@ export default function Header() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
         if (token) {
-            console.log("URL에서 추출한 토큰:", token);
             localStorage.setItem("jwtToken", token);
             setIsLoggedIn(true);
             navigate("/", { replace: true });
