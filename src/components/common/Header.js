@@ -48,14 +48,12 @@ export default function Header() {
                         headers: { "Authorization": `Bearer ${token}` }
                     }
                 );
-                // console.log(response.data);
-                console.log(response.data);
                 setLoginedUserId(response.data.userId)
                 if (response.data.role === "ADMIN") {
-                    console.log("true");
+                    console.log("ADMIN true");
                     setIsAdmin(true);
                 } else {
-                    console.log("false");
+                    console.log("ADMIN false");
                     setIsAdmin(false);
                 }
             } catch (error) {
@@ -64,11 +62,9 @@ export default function Header() {
         }
         bringAdmin();
     }, []);
-    // console.log(isAdmin);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
-        // console.log("localStorage에서 가져온 토큰:", token);
         if (token) {
             setIsLoggedIn(true);
         } else {
@@ -120,6 +116,7 @@ export default function Header() {
             }
             localStorage.removeItem("jwtToken");
             setIsLoggedIn(false);
+            window.location.reload();
             navigate("/login-and-register");
         } catch (error) {
             console.error("로그아웃 실패:", error.response?.data || error.message);

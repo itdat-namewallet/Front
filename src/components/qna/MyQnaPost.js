@@ -29,8 +29,6 @@ const MyQnaPost = () => {
                     }
                 }
             )
-            console.log("방금 넘어온 따끈 따끈한 데이타~!! ", response.data);
-            
                 if (typeof response.data === String) {
                     alert(response.data);
                 } else if (Array.isArray(response.data)) {
@@ -110,12 +108,6 @@ const MyQnaPost = () => {
                                 (post, index)=> {
                                     // 게시글이 비밀글인지 확인
                                     const isAccessible = isAdmin || post.user.userId === loginedUserId || !post.secret;
-                                        // 사용자가 어드민이거나, 게시물의 작성자이거나, 게시물의 상태가 비밀글이 아니면 접근 가능
-                                        // console.log(post);
-                                        // console.log(isAdmin);
-                                        // console.log(isAccessible);
-                                        // console.log(loginedUserId);
-                                    console.log(post);
                                     return (
                                         <tr 
                                             key={index}

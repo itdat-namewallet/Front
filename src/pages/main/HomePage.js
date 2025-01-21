@@ -79,22 +79,34 @@ export default function HomePage() {
 
               <div className="text-and-img">
                 <p>내 명함</p>
+                <div className="img-box">
                   <img src={thirdImage1}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>명함첩</p>
+                <div className="img-box">
                   <img src={thirdImage2}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>공개 명함</p>
+                <div className="img-box">
                   <img src={thirdImage3}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>내 정보</p>
+                <div className="img-box">
                   <img src={thirdImage4}/>  
+                </div>
+                  
               </div>
 
             </div>

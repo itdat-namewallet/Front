@@ -32,9 +32,13 @@ export default function LoginPage() {
               alert("로그인 실패: 토큰 없음");
           }
       } catch (error) {
+        if (error.response?.status === 403) {
+          alert("현재 계정은 제재 상태입니다. 관리자에게 문의하세요.");
+      } else {
           console.error("로그인 실패:", error.response?.data || error.message);
           alert("로그인 실패");
       }
+    }
   };
   
     
