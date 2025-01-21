@@ -40,7 +40,7 @@ export default function LoginPage() {
     
 
     // 소셜 로그인 성공 처리
-    const handleSocialLoginSuccess = async (provider, token) => {
+    const handleSocialLogin = async (provider, token) => {
       try {
           console.log("로그인 요청 시작");
           console.log("BASE_URL:", BASE_URL);
