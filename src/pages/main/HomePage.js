@@ -3,10 +3,10 @@ import "../../assets/css/pages/main/homePage.css";
 import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg"
 import slideImage0001 from "../../assets/images/management.jpg"
 import slideImage0002 from "../../assets/images/eco.png"
-import thirdImage1 from "../../assets/images/homepage/third-image1.jpg"
-import thirdImage2 from "../../assets/images/homepage/third-image2.jpg"
-import thirdImage3 from "../../assets/images/homepage/third-image3.jpg"
-import thirdImage4 from "../../assets/images/homepage/third-image4.jpg"
+import thirdImage1 from "../../assets/images/homepage/third-image1.png"
+import thirdImage2 from "../../assets/images/homepage/third-image2.png"
+import thirdImage3 from "../../assets/images/homepage/third-image3.png"
+import thirdImage4 from "../../assets/images/homepage/third-image4.png"
 import Slider from "react-slick";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";
@@ -79,22 +79,34 @@ export default function HomePage() {
 
               <div className="text-and-img">
                 <p>내 명함</p>
+                <div className="img-box">
                   <img src={thirdImage1}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>명함첩</p>
+                <div className="img-box">
                   <img src={thirdImage2}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>공개 명함</p>
+                <div className="img-box">
                   <img src={thirdImage3}/>
+                </div>
+                  
               </div>
 
               <div className="text-and-img">
                 <p>내 정보</p>
+                <div className="img-box">
                   <img src={thirdImage4}/>  
+                </div>
+                  
               </div>
 
             </div>

@@ -1,13 +1,13 @@
 .home-page-wrapper {
     width: 100%;
-    height: 100%; /* 전체 화면 크기 */
-    overflow-y: auto; /* 수직 스크롤 활성화 */
-    /* scroll-snap-type: y mandatory; 스크롤 스냅 적용 (옵션) */
+    height: 100%;
+    overflow-y: auto; 
+    
 }
 
 .home-page-main-container,
 .home-page-second-box {
-    scroll-snap-align: start; /* 각 섹션이 스냅 */
+    scroll-snap-align: start; 
 }
 
 
@@ -71,15 +71,13 @@
 }
 
 .home-page-third-box{
-/*     display: flex;
+    display: flex;
     flex-direction: column;
-    background-color: #0f182e;
-    padding-top: 70px;
-    padding-bottom: 100px;
-    margin-bottom: 50px; */
     background-color: #8fcab8;
     padding-top: 250px;
     padding-bottom: 250px;
+    padding-left: 130px;
+    padding-right: 130px;
     justify-content: center;
     align-items: center;
     color: white;
@@ -123,18 +121,25 @@
 
         }
 
-        img {
+        .img-box{
+            display: flex;
+            justify-content: center;
             background-color: white;
             padding: 20px;
-            max-width: 100%;
+            max-width: 75%;
             max-height: 600px;
             border-radius: 45px;
-            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.356);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-        /* width: 250px; */
-        /* margin-right: 50px;
-        margin-left: 50px; */
-        /* border-radius: 20px; */
+        .img-box:hover {
+            transform: translateY(-5px);
+        }
+
+        img {
+            background-color: white;
+            max-width: 100%;
     }
   }
 }

@@ -44,23 +44,15 @@ const ReportedUser = () => {
 
     useEffect(() => {
         const bringUserList = async () => {
-            console.log("신고된 유저 목록을 가져오고 있습니다.");
-            // alert("신고된 유저 목록을 가져오고 있습니다.");
-
             try {
                 const response = await axios.get(`${BASE_URL}/admin/bring-reported-user-list`);
-                console.log("1111111111111111111", response.data);
                 const sortedData = response.data.sort((a, b) => new Date(b.lastReportedDateAt) - new Date(a.lastReportedDateAt));
-                // first in, last out!!!! 최근 제재 업데이트 일을 기분으로 내림차순 정렬되시겠다.
                 setUserList(sortedData);
                 setFilteredUsers(sortedData);
-                // setUserList(response.data);
-                // setFilteredUsers(response.data); // 초기에는 전체 데이터를 표시
-                // console.log(response.data);
+               
 
             } catch (error) {
                 console.log(error.response.data);
-                return alert(`${error.response.data}`);
             }
         }
         bringUserList();
@@ -86,20 +78,15 @@ const ReportedUser = () => {
     // 검색 버튼 클릭 시
     const handleSearch = () => {
         const filtered = userList.filter((user) => {
-            console.log(category, typeof category);
-            console.log(user.user.status, typeof user.user.status);
             const matchesCategory = category ? user.user.status == category : true;
             const matchesSearchTerm = user.user.userId
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase());
             return matchesCategory && matchesSearchTerm;
-            // console.log(user.user.userId)
-            // return user.user.userId.toLowerCase().includes(searchTerm.toLowerCase())
         }
 
 
         );
-        console.log(filtered);
         setFilteredUsers(filtered);
         setCurrentPage(1); // 검색 시 페이지를 첫 번째로 초기화
     }
@@ -108,7 +95,6 @@ const ReportedUser = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
-    //console.log(currentUsers[0].user.id);
 
     const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
@@ -124,13 +110,11 @@ const ReportedUser = () => {
                     params: { reportedUserId }
                 }
             );
-            console.log(response.data);
             setSelectedUserInfo(response.data);
             setUserData(response.data);
             navigate(`/admin/detail-info?reportedUserId=${reportedUserId}`);
         } catch (error) {
             console.log(error);
-            alert(error);
         }
         // navigate("/admin/detail-info");
     }
