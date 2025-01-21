@@ -84,8 +84,8 @@
 }
 
 .main-logo {
-    text-decoration: none;
-    color: inherit;
+    padding-top: 10px;
+    max-width: 150px;
 }
 
 .main-logo:link, 
