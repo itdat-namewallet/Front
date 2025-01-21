@@ -3,10 +3,10 @@ import "../../assets/css/pages/main/homePage.css";
 import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg"
 import slideImage0001 from "../../assets/images/management.jpg"
 import slideImage0002 from "../../assets/images/eco.png"
-import thirdImage1 from "../../assets/images/homepage/third-image1.svg"
-import thirdImage2 from "../../assets/images/homepage/third-image2.svg"
-import thirdImage3 from "../../assets/images/homepage/third-image3.svg"
-import thirdImage4 from "../../assets/images/homepage/third-image4.svg"
+import thirdImage1 from "../../assets/images/homepage/third-image1.png"
+import thirdImage2 from "../../assets/images/homepage/third-image2.png"
+import thirdImage3 from "../../assets/images/homepage/third-image3.png"
+import thirdImage4 from "../../assets/images/homepage/third-image4.png"
 import Slider from "react-slick";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";
@@ -70,24 +70,45 @@ export default function HomePage() {
           </div>
         </div>
         <div className="home-page-third-box">
-          <h1>깔끔하고 명확한 UI</h1>
+          <div className="head-line">
+            <p>꼭 필요한 기능만을 담은</p>
+            <h1>명확한 UI</h1>
+          </div>
+          
             <div className="center-box">
+
               <div className="text-and-img">
                 <p>내 명함</p>
-                <img src={thirdImage1}/>
+                <div className="img-box">
+                  <img src={thirdImage1}/>
+                </div>
+                  
               </div>
+
               <div className="text-and-img">
                 <p>명함첩</p>
-                <img src={thirdImage2}/>
+                <div className="img-box">
+                  <img src={thirdImage2}/>
+                </div>
+                  
               </div>
+
               <div className="text-and-img">
                 <p>공개 명함</p>
-                <img src={thirdImage3}/>
+                <div className="img-box">
+                  <img src={thirdImage3}/>
+                </div>
+                  
               </div>
+
               <div className="text-and-img">
                 <p>내 정보</p>
-                <img src={thirdImage4}/>  
+                <div className="img-box">
+                  <img src={thirdImage4}/>  
+                </div>
+                  
               </div>
+
             </div>
          
         </div>

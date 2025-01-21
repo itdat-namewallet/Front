@@ -23,7 +23,6 @@ const DetailInfo = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const reportedUserId = queryParams.get("reportedUserId");
-    console.log(reportedUserId);
 
     // 선택된 유저 데이터가 담긴 전역 변수. 쥬스탄드
     const { userData, setUserData } = userInfoStore();
@@ -135,24 +134,7 @@ const DetailInfo = () => {
         }
     }
 
-    // 삭제 버튼을 제거하여 사용하지 않는다.
-    // const deleteRepotedInfo = async (id) => {
-    //     try{
-    //         const response = await axios.delete(`${BASE_URL}/admin/reported-info-delete`,
-    //             {
-    //                 data: {id},
-    //                 // headers: {Authorization:`Bearer ${localStorage.getItem("jwtToken")}`}
-    //             }
-    //         );
-    //         alert(response.data)
-    //         navigate("/admin", {replace: true})
-    //     }catch(error){
-    //         console.log(error);
-    //     }
-    // }
-
     const countPlus = async (userId) => {
-        console.log(userId);
         try {
             const response = await axios.get(`${BASE_URL}/admin/sanctions-count-up`,
                 {
@@ -162,7 +144,6 @@ const DetailInfo = () => {
 
                 }
             )
-            console.log(response.data);
             setIsChange(!isChange);
             // alert(response.data);
         } catch (error) {
@@ -201,7 +182,7 @@ const DetailInfo = () => {
 
                         </tc>
                     </side>
-                    <body>
+                    <div>
 
                         <tc>
                             {/* <td>{userData.user.id}</td> */}
@@ -236,14 +217,14 @@ const DetailInfo = () => {
                             <td>{changeDateType(userData.endDateAt)}</td>
                             <td>{changeDateType(userData.updateAt)}</td>
                             <td>
-                                <button onClick={openModal}>직접 수정</button>
+                                <button onClick={openModal}>수정</button>
                                 <button onClick={() => resetState(userData.user.id)}>초기화</button>
                                 {/* <button onClick={()=>deleteRepotedInfo(userData.user.id)}>삭제</button> */}
                                 <button onClick={() => countPlus(userData.user.id)}>벌점({`${userData.demerit}`})+1</button>
                             </td>
 
                         </tc>
-                    </body>
+                    </div>
                 </div>
             </div>
 
