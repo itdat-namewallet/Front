@@ -42,7 +42,6 @@ const OpenCard = () => {
 
   return (
     <div className="opencard">
-
     <div className="opencard-content">
         <h2>나의 가치를 공개해보세요</h2>
         <p>

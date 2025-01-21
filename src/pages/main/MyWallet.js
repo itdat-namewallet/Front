@@ -45,8 +45,8 @@ const MyWallet = () => {
       <div className="mywallet-content">
         <h2>공유 받은 명함의 손쉬운 관리</h2>
         <p>
-          공유받은 명함을 나의 명함첩에서<br />
-          폴더로 손쉽게 관리하고 확인해 보세요.
+          공유받은 명함을 나의 명함첩에서 확인하고<br />
+          폴더로 손쉽게 관리해 보세요.
         </p>
       </div>
       <div className="mywallet-video-container">
