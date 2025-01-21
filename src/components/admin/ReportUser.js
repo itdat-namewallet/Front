@@ -55,10 +55,8 @@ const ReportUser = () => {
                 setFilteredList(sortedData);
                 // setReportUserList(response.data);
                 // setFilteredList(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.log(error.response.data);
-                return alert(`${error.response.data}`);
             }
         }
         bringReportList();

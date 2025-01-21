@@ -41,8 +41,6 @@ const QnaPostBoard = () => {
         const bringList = async () => {
             try{
                 const response = await axios.get(`${BASE_URL}/qna/all-list`);
-                console.log("여기까진 왔어?");
-                console.log(response.data);
                 if(typeof response.data === "string"){
                     alert(response.data);
                     // 타입 확인하여 스트링이면 내용을 알러트로 띄움

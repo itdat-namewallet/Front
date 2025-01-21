@@ -34,7 +34,6 @@ const QnaPostUpdate = () => {
             const response = await axios.get(`${BASE_URL}/qna/selected-qna`,
                 { params: { selectedId } }
             )
-            console.log(response.data);
             const thePost = response.data;
             setCategory(thePost.category);
             setTitle(thePost.title);
@@ -57,8 +56,6 @@ const QnaPostUpdate = () => {
     const handleEditorChange = (event, editor) => {
         const data = editor.getData();
         setContents(data);
-        // setUser(loginedUserId);
-        // console.log('Contents:', data);
     };
 
     // 카테고리 변경 이벤트 핸들러
@@ -78,9 +75,6 @@ const QnaPostUpdate = () => {
                     {checkPassword, id}
                 )
                 if(response.data === true){
-                    // setCheckSecret(event.target.checked);
-                    // console.log(event.target.checked);
-                    // if (!event.target.checked) setCheckPassword(""); // 비밀글 해제 시 패스워드 초기화
                     setCheckSecret(false);
                     setCheckPassword("");
                 }else{
@@ -90,7 +84,6 @@ const QnaPostUpdate = () => {
                 console.log("서버와의 통신 중에 오류 발생: ",error);
             }
         };
-        console.log(isSecret);
     
         // 패스워드 변경 이벤트 핸들러 - 확인용
         const checkPasswordChange = (event) => {
