@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-// import videoSrc from '../../assets/video/myCard.mp4';
+import videoSrc from '../../assets/video/myCard.mp4';
 import '../../assets/css/main/myCard.css';
 
 const MyCard = () => {
@@ -46,7 +46,7 @@ const MyCard = () => {
           <div className="myCard-video-container">
             <video
               ref={videoRef}
-            //   src={videoSrc}
+              src={videoSrc}
               type="video/mp4"
               muted
               loop

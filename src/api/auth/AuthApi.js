@@ -65,3 +65,5 @@ export const socialLogin = async (provider, data) => {
 export const unlinkSocialLogin = async (provider, data) => {
     return handleApiCall(() => axiosInstance.delete(`/api/oauth/${provider}`, { data }));
 };
+
+
