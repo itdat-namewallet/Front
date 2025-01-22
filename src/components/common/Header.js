@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../assets/css/common/header.css';
 import logoGreenDot from "../../assets/images/logo-green-dot.png";
-import logo from "../../assets/images/logo-Img.png";
 import { adminStore } from "../../store";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
