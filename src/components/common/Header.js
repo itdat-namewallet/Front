@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../assets/css/common/header.css';
 import logoGreenDot from "../../assets/images/logo-green-dot.png";
+import logo from "../../assets/images/logo-Img.png";
 import { adminStore } from "../../store";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -134,12 +135,11 @@ export default function Header() {
 
     return (
         <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
-            <h1>
-            <div className="itdat-and-green-dot">
-                <Link to="/" className="main-logo">ITDAT</Link>
-                <img src={logoGreenDot} alt="Logo" />
-            </div>
-            </h1>
+           
+            <Link to="/">
+                <img src={logo} alt="Logo" className="main-logo"/>
+            </Link>
+            
             <ul>
                 <li
                     className={activeIndex === 0 ? "active" : ""}
