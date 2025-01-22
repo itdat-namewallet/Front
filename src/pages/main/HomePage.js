@@ -3,10 +3,10 @@ import "../../assets/css/pages/main/homePage.css";
 import slideImage0000 from "../../assets/images/prevention-of-personal-information.jpg"
 import slideImage0001 from "../../assets/images/management.jpg"
 import slideImage0002 from "../../assets/images/eco.png"
-import thirdImage1 from "../../assets/images/homepage/third-image1.png"
-import thirdImage2 from "../../assets/images/homepage/third-image2.png"
-import thirdImage3 from "../../assets/images/homepage/third-image3.png"
-import thirdImage4 from "../../assets/images/homepage/third-image4.png"
+import thirdImage1 from "../../assets/images/homepage/third-image01.png"
+import thirdImage2 from "../../assets/images/homepage/third-image02.png"
+import thirdImage3 from "../../assets/images/homepage/third-image03.png"
+import thirdImage4 from "../../assets/images/homepage/third-image04.png"
 import Slider from "react-slick";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";

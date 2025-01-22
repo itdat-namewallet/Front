@@ -243,7 +243,7 @@ const QnaPostDetail = () => {
                         return (
                             <div className={styles["out-line"]} key={index}>
                                 {/* 왼쪽 위 콘텐츠 */}
-                                <div className={styles["content"]}>
+                                <div className={styles["contents"]}>
                                     <pre>{answer.contents}</pre>
                                 </div>
                                 

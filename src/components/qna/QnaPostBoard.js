@@ -150,11 +150,11 @@ const QnaPostBoard = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>카테고리</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>답변 여부</th>
+                            <th className={styles.category}>카테고리</th>
+                            <th className={styles.title}>제목</th>
+                            <th className={styles.author}>작성자</th>
+                            <th className={styles.date}>작성일</th>
+                            <th className={styles.status}>답변 여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,8 +169,7 @@ const QnaPostBoard = () => {
                                         className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                     >
                                         <td>{categoryMap[post.category] || "알 수 없음"}</td>
-                                        <td>{post.title}</td>
-                                        {/* <td>{post.user.userName}</td> */}
+                                        <td>{isAccessible ? post.title : "비밀글입니다." }</td>
                                         <td>
                                             {post.user.userName.length >= 2
                                                 ? post.user.userName[0] + "*" + post.user.userName.slice(2)
