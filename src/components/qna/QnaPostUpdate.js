@@ -226,63 +226,67 @@ const QnaPostUpdate = () => {
                 /> */}
                 </div>
 
-                {/* 비밀 여부 및 패스워드 */}
-                {
-                    checkSecret ?
-                        <div style={{ marginBottom: "0px", marginTop: "65px"}}>
-                            <label className={styles["secret-checkbox"]}>
-                                <input
-                                    type="checkbox"
-                                    checked={checkSecret}
-                                    onChange={checkSecretChange}
-                                />
-                                비밀글
-                            </label>
-                            {checkSecret && (
-                                <input
-                                    type="password"
-                                    value={checkPassword}
-                                    onChange={checkPasswordChange}
-                                    placeholder="설정했던 비밀번호를 입력하세요."
-                                    className={styles["secret-password"]}
-                                    style={{width: "200px"}}
-                                />
+                <div className={styles["secret-and-button"]}>
+                    {/* 비밀 여부 및 패스워드 */}
+                    {
+                        checkSecret ?
+                            <div >
+                                <label className={styles["secret-checkbox"]}>
+                                    <input
+                                        type="checkbox"
+                                        checked={checkSecret}
+                                        onChange={checkSecretChange}
+                                    />
+                                    비밀글
+                                </label>
+                                {checkSecret && (
+                                    <input
+                                        type="password"
+                                        value={checkPassword}
+                                        onChange={checkPasswordChange}
+                                        placeholder="설정했던 비밀번호를 입력하세요."
+                                        className={styles["secret-password"]}
+                                        style={{width: "200px"}}
+                                    />
 
-                            )}
-                            {/* {checkSecret && (
-                                <button onClick={checkPasswordButton}>비밀번호 확인</button>
-                            )} */}
-                        </div>
-                        :
-                        <div style={{ marginBottom: "0px", marginTop: "65px"}}>
-                            <label className={styles["secret-checkbox"]}>
-                                <input
-                                    type="checkbox"
-                                    checked={isSecret}
-                                    onChange={handleIsSecretChange}
-                                />
-                                비밀글
-                            </label>
-                            {isSecret && (
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                    placeholder="비밀번호를 입력하세요."
-                                    className={styles["secret-password"]}
-                                />
+                                )}
+                                {/* {checkSecret && (
+                                    <button onClick={checkPasswordButton}>비밀번호 확인</button>
+                                )} */}
+                            </div>
+                            :
+                            <div >
+                                <label className={styles["secret-checkbox"]}>
+                                    <input
+                                        type="checkbox"
+                                        checked={isSecret}
+                                        onChange={handleIsSecretChange}
+                                    />
+                                    비밀글
+                                </label>
+                                {isSecret && (
+                                    <input
+                                        type="password"
+                                        value={password}
+                                        onChange={handlePasswordChange}
+                                        placeholder="비밀번호를 입력하세요."
+                                        className={styles["secret-password"]}
+                                    />
 
-                            )}
-                        </div>
-                }
+                                )}
+                            </div>
+                    }
 
 
-                {/* 확인 버튼 */}
-                <div >
-                    <button onClick={handleSubmit} className={styles["confirm-button"]}>
-                        수정 확인
-                    </button>
+                    {/* 확인 버튼 */}
+                    <div >
+                        <button onClick={handleSubmit} className={styles["confirm-button"]}>
+                            수정 확인
+                        </button>
+                    </div>                    
                 </div>
+
+
             </div>
         </>
     )
