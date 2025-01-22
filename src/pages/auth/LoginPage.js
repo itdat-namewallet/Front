@@ -32,39 +32,42 @@ export default function LoginPage() {
               alert("로그인 실패: 토큰 없음");
           }
       } catch (error) {
-        if (error.response?.status === 403) {
-          alert("현재 계정은 제재 상태입니다. 관리자에게 문의하세요.");
-      } else {
           console.error("로그인 실패:", error.response?.data || error.message);
           alert("로그인 실패");
       }
-    }
   };
   
     
 
     // 소셜 로그인 성공 처리
     const handleSocialLoginSuccess = async (provider, token) => {
-        try {
-            const { data } = await axios.post(
-                `${BASE_URL}/api/oauth/${provider}`,
-                {},
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            );
-            if (data.requiresRegistration) {
-                navigate("/register", { state: data });
-            } else {
-                localStorage.setItem("token", data.token);
-                console.log("소셜 로그인 성공, 토큰 저장:", token);
-                navigate("/");
-            }
-        } catch (error) {
-            console.error(`${provider} 로그인 실패:`, error.message);   
-            alert(`${provider} 로그인 실패`);
-        }
-    };
+      try {
+          console.log("로그인 요청 시작");
+          console.log("BASE_URL:", BASE_URL);
+          console.log(`Authorization Header: Bearer ${token}`);
+  
+          const { data } = await axios.post(
+              `${BASE_URL}/api/oauth/${provider}`,
+              {},
+              {
+                  headers: { Authorization: `Bearer ${token}` },
+              }
+          );
+  
+          console.log("응답 데이터:", data);
+  
+          if (data.requiresRegistration) {
+              navigate("/register", { state: data });
+          } else {
+              localStorage.setItem("token", data.token);
+              console.log("소셜 로그인 성공, 토큰 저장:", data.token);
+              navigate("/");
+          }
+      } catch (error) {
+          console.error(`${provider} 로그인 실패:`, error.response?.data || error.message);
+          alert(`${provider} 로그인 실패`);
+      }
+  };
     
     // 소셜 로그인 실패 처리
     const handleSocialLoginFailure = (provider, error) => {
