@@ -74,8 +74,8 @@
     display: flex;
     flex-direction: column;
     background-color: #8fcab8;
-    padding-top: 250px;
-    padding-bottom: 250px;
+    padding-top: 125px;
+    padding-bottom: 150px;
     padding-left: 130px;
     padding-right: 130px;
     justify-content: center;
@@ -89,9 +89,13 @@
         padding-bottom: 30px;
 
         :first-child{
-            margin-right: 12px;
-            padding-bottom: 3px;
-            font-size: 20px;
+            margin-right: 16px;
+            padding-bottom: 6px;
+            font-size: 1.7rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
         }
     }
    

@@ -37,8 +37,36 @@
 }
 
 /* 확인 버튼 */
-.confirm-button {
+/* .confirm-button {
     padding: 10px 20px;
     cursor: pointer;
     margin-top: 20px;
-}
+} */
+
+.confirm-button {
+    width: 75px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding: 10px 20px;
+    /* padding: 1px; */
+    border: 1px solid #00CA91;
+    background-color: transparent;
+    color: #00CA91;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    /* margin-bottom: 20px; */
+    cursor: pointer;
+  }
+  
+  .confirm-button:hover {
+    background-color: #00CA91;
+    color: white;
+  }
+
+  .secret-and-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }

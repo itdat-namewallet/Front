@@ -54,7 +54,7 @@
 
 .buttons {
     display: flex;
-    justify-content: flex-end; /* 버튼 우측 정렬 */
+    justify-content: flex-end;
     gap: 10px;
 
     button {
@@ -80,6 +80,34 @@
         background-color: #ff4d4d;
     }
 }
+
+
+
+.buttons button {
+    width: 75px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding: 10px 20px;
+    /* padding: 1px; */
+    border: 1px solid #00CA91;
+    background-color: transparent;
+    color: #00CA91;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    /* margin-bottom: 20px; */
+    cursor: pointer;
+  }
+  
+  .buttons button:hover {
+    background-color: #00CA91;
+    color: white;
+  }
+
+
+
+
+
 
 .answer-input-and-button-box {
     /* display: flex;

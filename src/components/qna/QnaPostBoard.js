@@ -48,16 +48,12 @@ const QnaPostBoard = () => {
                     const sortedData = response.data.sort((a,b) => new Date(b.createDateAt) - new Date(a.createDateAt));
                     setQnaList(sortedData);
                     setFilteredList(sortedData);
-                    // setQnaList(response.data);
-                    // setFilteredList(response.data);
-                    // 타입 확인하여 리스트면 상태 업데이트
                 }else {
                     console.error("알수 없는 타입의 데이터가 담겼습니다. ", response.data)
                 }
             }catch(error){
                 console.log(error);
-                // alert("error: " + error.message)
-                // 서버에러..
+                
             }
         }
         bringList();
