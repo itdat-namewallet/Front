@@ -163,7 +163,8 @@ const QnaPostDetail = () => {
     // 날짜 형식 변경 함수
     const changeDateType = (localDateTime) => {
         return (
-            new Date(new Date(localDateTime).getTime() +9*60*60*1000).toLocaleDateString("ko-KR", {
+            // new Date(new Date(localDateTime).getTime() +9*60*60*1000).toLocaleDateString("ko-KR", {
+            new Date(localDateTime).toLocaleString("ko-KR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

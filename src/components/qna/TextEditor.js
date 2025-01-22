@@ -198,32 +198,36 @@ const TextEditor = () => {
                 />
             </div>
 
-            {/* 비밀 여부 및 패스워드 */}
-            <div style={{ marginBottom: "0px", marginTop: "65px"}}>
-                <label className={styles["secret-checkbox"]}>
-                    <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
-                    비밀글
-                </label>
-                {isSecret && (
-                    <input
-                        type="password"
-                        className={styles["secret-password"]}
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="비밀번호를 입력하세요."
-                    />
-                )}
+            <div className={styles["secret-and-button"]}>
+                {/* 비밀 여부 및 패스워드 */}
+                <div >
+                    <label className={styles["secret-checkbox"]}>
+                        <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
+                        비밀글
+                    </label>
+                    {isSecret && (
+                        <input
+                            type="password"
+                            className={styles["secret-password"]}
+                            value={password}
+                            onChange={handlePasswordChange}
+                            placeholder="비밀번호를 입력하세요."
+                        />
+                    )}
+                </div>
+
+                {/* 확인 버튼 */}
+                <div>
+                    <button
+                        onClick={handleSubmit}
+                        className={styles["confirm-button"]}
+                    >
+                        확인
+                    </button>
+                </div>
             </div>
 
-            {/* 확인 버튼 */}
-            <div>
-                <button
-                    onClick={handleSubmit}
-                    className={styles["confirm-button"]}
-                >
-                    확인
-                </button>
-            </div>
+            
         </div>
     );
 };
