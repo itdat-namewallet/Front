@@ -72,7 +72,7 @@ export default function HomePage() {
         <div className="home-page-third-box">
           <div className="head-line">
             <p>꼭 필요한 기능만을 담은</p>
-            <h1>명확한 UI</h1>
+            <h2>명확한 UI</h2>
           </div>
           
             <div className="center-box">

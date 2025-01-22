@@ -41,9 +41,7 @@
     line-height: 1.4;
   }
 
-  .myCard-content br {
-    font-size: 10px;
-  }
+
   
   .myCard-video-container {
     flex: 1;
@@ -55,6 +53,7 @@
   }
   
   .myCard-video {
+    padding: 10px 5px;
     max-width: 120%;
     max-height: 600px;
     border-radius: 45px;
