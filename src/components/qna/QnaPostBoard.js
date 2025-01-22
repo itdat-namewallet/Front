@@ -169,8 +169,7 @@ const QnaPostBoard = () => {
                                         className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                     >
                                         <td>{categoryMap[post.category] || "알 수 없음"}</td>
-                                        <td>{post.title}</td>
-                                        {/* <td>{post.user.userName}</td> */}
+                                        <td>{isAccessible ? post.title : "비밀글입니다." }</td>
                                         <td>
                                             {post.user.userName.length >= 2
                                                 ? post.user.userName[0] + "*" + post.user.userName.slice(2)
