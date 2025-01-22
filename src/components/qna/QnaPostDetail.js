@@ -1,7 +1,5 @@
 import { adminStore, qnaPostDetail } from "../../store";
-//import styles from "../../assets/css/qna/qnaPostDetail.module.css"
 import styles from "../../assets/css/pages/qna/qnaPostDetail.module.css"
-// className 충돌 방지를 위해. 모듈화하여 사용. test 코드임.
 import DOMPurify from 'dompurify';
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -15,7 +13,6 @@ const QnaPostDetail = () => {
     const location = useLocation(); // 현재 URL 정보 가져오기
     const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터 파싱
     const postId = queryParams.get("postId"); // "postId" 값 가져오기
-    // const loginedUserId = queryParams.get("loginedUserId");
 
     const { qnaPostData, setQnaPostData } = qnaPostDetail();
     const { isAdmin, loginedUserId } = adminStore();
@@ -53,12 +50,9 @@ const QnaPostDetail = () => {
                 const response = await axios.get(`${BASE_URL}/qna/selected-qna-answer-list`, {
                     params: {selectedId: postId}
                 });
-                console.log(response.data);
                 if(typeof response.data === "string"){
-                    console.log("string");
                     alert(response.data);
                 }else if(Array.isArray(response.data)){
-                    console.log("array");
                     setQnaAnswerList(response.data);
                 }
             } catch (error) {
@@ -69,7 +63,6 @@ const QnaPostDetail = () => {
             fetchQnaAnswerList();
         }
     }, [postId, isChange])
-    console.log(qnaAnswerList);
 
     // 선택된 게시물 수정
     const updatePost = async () => {
@@ -96,7 +89,6 @@ const QnaPostDetail = () => {
 
     // 선택된 게시물 삭제
     const deletePost = async () => {
-        console.log(postId);
         try {
             const response = await axios.delete(`${BASE_URL}/qna/selected-delete`,
                 {
@@ -147,7 +139,6 @@ const QnaPostDetail = () => {
                 loginedUserId,
                 postId
             });
-            console.log('서버 응답: ', response.data);
             if(response.data){
                 alert("답변을 성공적으로 달았습니다.")
                 setContents("");
@@ -172,7 +163,8 @@ const QnaPostDetail = () => {
     // 날짜 형식 변경 함수
     const changeDateType = (localDateTime) => {
         return (
-            new Date(new Date(localDateTime).getTime() +9*60*60*1000).toLocaleDateString("ko-KR", {
+            // new Date(new Date(localDateTime).getTime() +9*60*60*1000).toLocaleDateString("ko-KR", {
+            new Date(localDateTime).toLocaleString("ko-KR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
@@ -252,7 +244,7 @@ const QnaPostDetail = () => {
                         return (
                             <div className={styles["out-line"]} key={index}>
                                 {/* 왼쪽 위 콘텐츠 */}
-                                <div className={styles["content"]}>
+                                <div className={styles["contents"]}>
                                     <pre>{answer.contents}</pre>
                                 </div>
                                 

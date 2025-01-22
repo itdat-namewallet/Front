@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../assets/css/common/header.css';
 import logoGreenDot from "../../assets/images/logo-green-dot.png";
+import logo from "../../assets/images/logo-Img.png";
 import { adminStore } from "../../store";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -11,7 +12,6 @@ export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null); // 현재 활성화된 li의 index를 저장
     const { isAdmin, setIsAdmin, loginedUserId, setLoginedUserId } = adminStore();
-    //const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -36,7 +36,6 @@ export default function Header() {
         const bringAdmin = async () => {
             const token = localStorage.getItem("jwtToken");
             if (!token) {
-                console.log("토큰이 비어있습니다.");
                 setIsAdmin(false);
                 return;
             }
@@ -48,14 +47,12 @@ export default function Header() {
                         headers: { "Authorization": `Bearer ${token}` }
                     }
                 );
-                // console.log(response.data);
-                console.log(response.data);
                 setLoginedUserId(response.data.userId)
                 if (response.data.role === "ADMIN") {
-                    console.log("true");
+                    console.log("ADMIN true");
                     setIsAdmin(true);
                 } else {
-                    console.log("false");
+                    console.log("ADMIN false");
                     setIsAdmin(false);
                 }
             } catch (error) {
@@ -64,11 +61,9 @@ export default function Header() {
         }
         bringAdmin();
     }, []);
-    // console.log(isAdmin);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
-        // console.log("localStorage에서 가져온 토큰:", token);
         if (token) {
             setIsLoggedIn(true);
         } else {
@@ -80,7 +75,6 @@ export default function Header() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
         if (token) {
-            console.log("URL에서 추출한 토큰:", token);
             localStorage.setItem("jwtToken", token);
             setIsLoggedIn(true);
             navigate("/", { replace: true });
@@ -121,6 +115,7 @@ export default function Header() {
             localStorage.removeItem("jwtToken");
             setIsLoggedIn(false);
             navigate("/login-and-register");
+            window.location.reload();
         } catch (error) {
             console.error("로그아웃 실패:", error.response?.data || error.message);
             alert("로그아웃 실패");
@@ -138,13 +133,17 @@ export default function Header() {
         }
     }
 
+    const handleScrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" }); // 부드럽게 스크롤
+    };
+
     return (
         <header className={`main-header ${isScrolled ? "scrolled" : ""}`}>
             <h1>
-                <div className="itdat-and-green-dot">
+                <Link to="/" className="itdat-and-green-dot" onClick={handleScrollToTop}>
                     ITDAT
                     <img src={logoGreenDot} alt="Logo" />
-                </div>
+                </Link>
             </h1>
             <ul>
                 <li

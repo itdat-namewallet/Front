@@ -169,6 +169,7 @@
 
 .table-container table {
     width: 100%;
+    table-layout: auto; /* auto로 변경 */
     border: 1px solid #ddd;
     background-color: #fff;
     font-family: Arial, sans-serif;
@@ -183,6 +184,26 @@
     padding: 10px 15px;
     text-align: left;
     border-bottom: 2px solid #ddd;
+}
+
+.table-container thead th.category {
+    width: 15%; /* 카테고리 */
+}
+
+.table-container thead th.title {
+    width: 40%; /* 제목 */
+}
+
+.table-container thead th.author {
+    width: 20%; /* 작성자 */
+}
+
+.table-container thead th.date {
+    width: 15%; /* 작성일 */
+}
+
+.table-container thead th.status {
+    width: 10%; /* 답변 여부 */
 }
 
 .table-container tbody td {

@@ -53,6 +53,7 @@
   }
   
   .myCard-video {
+    padding: 10px 5px;
     max-width: 120%;
     max-height: 600px;
     border-radius: 45px;

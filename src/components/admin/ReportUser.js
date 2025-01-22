@@ -36,7 +36,7 @@ const ReportUser = () => {
     const {isAdmin, loginedUserId} = adminStore();
 
     const categoryMap = {
-        "POSTING_PORNOGRAPHY": "음란물 게시",
+        "POSTING_PORNOGRAPHY": "부적절한 게시물",
         "FAKE_ACCOUNT": "허위 계정",
         "FALSE_ADVERTISING": "허위 광고",
         "HYPE": "과대 광고",
@@ -55,10 +55,8 @@ const ReportUser = () => {
                 setFilteredList(sortedData);
                 // setReportUserList(response.data);
                 // setFilteredList(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.log(error.response.data);
-                return alert(`${error.response.data}`);
             }
         }
         bringReportList();
@@ -147,7 +145,7 @@ const ReportUser = () => {
                         onChange={(e) => setCategory(e.target.value)}
                     >
                         <option value="">전체 카테고리</option>
-                        <option value="POSTING_PORNOGRAPHY">음란물 게시</option>
+                        <option value="POSTING_PORNOGRAPHY">부적절한 게시물</option>
                         <option value="FAKE_ACCOUNT">허위 계정</option>
                         <option value="FALSE_ADVERTISING">허위 광고</option>
                         <option value="HYPE">과대 광고</option>

@@ -6,13 +6,10 @@ import "../../assets/css/pages/qna/textEditor.css"
 import styles from "../../assets/css/pages/qna/textEditor.module.css"
 import { adminStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
-// import { reject, resolve } from 'core-js/fn/promise';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-// import { MyCustomUploadAdapterPlugin } from './textEditorPlugin/MyUploadAdapter';
 
 
-console.log(ClassicEditor.builtinPlugins.map(plugin => plugin.pluginName));
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 class MyCustomUploadAdapter {
@@ -29,7 +26,6 @@ class MyCustomUploadAdapter {
                     reader.onloadend = () => {
                         // Base64로 로컬 미리보기
                         const base64 = reader.result;
-                        console.log("base64: ",base64);
                         resolve({
                             default: base64, // Base64로 로컬 미리보기
                         });
@@ -65,99 +61,15 @@ class MyCustomUploadAdapter {
     }
 
     abort = () => {
-        // 업로드 중 취소 처리가 필요하다면 여기에 구현할 수 있습니다.
         console.log("업로드가 취소되었습니다.");
     }
 }
 
 function MyCustomUploadAdapterPlugin(editor) {
-    console.log("여기는??? ", editor);
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
         return new MyCustomUploadAdapter(loader);
     };
 }
-
-// const MyCustomUploadAdapter = () => {
-//     constructor = (loader) => {
-//         console.log("생거",loader);
-//         this.loader = loader;
-//     };
-
-//     const upload = () => {
-//         return this.loader.file
-//             .then(file => {
-//                 return new Promise((resolve, reject) => {
-//                     const reader = new FileReader();
-
-//                     reader.onloadend = () => {
-//                         // Base64로 로컬 미리보기
-//                         const base64 = reader.result;
-//                         resolve({
-//                             default: base64, // Base64로 로컬 미리보기
-//                         });
-//                     };
-//                     reader.onerror = () => {
-//                         reject('이미지 업로드에 실패했습니다');
-//                     };
-//                     reader.readAsDataURL(file); // Base64로 변환
-//                 });
-//             });
-
-//         // return new Promise((resolve, reject) => {
-//         //     // 로컬에서 미리보기
-//         //     const file = this.loader.file;
-//         //     const reader = new FileReader();
-            
-//         //     reader.onloadend = () => {
-//         //         // Base64로 로컬 미리보기
-//         //         const base64 = reader.result;
-//         //         resolve({
-//         //             default: base64, // Base64로 로컬 미리보기
-//         //         });
-//         //     };
-
-//         //     reader.onerror = () => {
-//         //         reject('이미지 업로드에 실패했습니다');
-//         //     };
-
-//         //     reader.readAsDataURL(file); // Base64로 변환
-//         // });
-
-//         // return this.loader.file
-//         //     .then(file => {
-//         //         return new Promise((resolve, reject) => {
-//         //             const data = new FormData();
-//         //             data.append('file', file);  // 파일을 FormData로 추가
-//         //             const fileData = data.get('file'); // 'file' 키에 해당하는 값 가져오기
-//         //             console.log("asdasdasdsa   " , fileData); // 파일 객체 출력
-        
-//         //             axios.post(`${BASE_URL}/qna/image-upload`, data)
-//         //                 .then(response => response.json())
-//         //                 .then(data => {
-//         //                     resolve({
-//         //                         default: data.url,  // 서버에서 반환한 이미지 URL을 CKEditor에 전달
-//         //                     });
-//         //                 })
-//         //                 .catch(err => {
-//         //                     reject('이미지 업로드에 실패했습니다');
-//         //                 });
-//         //         });
-//         //     })
-//     }
-//     upload();
-
-//     const abort = () => {
-//         // 업로드 중 취소 처리가 필요하다면 여기에 구현할 수 있습니다.
-//     }
-//     abort();
-// }
-
-// function MyCustomUploadAdapterPlugin(editor) {
-//     console.log("여기는??? ",editor);
-//     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-//         return new MyCustomUploadAdapter(loader);
-//     };
-// }
 
 const TextEditor = () => {
     const navigate = useNavigate();
@@ -166,20 +78,15 @@ const TextEditor = () => {
     const [contents, setContents] = useState("");
     const [user, setUser] = useState("");
     const {loginedUserId} = adminStore();
-    // setUserId(loginedUserId);
-    // const [createDateAt, setCreateDateAt] = useState("");
-    // const [updateAt, setUpdateAt] = useState("");
     const [isSecret, setIsSecret] = useState(false);
     const [password, setPassword] = useState("");
-    const [category, setCategory] = useState(""); // 카테고리 상태
+    const [category, setCategory] = useState(""); 
     
 
     // CKEditor 변경 이벤트 핸들러
     const handleEditorChange = (event, editor) => {
         const data = editor.getData();
         setContents(data);
-        // setUser(loginedUserId);
-        // console.log('Contents:', data);
     };
 
     // 카테고리 변경 이벤트 핸들러
@@ -195,7 +102,6 @@ const TextEditor = () => {
     // 비밀 여부 변경 이벤트 핸들러
     const handleIsSecretChange = (event) => {
         setIsSecret(event.target.checked);
-        console.log(event.target.checked);
         if (!event.target.checked) setPassword(""); // 비밀글 해제 시 패스워드 초기화
     };
 
@@ -216,7 +122,6 @@ const TextEditor = () => {
             return;
         }
         try {
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",isSecret);
             const response = await axios.post(`${BASE_URL}/qna/write`, {
                 title,
                 contents,
@@ -225,17 +130,12 @@ const TextEditor = () => {
                 password,
                 loginedUserId,
              });
-            console.log('서버 응답: ', response.data);
-            //alert('성공적으로 저장되었습니다!');
-            // 작성자의 아이디를 백으로 요청을 보내서 작성자의 마지막 글을 받아낸다.
             navigate(`/qna`);
         } catch (error) {
             console.error('데이터 전송 오류: ', error);
             alert('저장 중 오류가 발생했습니다.');
         }
     };
-
-    //console.log(loginedUserId);
 
     return (
         <div className={styles["text-container"]}>
@@ -298,32 +198,36 @@ const TextEditor = () => {
                 />
             </div>
 
-            {/* 비밀 여부 및 패스워드 */}
-            <div style={{ marginBottom: "0px", marginTop: "65px"}}>
-                <label className={styles["secret-checkbox"]}>
-                    <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
-                    비밀글
-                </label>
-                {isSecret && (
-                    <input
-                        type="password"
-                        className={styles["secret-password"]}
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="비밀번호를 입력하세요."
-                    />
-                )}
+            <div className={styles["secret-and-button"]}>
+                {/* 비밀 여부 및 패스워드 */}
+                <div >
+                    <label className={styles["secret-checkbox"]}>
+                        <input type="checkbox" checked={isSecret} onChange={handleIsSecretChange} />
+                        비밀글
+                    </label>
+                    {isSecret && (
+                        <input
+                            type="password"
+                            className={styles["secret-password"]}
+                            value={password}
+                            onChange={handlePasswordChange}
+                            placeholder="비밀번호를 입력하세요."
+                        />
+                    )}
+                </div>
+
+                {/* 확인 버튼 */}
+                <div>
+                    <button
+                        onClick={handleSubmit}
+                        className={styles["confirm-button"]}
+                    >
+                        확인
+                    </button>
+                </div>
             </div>
 
-            {/* 확인 버튼 */}
-            <div>
-                <button
-                    onClick={handleSubmit}
-                    className={styles["confirm-button"]}
-                >
-                    확인
-                </button>
-            </div>
+            
         </div>
     );
 };

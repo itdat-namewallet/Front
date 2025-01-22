@@ -1,0 +1,56 @@
+.opencard-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+  /* test */
+  .opencard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem; 
+    background-color: #8fcab8;
+    box-sizing: border-box;
+    height: 100vh;
+  }
+  
+  .opencard-content {
+    flex: 1;
+    max-width: 50%;
+    margin-right: -11.5rem;
+    margin-left: 415px;
+    color: #fff;
+  }
+  
+  .opencard-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .opencard-content p {
+    font-size: 1.7rem;
+    line-height: 1.4;
+  }
+  
+  .opencard-video-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-right: 12.5rem;
+  }
+  
+  .opencard-video {
+    max-width: 120%;
+    max-height: 600px;
+    border-radius: 45px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  

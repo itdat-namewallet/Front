@@ -29,8 +29,6 @@ const MyQnaPost = () => {
                     }
                 }
             )
-            console.log("방금 넘어온 따끈 따끈한 데이타~!! ", response.data);
-            
                 if (typeof response.data === String) {
                     alert(response.data);
                 } else if (Array.isArray(response.data)) {
@@ -94,14 +92,11 @@ const MyQnaPost = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>카테고리</th>
-                            <th>제목</th>
-                            {/* <td>내용</td>  */}
-                                {/* 요약된 내용.. 무슨 수로? 문자열 10번째 까지 보여지고 이후 ... 붙이기 */}
-                            <th>작성자</th>
-                            <th>작성일</th> {/* 수정일을 클릭 후 확인 가능 */}
-                            {/* 비밀글은 제목만 보이도록 */}
-                            {/* 비밀번호는 클릭시 묻는 용도로 */}
+                            <th className={styles.category}>카테고리</th>
+                            <th className={styles.title}>제목</th>
+                            {/* <th className={styles.author}>작성자</th> */}
+                            <th className={styles.date}>작성일</th>
+                            <th className={styles.status}>답변 여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,12 +105,6 @@ const MyQnaPost = () => {
                                 (post, index)=> {
                                     // 게시글이 비밀글인지 확인
                                     const isAccessible = isAdmin || post.user.userId === loginedUserId || !post.secret;
-                                        // 사용자가 어드민이거나, 게시물의 작성자이거나, 게시물의 상태가 비밀글이 아니면 접근 가능
-                                        // console.log(post);
-                                        // console.log(isAdmin);
-                                        // console.log(isAccessible);
-                                        // console.log(loginedUserId);
-                                    console.log(post);
                                     return (
                                         <tr 
                                             key={index}
@@ -126,7 +115,7 @@ const MyQnaPost = () => {
                                             <td>{post.category}</td>
                                             <td>{post.title}</td>
                                             {/* <td>{post.contents.length > 10 ? `${post.contents.slice(0,10)} ...` : post.contents}</td> */}
-                                            <td>{post.user.userId}</td>
+                                            {/* <td>{post.user.userId}</td> */}
                                             {/* <td>{post.createDateAt}</td> */}
                                             <td>
                                                 {new Date(post.createDateAt).toLocaleString("ko-KR", {
@@ -137,6 +126,7 @@ const MyQnaPost = () => {
                                                     minute: "2-digit",
                                                 })}
                                             </td>
+                                            <td>{post.answered? "O" : "X"}</td>
                                         </tr>
                                     )
                                 }

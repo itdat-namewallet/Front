@@ -41,8 +41,6 @@ const QnaPostBoard = () => {
         const bringList = async () => {
             try{
                 const response = await axios.get(`${BASE_URL}/qna/all-list`);
-                console.log("여기까진 왔어?");
-                console.log(response.data);
                 if(typeof response.data === "string"){
                     alert(response.data);
                     // 타입 확인하여 스트링이면 내용을 알러트로 띄움
@@ -50,16 +48,12 @@ const QnaPostBoard = () => {
                     const sortedData = response.data.sort((a,b) => new Date(b.createDateAt) - new Date(a.createDateAt));
                     setQnaList(sortedData);
                     setFilteredList(sortedData);
-                    // setQnaList(response.data);
-                    // setFilteredList(response.data);
-                    // 타입 확인하여 리스트면 상태 업데이트
                 }else {
                     console.error("알수 없는 타입의 데이터가 담겼습니다. ", response.data)
                 }
             }catch(error){
                 console.log(error);
-                // alert("error: " + error.message)
-                // 서버에러..
+                
             }
         }
         bringList();
@@ -152,11 +146,11 @@ const QnaPostBoard = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>카테고리</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>답변 여부</th>
+                            <th className={styles.category}>카테고리</th>
+                            <th className={styles.title}>제목</th>
+                            <th className={styles.author}>작성자</th>
+                            <th className={styles.date}>작성일</th>
+                            <th className={styles.status}>답변 여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -171,8 +165,7 @@ const QnaPostBoard = () => {
                                         className={`${styles.row} ${isAccessible ? "" : styles.disabledRow}`}
                                     >
                                         <td>{categoryMap[post.category] || "알 수 없음"}</td>
-                                        <td>{post.title}</td>
-                                        {/* <td>{post.user.userName}</td> */}
+                                        <td>{isAccessible ? post.title : "비밀글입니다." }</td>
                                         <td>
                                             {post.user.userName.length >= 2
                                                 ? post.user.userName[0] + "*" + post.user.userName.slice(2)
