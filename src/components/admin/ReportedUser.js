@@ -68,6 +68,7 @@ const ReportedUser = () => {
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit",
+                timeZone: "Asia/Seoul"
             })
         } else {
             return "제재 중인 유저가 아닙니다."
