@@ -30,10 +30,17 @@
 ### 3. NFC 제품 페이지
 - NFC 제품 제작 및 제공
 ---
-💻 Getting Started
-Installation
+## 💻 Getting Started
+(↑해당 프로젝트 설치 및 실행 방법)
+### Installation
+```
 npm install
-Develop Mode
+```
+### Develop Mode
+```
 npm run dev
-Production
+```
+### Production
+```
 npm run build
+```
