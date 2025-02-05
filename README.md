@@ -31,7 +31,6 @@
 - NFC 제품 제작 및 제공
 ---
 ## 💻 Getting Started
-(↑해당 프로젝트 설치 및 실행 방법)
 ### Installation
 ```
 npm install
@@ -44,3 +43,11 @@ npm run dev
 ```
 npm run build
 ```
+
+## 🔧 Stack
+- **Language**: JavaScript
+- **Library & Framework** : Node.js
+- **Database** : MySQL
+- **ORM** : JPA/Hibernate
+- **Deploy**: Vercel
+
