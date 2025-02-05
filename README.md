@@ -25,3 +25,15 @@
   + 소유한 명함들을 관리하는 명함첩 기능
   + 명함을 커스텀할 수 있는 기능
   + 자신의 명함을 공유할 수 있고 타인의 공유 명함을 볼 수 있는 기능
+### 2. 명함제작 페이지
+- 명함 디자인 템플릿 제공
+### 3. NFC 제품 페이지
+- NFC 제품 제작 및 제공
+---
+💻 Getting Started
+Installation
+npm install
+Develop Mode
+npm run dev
+Production
+npm run build
