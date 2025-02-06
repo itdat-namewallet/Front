@@ -30,19 +30,6 @@
 ### 3. NFC 제품 페이지
 - NFC 제품 제작 및 제공
 ---
-## 💻 Getting Started
-### Installation
-```
-npm install
-```
-### Develop Mode
-```
-npm run dev
-```
-### Production
-```
-npm run build
-```
 
 ## 🔧 Stack
 - **Language**: JavaScript
