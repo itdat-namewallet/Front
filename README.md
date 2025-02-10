@@ -2,6 +2,7 @@
 ![image](https://github.com/user-attachments/assets/9803e497-c038-44f5-92d9-a1dd29a9f088)
 ## 프론트 엔드 기능 파트
 ### 1. QnA 페이지
+![qna](https://github.com/user-attachments/assets/d8f56db6-6870-42d5-8e1f-a3d957216f39)
 - 게시물 조회하기
 - 게시물 작성하기
 - 내 게시물 확인하기
@@ -17,6 +18,7 @@
 ---
 ## 프론트 엔드 뷰어 파트
 ### 1. 소개
+![메인페이지](https://github.com/user-attachments/assets/6d88193e-6050-4260-93ae-09e72cb270b3)
 - 첫 인사말
 - 잇닷의 취지
 - 어플리케이션 메인 화면들
@@ -26,8 +28,10 @@
   + 명함을 커스텀할 수 있는 기능
   + 자신의 명함을 공유할 수 있고 타인의 공유 명함을 볼 수 있는 기능
 ### 2. 명함제작 페이지
+![명함만들기](https://github.com/user-attachments/assets/f8acd875-17f3-48e0-a4ac-f233355fa182)
 - 명함 디자인 템플릿 제공
 ### 3. NFC 제품 페이지
+![nfc](https://github.com/user-attachments/assets/466c106b-50f1-453f-980d-36e5fec19332)
 - NFC 제품 제작 및 제공
 ---
 
