@@ -9,15 +9,6 @@
 - Q&A 기능을 통해 사용자 문의 및 피드백을 받을 수 있습니다.
 - 관리자 페이지에서는 Q&A 답변 관리 및 신고된 유저에 대한 제재 처리가 가능합니다.
 > **배포 주소** : [https://www.itdat.store/](https://www.itdat.store/) <br>
-## 🔧 기술스택
-### Development : ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-### Library : <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
-
-### DataBas : <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
-
-### ORM : <img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white">
-
-### Deploy : <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white"/>
 
 ## 1. 소개
 ![image](https://github.com/user-attachments/assets/db75092e-9994-4a6c-98b2-07d488c19fc5)
@@ -38,5 +29,14 @@
 ### ⭐️ 사용자 인증 페이지
 ![image](https://github.com/user-attachments/assets/dac7e570-ba71-4617-86da-44de48311f85)
 ![image](https://github.com/user-attachments/assets/d39ec490-3246-4902-ae6a-28419e04abdb)
+## 🔧 기술스택
+### Development : ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+### Library : <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
+
+### DataBas : <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
+
+### ORM : <img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white">
+
+### Deploy : <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white"/>
 
 ---
